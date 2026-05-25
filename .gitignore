@@ -1,3 +1,9 @@
 libshared.git
 taskwarrior.git
 timewarrior.git
+CMakeFiles
+CMakeCache.txt
+*.cmake
+Makefile
+cmake.h
+commit.h
