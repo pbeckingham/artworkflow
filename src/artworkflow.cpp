@@ -38,9 +38,7 @@ int main (int argc, const char** argv)
   run_time.stop ();
   std::stringstream s;
   s << "Timer artworkflow "
-/*
     << std::setprecision (6)
-*/
     << std::fixed
     << run_time.total_us () / 1000000.0
     << " sec\n";
