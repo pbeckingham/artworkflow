@@ -48,6 +48,18 @@ int main (int argc, const char** argv)
     CLI cli;
     initializeEntities (cli);
 
+    // Capture the args.
+    std::string commandLine;
+    for (int i = 0; i < argc; i++)
+    {
+      cli.add (argv[i]);
+
+      if (i)
+        commandLine += " ";
+
+      commandLine += quoteIfNeeded (argv[i]);
+    }
+
   }
 
   catch (const std::string& error)

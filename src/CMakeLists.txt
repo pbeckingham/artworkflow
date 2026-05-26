@@ -35,9 +35,10 @@ set (artworkflow_SRCS artworkflow.cpp    artworkflow.h
                       Tree.cpp           Tree.h
                       unicode.cpp        unicode.h
                       utf8.cpp           utf8.h
+                      util.cpp
                                          wcwidth.h)
 
-add_executable (artworkflow_executable artworkflow.cpp debug.cpp format.cpp init.cpp shared.cpp unicode.cpp utf8.cpp Args.cpp CLI.cpp Color.cpp Datetime.cpp Duration.cpp Lexer.cpp PIG.cpp Timer.cpp)
+add_executable (artworkflow_executable artworkflow.cpp debug.cpp format.cpp init.cpp shared.cpp unicode.cpp utf8.cpp util.cpp Args.cpp CLI.cpp Color.cpp Datetime.cpp Duration.cpp Lexer.cpp PIG.cpp Timer.cpp)
 target_link_libraries (artworkflow_executable)
 set_property (TARGET artworkflow_executable PROPERTY OUTPUT_NAME "artworkflow")
 install (TARGETS artworkflow_executable DESTINATION ${ARTWORKFLOW_BINDIR})

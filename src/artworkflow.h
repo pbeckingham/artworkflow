@@ -37,4 +37,10 @@ void debug (const std::string&);
 bool lightweightVersionCheck (int, const char**);
 void initializeEntities (CLI&);
 
+// util.cpp
+std::string escape (const std::string&, int);
+std::string quoteIfNeeded (const std::string&);
+std::string join(const std::string& glue, const std::set <std::string>& array);
+template <typename Container> std::string joinQuotedIfNeeded (const std::string&, const Container&);
+
 #endif
