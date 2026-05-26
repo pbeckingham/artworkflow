@@ -30,10 +30,9 @@
 
 // debug.cpp
 void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
 void debug (const std::string&);
-void warn (const std::string&);
 
+// init.cpp
+bool lightweightVersionCheck (int, const char**);
 
 #endif

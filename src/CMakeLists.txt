@@ -10,10 +10,11 @@ set (artworkflow_SRCS artworkflow.cpp   artworkflow.h
                       Composite.cpp     Composite.h
                       Configuration.cpp Configuration.h
                       Datetime.cpp      Datetime.h
-		      debug.cpp
+                      debug.cpp
                       Duration.cpp      Duration.h
                       format.cpp        format.h
                       FS.cpp            FS.h
+                      init.cpp
                       ip.cpp
                       JSON.cpp          JSON.h
                       lex.cpp
@@ -34,7 +35,7 @@ set (artworkflow_SRCS artworkflow.cpp   artworkflow.h
                       utf8.cpp          utf8.h
                                         wcwidth.h)
 
-add_executable (artworkflow_executable artworkflow.cpp debug.cpp format.cpp shared.cpp utf8.cpp Color.cpp Timer.cpp)
+add_executable (artworkflow_executable artworkflow.cpp debug.cpp format.cpp init.cpp shared.cpp utf8.cpp Color.cpp Timer.cpp)
 target_link_libraries (artworkflow_executable)
 set_property (TARGET artworkflow_executable PROPERTY OUTPUT_NAME "artworkflow")
 install (TARGETS artworkflow_executable DESTINATION ${ARTWORKFLOW_BINDIR})

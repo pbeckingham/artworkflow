@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2016 - 2025, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,31 +24,19 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
-#include <Color.h>
-#include <Timer.h>
-#include <artworkflow.h>
+#include <cmake.h>
+#include <iostream>
 
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
+bool lightweightVersionCheck (int argc, const char** argv)
 {
-  Timer run_time;
+  if (argc == 2 && std::string (argv[1]) == "--version")
+  {
+    std::cout << VERSION << '\n';
+    return true;
+  }
 
-  // Lightweight version checking that doesn't require initialization or I/O.
-  int status = 0;
-  if (lightweightVersionCheck (argc, argv))
-    return status;
-
-  run_time.stop ();
-  std::stringstream s;
-  s << "Timer artworkflow "
-    << std::setprecision (6)
-    << std::fixed
-    << run_time.total_us () / 1000000.0
-    << " sec\n";
-  debug (s.str ());
-
-  return status;
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
