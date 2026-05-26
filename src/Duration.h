@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,58 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_DURATION
+#define INCLUDED_DURATION
 
+#include <Pig.h>
+#include <ctime>
+#include <string>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class Duration
+{
+public:
+  static bool standaloneSecondsEnabled;
 
+  Duration ();
+  Duration (const std::string&);
+  Duration (time_t);
+  bool operator< (const Duration&);
+  bool operator> (const Duration&);
+  bool operator<= (const Duration&);
+  bool operator>= (const Duration&);
+  std::string toString () const;
+  time_t toTime_t () const;
+  bool parse (const std::string&, std::string::size_type&);
+  bool parse_seconds (Pig&);
+  bool parse_designated (Pig&);
+  bool parse_weeks (Pig&);
+  bool parse_units (Pig&);
+  std::string format () const;
+  std::string formatHours () const;
+  std::string formatISO () const;
+  std::string formatVague (bool padding = false) const;
+
+  int days () const;
+  int hours () const;
+  int minutes () const;
+  time_t seconds () const;
+
+private:
+  void clear ();
+  void resolve ();
+  std::string dump () const;
+
+public:
+  int _year       {0};
+  int _month      {0};
+  int _weeks      {0};
+  int _day        {0};
+  int _hours      {0};
+  int _minutes    {0};
+  time_t _seconds {0};
+  time_t _period  {0};
+};
 
 #endif
+
+////////////////////////////////////////////////////////////////////////////////

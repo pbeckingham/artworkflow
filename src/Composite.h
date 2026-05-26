@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,24 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_COMPOSITE
+#define INCLUDED_COMPOSITE
 
+#include <Color.h>
+#include <string>
+#include <tuple>
+#include <vector>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class Composite
+{
+public:
+  Composite () = default;
+  void add (const std::string&, std::string::size_type, const Color&);
+  std::string str () const;
+  void clear ();
 
+private:
+  std::vector <std::tuple <std::string, std::string::size_type, Color>> _layers;
+};
 
 #endif

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,46 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
-#include <Color.h>
-#include <Timer.h>
-#include <artworkflow.h>
+#include <PEG.h>
+#include <Packrat.h>
+#include <test.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
+int main (int, char**)
 {
-  Timer run_time;
-  int status = 0;
+  UnitTest t (7);
 
-  run_time.stop ();
-  std::stringstream s;
-  s << "Timer artworkflow "
-/*
-    << std::setprecision (6)
-*/
-    << std::fixed
-    << run_time.total_us () / 1000000.0
-    << " sec\n";
-  debug (s.str ());
+  // Grammar that is valid.
+  PEG peg;
+  peg.loadFromString ("thing: \"abc\"");
+  t.is (peg.firstRule (), "thing",                                          "stringliteral: firstRule found");
 
-  return status;
+  auto rules = peg.syntax ();
+  t.is (rules["thing"][0][0]._token,  "\"abc\"",                            "stringliteral: thing: 'abc'");
+  t.ok (rules["thing"][0][0]._quantifier == PEG::Token::Quantifier::one,    "stringliteral: thing: 'abc' quantifier one");
+  t.ok (rules["thing"][0][0]._lookahead == PEG::Token::Lookahead::none,     "stringliteral: thing: 'abc' lookahead none");
+  t.ok (rules["thing"][0][0]._tags == std::set <std::string> {"string", "literal"},
+                                                                            "stringliteral: thing: 'abc' tags {'string', 'literal'}");
+
+  // 'abc' is valid.
+  try
+  {
+    Packrat rat;
+    rat.parse (peg, "abc");
+    t.pass ("stringliteral: 'abc' valid");
+  }
+  catch (const std::string& e) { t.fail ("stringliteral: 'abc' " + e); }
+
+  // 'def' is not valid.
+  try
+  {
+    Packrat rat;
+    rat.parse (peg, "def");  // Expected to fail.
+    t.fail ("stringliteral: 'def' not valid");
+  }
+  catch (const std::string& e) { t.pass ("stringliteral: 'def' " + e); }
+
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

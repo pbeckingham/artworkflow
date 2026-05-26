@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2016, 2018 - 2020, 2023, 2025, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,58 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
 #include <Color.h>
-#include <Timer.h>
+#include <iostream>
+#include <sstream>
 #include <artworkflow.h>
 
+static bool debugMode = false;
+static std::string debugIndicator = ">>";
+static Color debugColor;
+
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
+void enableDebugMode (bool value)
 {
-  Timer run_time;
-  int status = 0;
-
-  run_time.stop ();
-  std::stringstream s;
-  s << "Timer artworkflow "
-/*
-    << std::setprecision (6)
-*/
-    << std::fixed
-    << run_time.total_us () / 1000000.0
-    << " sec\n";
-  debug (s.str ());
-
-  return status;
+  debugMode = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void setDebugIndicator (const std::string& indicator)
+{
+  debugIndicator = indicator;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void setDebugColor (const Color& color)
+{
+  debugColor = color;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void debug (const std::string& msg)
+{
+  if (debugMode)
+  {
+    std::stringstream sstr (msg);
+    std::string line;
+    while (std::getline (sstr, line, '\n'))
+    {
+      std::cout << debugColor.colorize (debugIndicator + " " + line) << "\n";
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void warn (const std::string& msg)
+{
+  const auto warnColor = Color(Color::yellow);
+
+  std::stringstream sstr (msg);
+  std::string line;
+  bool first = true;
+  while (std::getline (sstr, line, '\n'))
+  {
+    std::cerr << warnColor.colorize(first ? "WARNING: " : "         ") << warnColor.colorize(line) << "\n";
+    first = false;
+  }
+}

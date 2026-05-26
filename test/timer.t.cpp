@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,44 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
-#include <Color.h>
 #include <Timer.h>
-#include <artworkflow.h>
+#include <format.h>
+#include <test.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
+int main (int, char**)
 {
-  Timer run_time;
-  int status = 0;
+  UnitTest t (7);
 
-  run_time.stop ();
-  std::stringstream s;
-  s << "Timer artworkflow "
-/*
-    << std::setprecision (6)
-*/
-    << std::fixed
-    << run_time.total_us () / 1000000.0
-    << " sec\n";
-  debug (s.str ());
+  // Start this timer early to allow for non-trivial elapsed time.
+  Timer t0;
+  t0.start ();
 
-  return status;
+  Timer t1;
+  t1.stop ();
+  t.ok (t1.total_s ()  >= 0.0, "Timer: possibliy non-zero s if not started");
+  t.ok (t1.total_ms () >= 0.0, "Timer: possibliy non-zero ms if not started");
+  t.ok (t1.total_us () >= 0.0, "Timer: possibliy non-zero us if not started");
+  t.ok (t1.total_ns () >= 0.0, "Timer: possibliy non-zero ns if not started");
+
+  t0.stop ();
+  t.ok (t0.total_ms () >= t0.total_s (),  "Timer: more ms than s");
+  t.ok (t0.total_us () >= t0.total_ms (), "Timer: more us than ms");
+  t.ok (t0.total_ns () >= t0.total_us (), "Timer: more ns than us");
+
+  t.diag (format ("Total {1} s",  t0.total_s ()));
+  t.diag (format ("Total {1} ms", t0.total_ms ()));
+  t.diag (format ("Total {1} μs", t0.total_us ()));
+  t.diag (format ("Total {1} ns", t0.total_ns ()));
+
+  Timer t2;
+  t2.start ();
+  t.diag (format ("Running total {1} s",  t2.total_s ()));
+  t.diag (format ("Running total {1} ms", t2.total_ms ()));
+  t.diag (format ("Running total {1} us", t2.total_us ()));
+  t.diag (format ("Running total {1} ns", t2.total_ns ()));
+
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

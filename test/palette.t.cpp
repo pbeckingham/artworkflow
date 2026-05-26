@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,48 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
-#include <Color.h>
-#include <Timer.h>
-#include <artworkflow.h>
+#include <Palette.h>
+#include <test.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
+int main (int, char**)
 {
-  Timer run_time;
-  int status = 0;
+  UnitTest t (3);
 
-  run_time.stop ();
-  std::stringstream s;
-  s << "Timer artworkflow "
-/*
-    << std::setprecision (6)
-*/
-    << std::fixed
-    << run_time.total_us () / 1000000.0
-    << " sec\n";
-  debug (s.str ());
+  Palette p;
+  t.ok (p.size () >= 8, "Palette.size at least 8");
 
-  return status;
+  p.enabled = true;
+  t.ok (p.next () == Color ("white on red"), "Palette provides color when enabled");
+  p.enabled = false;
+  t.ok (p.next () == Color (),               "Palette suppresses color when disabled");
+  p.enabled = true;
+
+  t.diag (p.next ().colorize ("palette entry 0"));
+  t.diag (p.next ().colorize ("palette entry 1"));
+  t.diag (p.next ().colorize ("palette entry 2"));
+  t.diag (p.next ().colorize ("palette entry 3"));
+  t.diag (p.next ().colorize ("palette entry 4"));
+  t.diag (p.next ().colorize ("palette entry 5"));
+  t.diag (p.next ().colorize ("palette entry 6"));
+  t.diag (p.next ().colorize ("palette entry 7"));
+  t.diag (p.next ().colorize ("palette entry 8"));
+  t.diag (p.next ().colorize ("palette entry 9"));
+  t.diag (p.next ().colorize ("palette entry 10"));
+  t.diag (p.next ().colorize ("palette entry 11"));
+  t.diag (p.next ().colorize ("palette entry 12"));
+  t.diag ("Repeating...");
+  t.diag (p.next ().colorize ("palette entry 1"));
+  t.diag (p.next ().colorize ("palette entry 2"));
+
+  t.diag ("Disabled...");
+  p.enabled = false;
+  t.diag (p.next ().colorize ("palette entry 1"));
+  t.diag (p.next ().colorize ("palette entry 2"));
+  p.enabled = true;
+
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+

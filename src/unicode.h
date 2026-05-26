@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2015 - 2021, Paul Beckingham, Federico Hernandez.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_UNICODE
+#define INCLUDED_UNICODE
 
-
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
-
+bool unicodeWhitespace           (unsigned int);
+bool unicodeHorizontalWhitespace (unsigned int);
+bool unicodeVerticalWhitespace   (unsigned int);
+bool unicodePunctuation          (unsigned int);
+bool unicodeAlpha                (unsigned int);
+bool unicodeLatinAlpha           (unsigned int);
+bool unicodeLatinDigit           (unsigned int);
+bool unicodeHexDigit             (unsigned int);
 
 #endif

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,33 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_LOG
+#define INCLUDED_LOG
 
+#include <Datetime.h>
+#include <FS.h>
+#include <cstdio>
+#include <set>
+#include <string>
+#include <vector>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class Log
+{
+public:
+  std::string file () const;
+  void file (const std::string&);
+  void ignore (const std::string&);
+  void write (const std::string&);
+  void write (const std::string&, const std::string&);
 
+private:
+  std::string               _name       {};
+  std::vector <std::string> _backlog    {};
+  File                      _file       {};
+  std::string               _prior      {"none"};
+  int                       _repetition {0};
+  std::set <std::string>    _ignore     {};
+};
 
 #endif
+

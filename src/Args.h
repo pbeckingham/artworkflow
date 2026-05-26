@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,45 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_ARGS
+#define INCLUDED_ARGS
 
+#include <map>
+#include <string>
+#include <vector>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class Args
+{
+public:
+  Args () = default;
 
+  void addOption (const std::string&, bool defaultValue = true);
+  void addNamed  (const std::string&, const std::string& defaultValue = "");
+  void limitPositionals (int);
+  void enableNegatives ();
+
+  void scan (int, const char**);
+
+  bool getOption (const std::string&) const;
+  int getOptionCount (const std::string&) const;
+  std::string getNamed (const std::string&) const;
+  int getPositionalCount () const;
+  std::string getPositional (int) const;
+
+  std::string dump () const;
+
+private:
+  bool canonicalizeOption (const std::string&, std::string&) const;
+  bool canonicalizeNamed (const std::string&, std::string&) const;
+
+private:
+  std::map <std::string, bool>        _options     {};
+  std::map <std::string, int>         _optionCount {};
+  std::map <std::string, std::string> _named       {};
+  std::vector <std::string>           _positionals {};
+  int                                 _limit       {-1};
+  bool                                _negatives   {false};
+};
 
 #endif
+

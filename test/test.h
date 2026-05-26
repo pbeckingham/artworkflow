@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2006 - 2021, Paul Beckingham, Federico Hernandez.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,49 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_UNITTEST
+#define INCLUDED_UNITTEST
 
+#include <string>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class UnitTest
+{
+public:
+  UnitTest ();
+  UnitTest (int);
+  ~UnitTest ();
 
+  void plan (int);
+  void planMore (int);
+  void ok (bool, const std::string&);
+  void notok (bool, const std::string&);
+  void is (bool, bool, const std::string&);
+  void is (int, int, const std::string&);
+  void is (size_t, size_t, const std::string&);
+  void is (time_t, time_t, const std::string&);
+  void is (double, double, const std::string&);
+  void is (double, double, double, const std::string&);
+  void is (unsigned char, unsigned char, const std::string&);
+  void is (const std::string&, const std::string&, const std::string&);
+  void is (const char*, const char*, const std::string&);
+  void diag (const std::string&);
+  void pass (const std::string&);
+  void fail (const std::string&);
+  void skip (const std::string&);
+
+private:
+  std::string red (const std::string&);
+  std::string green (const std::string&);
+  std::string yellow (const std::string&);
+
+private:
+  int _planned;
+  int _counter;
+  int _passed;
+  int _failed;
+  int _skipped;
+};
 
 #endif
+
+////////////////////////////////////////////////////////////////////////////////

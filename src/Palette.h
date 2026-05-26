@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,28 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_PALETTE
+#define INCLUDED_PALETTE
 
+#include <Color.h>
+#include <string>
+#include <vector>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class Palette
+{
+public:
+  Palette ();
+  void add (Color);
+  Color next ();
+  int size () const;
+  void clear ();
 
+public:
+  bool enabled {true};
+
+private:
+  std::vector <Color> _colors  {};
+  int                 _current {0};
+};
 
 #endif

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,31 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_MSG
+#define INCLUDED_MSG
 
+#include <map>
+#include <string>
+#include <vector>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class Msg
+{
+public:
+  void set (const std::string&, int);
+  void set (const std::string&, const std::string&);
+  std::string get (const std::string&) const;
 
+  void setPayload (const std::string&);
+  std::string getPayload () const;
+
+  std::vector <std::string> all () const;
+  std::string serialize () const;
+  bool parse (const std::string&);
+
+private:
+  std::map <std::string, std::string> _header {};
+  std::string _payload                        {""};
+};
 
 #endif
+

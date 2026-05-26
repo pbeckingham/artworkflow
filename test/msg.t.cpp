@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,46 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
-#include <Color.h>
-#include <Timer.h>
-#include <artworkflow.h>
+#include <Msg.h>
+#include <test.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
+int main (int, char**)
 {
-  Timer run_time;
-  int status = 0;
+  UnitTest t (13);
 
-  run_time.stop ();
-  std::stringstream s;
-  s << "Timer artworkflow "
-/*
-    << std::setprecision (6)
-*/
-    << std::fixed
-    << run_time.total_us () / 1000000.0
-    << " sec\n";
-  debug (s.str ());
+  Msg m;
+  t.is (m.serialize (), "\n\n",        "Msg::serialize '' --> '\\n\\n'");
 
-  return status;
+  m.set ("name", "value");
+  t.is (m.serialize (), "name: value\n\n\n",
+                                       "Msg::serialize 1 var");
+
+  m.set ("foo", 123);
+  t.is (m.serialize (), "foo: 123\nname: value\n\n\n",
+                                       "Msg::serialize 2 vars");
+
+  m.setPayload ("payload");
+  t.is (m.serialize (), "foo: 123\nname: value\n\npayload\n",
+                                       "Msg::serialize 2 vars + payload");
+
+  Msg m2;
+  t.ok (m2.parse ("foo: bar\nname: value\n\npayload\n"),
+                                       "Msg::parse ok");
+  t.is (m2.get ("foo"),   "bar",       "Msg::get");
+  t.is (m2.get ("name"),  "value",     "Msg::get");
+  t.is (m2.getPayload (), "payload\n", "Msg::getPayload");
+
+  Msg m3;
+  t.ok (m3.parse ("foo:bar\nname:   value\n\npayload\n"),
+                                       "Msg::parse ok");
+  t.is (m3.get ("foo"),   "bar",       "Msg::get");
+  t.is (m3.get ("name"),  "value",     "Msg::get");
+  t.is (m3.getPayload (), "payload\n", "Msg::getPayload");
+  t.ok (m3.all () == std::vector <std::string> {"foo", "name"},
+                                       "Msg::all --> {'foo', 'name'}");
+
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, Paul Beckingham, Federico Hernandez.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,23 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_UTF8
+#define INCLUDED_UTF8
 
+#include <string>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+unsigned int utf8_codepoint (const std::string&);
+unsigned int utf8_next_char (const std::string&, std::string::size_type&);
+std::string utf8_character (unsigned int);
+int utf8_sequence (unsigned int);
+unsigned int utf8_length (const std::string&);
+unsigned int utf8_text_length (const std::string&);
+unsigned int utf8_width (const std::string& str);
+unsigned int utf8_text_width (const std::string&);
+std::string utf8_substr (const std::string&, unsigned int, unsigned int length = 0);
 
+const std::string utf8_truncate_to_width (const std::string&, unsigned int target_width);
+
+int mk_wcwidth (wchar_t);
 
 #endif

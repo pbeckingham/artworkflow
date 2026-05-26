@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,30 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_TIMER
+#define INCLUDED_TIMER
 
+#include <chrono>
+#include <string>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class Timer
+{
+public:
+  Timer ();
+  ~Timer () = default;
 
+  void start ();
+  void stop ();
+
+  double total_s () const;
+  double total_ms () const;
+  double total_us () const;
+  double total_ns () const;
+
+private:
+  std::chrono::time_point<std::chrono::high_resolution_clock> _start   {};
+  std::chrono::time_point<std::chrono::high_resolution_clock> _end     {};
+  bool                                                        _running {false};
+};
 
 #endif

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,33 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#include <shared.h>
+#include <test.h>
 
+////////////////////////////////////////////////////////////////////////////////
+int main (int, char**)
+{
+  UnitTest t (8);
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+  std::vector <std::string> options {"abc", "abcd", "abcde", "bcdef", "cdefg"};
+  std::vector <std::string> matches;
+  int result = autoComplete ("", options, matches);
+  t.is (result, 0, "no match on empty string");
 
+  result = autoComplete ("x", options, matches);
+  t.is (result, 0, "no match on wrong string");
 
-#endif
+  result = autoComplete ("abcd", options, matches);
+  t.is (result, 1, "exact match on 'abcd'");
+  t.is (matches[0], "abcd", "exact match on 'abcd'");
+
+  result = autoComplete ("ab", options, matches);
+  t.is (result, 3, "partial match on 'ab'");
+  t.is (matches[0], "abc", "partial match on 'abc'");
+  t.is (matches[1], "abcd", "partial match on 'abcd'");
+  t.is (matches[2], "abcde", "partial match on 'abcde'");
+
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////

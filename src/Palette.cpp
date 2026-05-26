@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,58 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
-#include <Color.h>
-#include <Timer.h>
-#include <artworkflow.h>
+#include <Palette.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
+// Use a default palette, which is overwritten in ::initialize.
+Palette::Palette ()
 {
-  Timer run_time;
-  int status = 0;
+  _colors = {
+    Color ("white on red"),
+    Color ("white on blue"),
+    Color ("black on green"),
+    Color ("black on magenta"),
+    Color ("black on cyan"),
+    Color ("black on yellow"),
+    Color ("black on white"),
+    Color ("white on bright red"),
+    Color ("white on bright blue"),
+    Color ("black on bright green"),
+    Color ("black on bright magenta"),
+    Color ("black on bright cyan"),
+    Color ("black on bright yellow"),
+  };
 
-  run_time.stop ();
-  std::stringstream s;
-  s << "Timer artworkflow "
-/*
-    << std::setprecision (6)
-*/
-    << std::fixed
-    << run_time.total_us () / 1000000.0
-    << " sec\n";
-  debug (s.str ());
+  _current = 0;
+}
 
-  return status;
+////////////////////////////////////////////////////////////////////////////////
+void Palette::add (Color c)
+{
+  _colors.push_back (c);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Return the next color in the list.  Cycle to the beginning if necessary.
+Color Palette::next ()
+{
+  if (enabled)
+    return _colors[_current++ % _colors.size ()];
+
+  return Color ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int Palette::size () const
+{
+  return static_cast <int> (_colors.size ());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void Palette::clear ()
+{
+  _colors.clear ();
+  _current = 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

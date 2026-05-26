@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,60 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
-#include <Color.h>
-#include <Timer.h>
-#include <artworkflow.h>
+#include <FS.h>
+#include <JSON.h>
+#include <cstring>
+#include <iostream>
+#include <string>
 
 ////////////////////////////////////////////////////////////////////////////////
-int main (int argc, const char** argv)
+int main (int argc, char** argv)
 {
-  Timer run_time;
-  int status = 0;
+  if (argc == 1)
+  {
+    std::cout << "\nUsage: json_test [-q] <file | JSON> ...\n"
+              << '\n'
+              << "      -q        quiet, no JSON dump\n"
+              << "      <file>    file containing JSON\n"
+              << "      <JSON>    JSON string, may need to be quoted\n"
+              << '\n';
+    return 0;
+  }
 
-  run_time.stop ();
-  std::stringstream s;
-  s << "Timer artworkflow "
-/*
-    << std::setprecision (6)
-*/
-    << std::fixed
-    << run_time.total_us () / 1000000.0
-    << " sec\n";
-  debug (s.str ());
+  bool quiet = false;
+  for (int i = 1; i < argc; ++i)
+    if (!strcmp (argv[i], "-q"))
+      quiet = true;
 
-  return status;
+  for (int i = 1; i < argc; ++i)
+  {
+    if (strcmp (argv[i], "-q"))
+    {
+      try
+      {
+        json::value* root;
+        File file (argv[i]);
+        if (file.exists ())
+        {
+          std::string contents;
+          file.read (contents);
+          root = json::parse (contents);
+        }
+        else
+          root = json::parse (argv[i]);
+
+        if (root && !quiet)
+          std::cout << root->dump () << '\n';
+
+        delete root;
+      }
+
+      catch (const std::string& e) { std::cout << e << '\n';         }
+      catch (...)                  { std::cout << "Unknown error\n"; }
+    }
+  }
+
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

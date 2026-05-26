@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2017, 2019 - 2021, 2023, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,35 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_RX
+#define INCLUDED_RX
 
+#include <regex>
+#include <string>
+#include <vector>
 
-// debug.cpp
-void enableDebugMode (bool);
-void setDebugIndicator (const std::string&);
-void setDebugColor (const Color&);
-void debug (const std::string&);
-void warn (const std::string&);
+class RX
+{
+public:
+  RX ();
+  RX (const std::string&, bool case_sensitive = true);
+  RX (const RX&);
+  ~RX ();
+  RX& operator= (const RX&);
 
+  bool match (const std::string&);
+  bool match (std::vector<std::string>&, const std::string&);
+  bool match (std::vector <int>&, std::vector <int>&, const std::string&);
+
+private:
+  void compile ();
+
+private:
+  bool _compiled       {false};
+  std::string _pattern {};
+  bool _case_sensitive {false};
+  std::regex _regex;
+};
 
 #endif
+
