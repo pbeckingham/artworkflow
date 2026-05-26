@@ -27,6 +27,7 @@
 #ifndef INCLUDED_ARTWORKFLOW
 #define INCLUDED_ARTWORKFLOW
 
+#include <CLI.h>
 
 // debug.cpp
 void enableDebugMode (bool);
@@ -34,5 +35,6 @@ void debug (const std::string&);
 
 // init.cpp
 bool lightweightVersionCheck (int, const char**);
+void initializeEntities (CLI&);
 
 #endif

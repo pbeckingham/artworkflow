@@ -24,9 +24,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <shared.h>
+#include <iomanip>
+#include <iostream>
 #include <Color.h>
 #include <Timer.h>
+#include <shared.h>
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,6 +40,35 @@ int main (int argc, const char** argv)
   int status = 0;
   if (lightweightVersionCheck (argc, argv))
     return status;
+
+  try
+  {
+    // Add entities so that command line tokens such as 'help' are recognized as
+    // commands.
+    CLI cli;
+    initializeEntities (cli);
+
+  }
+
+  catch (const std::string& error)
+  {
+    std::cerr << error << '\n';
+    status = -1;
+  }
+
+  catch (std::bad_alloc& error)
+  {
+    auto message = std::string ("Memory allocation failed: ") + error.what ();
+    std::cerr << "Error: " << message << '\n';
+    status = -3;
+  }
+
+  catch (...)
+  {
+    auto message = "Unknown problem, please report.";
+    std::cerr << "Error: " << message << '\n';
+    status = -2;
+  }
 
   run_time.stop ();
   std::stringstream s;
