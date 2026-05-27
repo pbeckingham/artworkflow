@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <DatetimeParser.h>
+#include <Datetime.h>
 #include <Duration.h>
 #include <algorithm>
 #include <format.h>
@@ -54,6 +55,137 @@ static std::vector <std::string> monthNames {
   "october",
   "november",
   "december"};
+
+////////////////////////////////////////////////////////////////////////////////
+/*
+Range DatetimeParser::parse_range (const std::string& input)
+{
+  clear ();
+  std::string::size_type start = 0;
+  auto i = start;
+  Pig pig (input);
+  if (i)
+    pig.skipN (static_cast <int> (i));
+
+  auto checkpoint = pig.cursor ();
+
+  // Parse epoch first, as it's the most common scenario.
+  if (parse_epoch (pig))
+  {
+    // ::validate and ::resolve are not needed in this case.
+    start = pig.cursor ();
+    return Range {};
+  }
+
+  // Allow parse_date_time and parse_date_time_ext regardless of
+  // DatetimeParser::isoEnabled setting, because these formats are relied upon by
+  // the 'import' command, JSON parser and hook system.
+  if (parse_date_time_ext   (pig) || // Strictest first.
+      parse_date_time       (pig))
+  {
+    // Check the values and determine time_t.
+    if (validate ())
+    {
+      start = pig.cursor ();
+      resolve ();
+      return Range {Datetime {_date}, 0};
+    }
+  }
+
+  // Allow parse_date_time and parse_date_time_ext regardless of
+  // DatetimeParser::isoEnabled setting, because these formats are relied upon by
+  // the 'import' command, JSON parser and hook system.
+  if (Datetime::isoEnabled &&
+      (                                   parse_date_ext      (pig)  ||
+      (Datetime::standaloneDateEnabled && parse_date          (pig))
+      )
+    )
+  {
+    // Check the values and determine time_t.
+    if (validate ())
+    {
+      start = pig.cursor ();
+      resolve ();
+
+      if (_day != 0)
+      {
+        auto start_date = Datetime (_date);
+        auto end_date = start_date + Duration ("1d").toTime_t ();
+        return Range{start_date, end_date };
+      }
+      else if (_month != 0)
+      {
+        auto start_date = Datetime (_date);
+        auto end_date = Datetime (start_date.year (), start_date.month ()+1, 1);
+        return Range {start_date, end_date};
+      }
+      else if (_year != 0)
+      {
+        auto start_date = Datetime (_date);
+        auto end_date = Datetime(start_date.year()+1, 1, 1);
+        return Range {start_date, end_date};
+      }
+      return Range {};
+    }
+  }
+
+  // Allow parse_date_time and parse_date_time_ext regardless of
+  // DatetimeParser::isoEnabled setting, because these formats are relied upon by
+  // the 'import' command, JSON parser and hook system.
+  if (Datetime::isoEnabled &&
+      (                                   parse_time_utc_ext  (pig)  ||
+                                          parse_time_utc      (pig)  ||
+                                          parse_time_off_ext  (pig)  ||
+                                          parse_time_off      (pig)  ||
+                                          parse_time_ext      (pig)  ||
+      (Datetime::standaloneTimeEnabled && parse_time          (pig)) // Time last, as it is the most permissive.
+      )
+     )
+  {
+    // Check the values and determine time_t.
+    if (validate ())
+    {
+      start = pig.cursor ();
+      resolve ();
+      return Range {Datetime (_date), 0};
+    }
+  }
+
+  pig.restoreTo (checkpoint);
+
+  if (parse_informal_time (pig))
+  {
+    return Range {Datetime {_date}, 0};
+  }
+
+  if (parse_named_day (pig))
+  {
+    // ::validate and ::resolve are not needed in this case.
+    start = pig.cursor ();
+    return Range {Datetime (_date), Datetime (_date) + Duration ("1d").toTime_t ()};
+  }
+
+  if (parse_named_month (pig))
+  {
+    // ::validate and ::resolve are not needed in this case.
+    start = pig.cursor ();
+    auto begin = Datetime (_date);
+    auto month = (begin.month() + 1) % 13 + (begin.month() == 12);
+    auto year = (begin.year() + (begin.month() == 12));
+    auto end = Datetime (year, month, 1);
+    return Range {begin, end};
+  }
+
+  if (parse_named (pig))
+  {
+    // ::validate and ::resolve are not needed in this case.
+    start = pig.cursor ();
+    return Range {Datetime (_date), 0};
+  }
+
+  throw format ("'{1}' is not a valid range.", input);
+}
+*/
 
 ////////////////////////////////////////////////////////////////////////////////
 void DatetimeParser::clear ()

@@ -36,6 +36,9 @@ int main (int argc, const char** argv)
 {
   Timer run_time;
 
+  // TODO Remove.
+  enableDebugMode (true);
+
   // Lightweight version checking that doesn't require initialization or I/O.
   int status = 0;
   if (lightweightVersionCheck (argc, argv))
@@ -60,6 +63,13 @@ int main (int argc, const char** argv)
       commandLine += quoteIfNeeded (argv[i]);
     }
 
+    // Scan command line.
+    cli.analyze ();
+
+    // Prepare the database, but do not read data.
+    Database database;
+    Rules rules;
+    initializeDataAndRules (cli, database, rules);
   }
 
   catch (const std::string& error)

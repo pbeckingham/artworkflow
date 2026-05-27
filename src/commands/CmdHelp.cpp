@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016 - 2020, 2022 - 2024, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +24,34 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#include <FS.h>
+#include <algorithm>
+#include <commands.h>
+#include <iostream>
+#include <shared.h>
+#include <sys/wait.h>
 
-#include <CLI.h>
-#include <Database.h>
-#include <Rules.h>
+////////////////////////////////////////////////////////////////////////////////
+int CmdHelpUsage ()
+{
+  std::cout << '\n'
+            << "Usage: artworkflow [--version]\n"
+            << "       timew help [<command>]\n"
+            << '\n';
 
-// debug.cpp
-void enableDebugMode (bool);
-void debug (const std::string&);
+  return 0;
+}
 
-// init.cpp
-bool lightweightVersionCheck (int, const char**);
-void initializeEntities (CLI&);
-void initializeDataAndRules (const CLI&, Database&, Rules&);
+int CmdHelp (CLI& cli)
+{
+  auto words = cli.getWords ();
 
-// util.cpp
-std::string escape (const std::string&, int);
-std::string quoteIfNeeded (const std::string&);
-std::string join(const std::string& glue, const std::set <std::string>& array);
-template <typename Container> std::string joinQuotedIfNeeded (const std::string&, const Container&);
+  if (! words.empty ())
+  {
+    std::string man_command = "man artworkflow-" + words[0];
+    int ret = system (man_command.c_str());
+    return (WIFEXITED (ret)) ? WEXITSTATUS (ret) : -1;
+  }
+}
 
-#endif
+////////////////////////////////////////////////////////////////////////////////

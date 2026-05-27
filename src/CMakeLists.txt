@@ -1,44 +1,23 @@
 cmake_minimum_required (VERSION 3.10)
 include_directories (${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src
+                     ${CMAKE_SOURCE_DIR}/src/commands
+                     ${CMAKE_SOURCE_DIR}/src/libshared
 		     ${ARTWORKFLOW_INCLUDE_DIRS})
 
-set (artworkflow_SRCS artworkflow.cpp    artworkflow.h
-                      Args.cpp           Args.h
-                      artworkflow.cpp    artworkflow.h
+set (artworkflow_SRCS AtomicFile.cpp     AtomicFile.h
                       CLI.cpp            CLI.h
-                      Color.cpp          Color.h
-                      Composite.cpp      Composite.h
-                      Configuration.cpp  Configuration.h
-                      Datetime.cpp       Datetime.h
                       DatetimeParser.cpp DatetimeParser.h
+                      Database.cpp       Database.h
+                      Datafile.cpp       Datafile.h
+                      Rules.cpp          Rules.h
                       debug.cpp
-                      Duration.cpp       Duration.h
-                      format.cpp         format.h
-                      FS.cpp             FS.h
                       init.cpp
-                      ip.cpp
-                      JSON.cpp           JSON.h
-                      lex.cpp
-                      Lexer.cpp          Lexer.h
-                      Log.cpp            Log.h
-                      Msg.cpp            Msg.h
-                      Packrat.cpp        Packrat.h
-                      Palette.cpp        Palette.h
-                      PEG.cpp            PEG.h
-                      Pig.cpp            Pig.h
-                      RX.cpp             RX.h
-                      SAX.cpp
-                      shared.cpp         shared.h
-                      Table.cpp          Table.h
-                      Timer.cpp          Timer.h
-                      Tree.cpp           Tree.h
-                      unicode.cpp        unicode.h
-                      utf8.cpp           utf8.h
-                      util.cpp
-                                         wcwidth.h)
+                      util.cpp)
 
-add_executable (artworkflow_executable artworkflow.cpp debug.cpp format.cpp init.cpp shared.cpp unicode.cpp utf8.cpp util.cpp Args.cpp CLI.cpp Color.cpp Datetime.cpp Duration.cpp Lexer.cpp PIG.cpp Timer.cpp)
-target_link_libraries (artworkflow_executable)
+add_library (artworkflow STATIC ${artworkflow_SRCS})
+add_executable (artworkflow_executable artworkflow.cpp)
+
+target_link_libraries (artworkflow_executable artworkflow commands shared ${ARTWORKFLOW_LIBRARIES})
 set_property (TARGET artworkflow_executable PROPERTY OUTPUT_NAME "artworkflow")
 install (TARGETS artworkflow_executable DESTINATION ${ARTWORKFLOW_BINDIR})

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham.
+// Copyright 2016, 2018 - 2022, Thomas Lauf, Paul Beckingham, Federico Hernandez.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +24,36 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_ARTWORKFLOW
-#define INCLUDED_ARTWORKFLOW
+#ifndef INCLUDED_DATAFILE
+#define INCLUDED_DATAFILE
 
-#include <CLI.h>
-#include <Database.h>
-#include <Rules.h>
+#include <FS.h>
+#include <Datetime.h>
+#include <string>
+#include <vector>
 
-// debug.cpp
-void enableDebugMode (bool);
-void debug (const std::string&);
+class Datafile
+{
+public:
+  Datafile () = default;
+  void initialize (const std::string&);
+  std::string name () const;
 
-// init.cpp
-bool lightweightVersionCheck (int, const char**);
-void initializeEntities (CLI&);
-void initializeDataAndRules (const CLI&, Database&, Rules&);
+  std::string lastLine ();
+  const std::vector <std::string>& allLines ();
 
-// util.cpp
-std::string escape (const std::string&, int);
-std::string quoteIfNeeded (const std::string&);
-std::string join(const std::string& glue, const std::set <std::string>& array);
-template <typename Container> std::string joinQuotedIfNeeded (const std::string&, const Container&);
+  void commit ();
+
+  std::string dump () const;
+
+private:
+  void load_lines ();
+
+private:
+  Path                      _file         {};
+  bool                      _dirty        {false};
+  std::vector <std::string> _lines        {};
+  bool                      _lines_loaded {false};
+};
 
 #endif

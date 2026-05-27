@@ -1,5 +1,8 @@
 cmake_minimum_required (VERSION 3.10)
-set (CMAKE_CXX_STANDARD 23)
+#set (CMAKE_CXX_STANDARD 2c)
+#set (CMAKE_CXX_STANDARD 23)
+#set (CMAKE_CXX_STANDARD 20)
+set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 set (HAVE_CMAKE true)
 
@@ -52,6 +55,8 @@ configure_file (${CMAKE_SOURCE_DIR}/cmake.h.in
                 ${CMAKE_SOURCE_DIR}/cmake.h)
 
 add_subdirectory (src)
+add_subdirectory (src/commands)
+add_subdirectory (src/libshared)
 add_subdirectory (doc)
 if (EXISTS ${CMAKE_SOURCE_DIR}/test)
   add_subdirectory (test EXCLUDE_FROM_ALL)

@@ -28,6 +28,7 @@
 #define INCLUDED_DATETIMEPARSER
 
 #include <Pig.h>
+//#include <Range.h>
 #include <ctime>
 #include <string>
 
@@ -35,6 +36,7 @@ class DatetimeParser
 {
 public:
   DatetimeParser () = default;
+//  Range parse_range(const std::string&);
 
 private:
   void clear ();
