@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2022 - 2023, Thomas Lauf, Paul Beckingham, Federico Hernandez.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,36 +24,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
-#include <commands.h>
-#include <iostream>
-#include <shared.h>
+#ifndef INCLUDED_PATH_RESOLVER
+#define INCLUDED_PATH_RESOLVER
 
-////////////////////////////////////////////////////////////////////////////////
-int CmdHelpUsage ()
-{
-  std::cout << '\n'
-            << "Usage: artworkflow [--version]\n"
-            << "       artworkflow diagnostics\n"
-            << "       artworkflow help [<command>]\n"
-            << '\n';
+#include <Rules.h>
+#include <string>
 
-  return 0;
+namespace paths {
+    void initializeDirs (Rules&);
+    std::string configDir ();
+    std::string configFile ();
+    std::string dbDir ();
+    std::string dbDataDir ();
+    std::string extensionsDir ();
 }
-
-////////////////////////////////////////////////////////////////////////////////
-int CmdHelp (CLI& cli)
-{
-  auto words = cli.getWords ();
-
-  if (! words.empty ())
-  {
-    std::string man_command = "man artworkflow-" + words[0];
-    int ret = system (man_command.c_str());
-    return (WIFEXITED (ret)) ? WEXITSTATUS (ret) : -1;
-  }
-
-  return 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
+#endif

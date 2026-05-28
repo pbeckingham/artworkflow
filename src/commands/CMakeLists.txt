@@ -4,5 +4,6 @@ include_directories (${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src/commands
                      ${CMAKE_SOURCE_DIR}/src/libshared/src)
 
-set (commands_SRCS CmdHelp.cpp)
+set (commands_SRCS CmdDiagnostics.cpp
+                   CmdHelp.cpp)
 add_library (commands STATIC ${commands_SRCS})

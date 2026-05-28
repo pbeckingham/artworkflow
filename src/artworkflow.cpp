@@ -36,7 +36,7 @@ int main (int argc, const char** argv)
 {
   Timer run_time;
 
-  // TODO Remove.
+  // TODO Remove when the command dispatch is functional and sufficiently complete.
   enableDebugMode (true);
 
   // Lightweight version checking that doesn't require initialization or I/O.

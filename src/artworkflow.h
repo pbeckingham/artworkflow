@@ -31,6 +31,7 @@
 #include <CLI.h>
 #include <Database.h>
 #include <Rules.h>
+#include <Palette.h>
 
 // debug.cpp
 void enableDebugMode (bool);
@@ -38,6 +39,14 @@ void setDebugIndicator (const std::string&);
 void setDebugColor (const Color&);
 void debug (const std::string&);
 void warn (const std::string&);
+
+// helper.cpp
+Color summaryIntervalColor (const Rules&, const std::set <std::string>&);
+Color summaryIntervalColor (std::map <std::string, Color>&, const std::set <std::string>&);
+Color chartIntervalColor (const std::set <std::string>&, const std::map <std::string, Color>&);
+Color tagColor (const Rules&, const std::string&);
+Palette createPalette (const Rules&);
+int quantizeToNMinutes (int, int);
 
 // init.cpp
 bool lightweightVersionCheck (int, const char**);

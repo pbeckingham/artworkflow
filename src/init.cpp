@@ -49,6 +49,7 @@ bool lightweightVersionCheck (int argc, const char** argv)
 void initializeEntities (CLI& cli)
 {
   // Command entities.
+  cli.entity ("command", "diagnostics");
   cli.entity ("command", "help");
   cli.entity ("command", "--help");
   cli.entity ("command", "-h");
@@ -142,10 +143,10 @@ int dispatchCommand (
   if (! command.empty ())
   {
     // These signatures are expected to be all different, therefore no command to fn mapping.
-         if (command == "help" ||
+         if (command == "diagnostics") status = CmdDiagnostics   (     rules, database);
+    else if (command == "help" ||
              command == "--help" ||
              command == "-h")          status = CmdHelp          (cli                 );
-//    else if (command == "import")      status = CmdImport        (cli, rules, database);
 //    else                               status = CmdReport        (cli, rules, database);
   }
   else
