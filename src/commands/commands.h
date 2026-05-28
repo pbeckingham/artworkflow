@@ -31,6 +31,7 @@
 #include <Database.h>
 #include <Rules.h>
 
-int CmdHelp          (CLI&,                  );
+//  CmdXxx           (CLI&, Rules&, Database&);
+int CmdHelp          (CLI&                   );
 
 #endif

@@ -29,6 +29,8 @@
 
 #include <FS.h>
 #include <Datetime.h>
+//#include <Interval.h>
+//#include <Range.h>
 #include <string>
 #include <vector>
 
@@ -42,6 +44,8 @@ public:
   std::string lastLine ();
   const std::vector <std::string>& allLines ();
 
+//  void addInterval (const Interval&);
+//  void deleteInterval (const Interval&);
   void commit ();
 
   std::string dump () const;
@@ -54,6 +58,7 @@ private:
   bool                      _dirty        {false};
   std::vector <std::string> _lines        {};
   bool                      _lines_loaded {false};
+//  Range                     _range        {};
 };
 
 #endif

@@ -27,18 +27,23 @@
 #ifndef INCLUDED_ARTWORKFLOW
 #define INCLUDED_ARTWORKFLOW
 
+#include <Color.h>
 #include <CLI.h>
 #include <Database.h>
 #include <Rules.h>
 
 // debug.cpp
 void enableDebugMode (bool);
+void setDebugIndicator (const std::string&);
+void setDebugColor (const Color&);
 void debug (const std::string&);
+void warn (const std::string&);
 
 // init.cpp
 bool lightweightVersionCheck (int, const char**);
 void initializeEntities (CLI&);
 void initializeDataAndRules (const CLI&, Database&, Rules&);
+int dispatchCommand (CLI&, Database&, Rules&);
 
 // util.cpp
 std::string escape (const std::string&, int);
