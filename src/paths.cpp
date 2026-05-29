@@ -95,9 +95,8 @@ namespace paths
 
 #endif
 
-  std::string configFile () { return configDir () + "/timewarrior.cfg"; }
+  std::string configFile () { return configDir () + "/artworkflow.cfg"; }
   std::string dbDataDir () { return dbDir () + "/data"; }
-  std::string extensionsDir () { return configDir () + "/extensions"; }
 
   void initializeDirs (Rules& rules)
   {

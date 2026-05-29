@@ -45,56 +45,6 @@ Rules::Rules ()
     {"confirmation",             "on"},
     {"debug",                    "off"},
     {"verbose",                  "on"},
-
-    // 'day' report.
-    {"reports.day.hours",        "all"},
-    {"reports.day.axis",         "internal"},
-    {"reports.day.lines",        "2"},
-    {"reports.day.spacing",      "1"},
-    {"reports.day.month",        "no"},
-    {"reports.day.week",         "no"},
-    {"reports.day.day",          "yes"},
-    {"reports.day.weekday",      "yes"},
-    {"reports.day.totals",       "no"},
-    {"reports.day.summary",      "yes"},
-    {"reports.day.holidays",     "no"},
-    {"reports.day.cell",         "15"},
-
-    // 'week' report.
-    {"reports.week.hours",       "all"},
-    {"reports.week.lines",       "1"},
-    {"reports.week.spacing",     "1"},
-    {"reports.week.month",       "no"},
-    {"reports.week.week",        "yes"},
-    {"reports.week.day",         "yes"},
-    {"reports.week.weekday",     "yes"},
-    {"reports.week.totals",      "yes"},
-    {"reports.week.summary",     "yes"},
-    {"reports.week.holidays",    "yes"},
-    {"reports.week.cell",        "15"},
-
-    // 'month' report.
-    {"reports.month.hours",      "all"},
-    {"reports.month.lines",      "1"},
-    {"reports.month.spacing",    "1"},
-    {"reports.month.month",      "yes"},
-    {"reports.month.week",       "yes"},
-    {"reports.month.day",        "yes"},
-    {"reports.month.weekday",    "yes"},
-    {"reports.month.totals",     "yes"},
-    {"reports.month.summary",    "yes"},
-    {"reports.month.holidays",   "yes"},
-    {"reports.month.cell",       "15"},
-
-    // 'summary' report.
-    {"reports.summary.holidays", "yes"},
-
-    // Enough of a theme to make the charts work.
-    {"theme.description",        "Built-in default"},
-    {"theme.colors.exclusion",   "gray8 on gray4"},
-    {"theme.colors.today",       "white"},
-    {"theme.colors.holiday",     "gray4"},
-    {"theme.colors.label",       "gray4"},
   };
 }
 

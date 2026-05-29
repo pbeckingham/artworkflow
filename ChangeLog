@@ -17,6 +17,9 @@
 - Hints :debug, :quiet, :color, :nocolor, and :yes implemented
 - Began creation of artworkflow(1) man page
 - Began implementation of the default command
+- Implemented config command
+- Implemented show command
+- Implemented default configuration settings
 
 ------ stable ------------------------------------
 

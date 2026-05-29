@@ -50,10 +50,12 @@ bool lightweightVersionCheck (int argc, const char** argv)
 void initializeEntities (CLI& cli)
 {
   // Command entities.
+  cli.entity ("command", "config");
   cli.entity ("command", "diagnostics");
   cli.entity ("command", "help");
   cli.entity ("command", "--help");
   cli.entity ("command", "-h");
+  cli.entity ("command", "show");
   cli.entity ("command", "version");
   cli.entity ("command", "--version"); // Note: this only appears to overlap with
 				       // the lightweight version checking.
@@ -102,12 +104,10 @@ void initializeDataAndRules (
     if (arg.hasTag ("HINT"))
     {
       if (arg.attribute ("canonical") == ":debug")   rules.set ("debug",        "on");
-/*
       if (arg.attribute ("canonical") == ":quiet")   rules.set ("verbose",      "off");
       if (arg.attribute ("canonical") == ":color")   rules.set ("color",        "on");
       if (arg.attribute ("canonical") == ":nocolor") rules.set ("color",        "off");
       if (arg.attribute ("canonical") == ":yes")     rules.set ("confirmation", "off");
-*/
     }
   }
 
@@ -150,10 +150,12 @@ int dispatchCommand (
   if (! command.empty ())
   {
     // These signatures are expected to be all different, therefore no command to fn mapping.
-         if (command == "diagnostics") status = CmdDiagnostics   (     rules, database);
+         if (command == "config")      status = CmdConfig        (cli, rules          );
+    else if (command == "diagnostics") status = CmdDiagnostics   (     rules, database);
     else if (command == "help"    ||
              command == "--help"  ||
              command == "-h")          status = CmdHelp          (cli                 );
+    else if (command == "show")        status = CmdShow          (     rules          );
     else if (command == "version" ||
              command == "-v")          status = CmdVersion       (                    );
 //    else                               status = CmdReport        (cli, rules, database);

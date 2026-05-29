@@ -480,7 +480,7 @@ void CLI::canonicalizeNames ()
       alreadyFoundCmd = true;
     }
 
-    // 'timew <command> --help|-h' should be treated the same as 'timew help <command>'.
+    // 'artworkflow <command> --help|-h' should be treated the same as 'artworkflow help <command>'.
     // Therefore, '--help|-h' on the command line should always become the command.
     else if (alreadyFoundCmd && (raw == "--help" || raw == "-h"))
     {
