@@ -36,6 +36,7 @@
 #include <sstream>
 #include <artworkflow.h>
 #include <utf8.h>
+#include <cmake.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 A2::A2 (const std::string& raw, Lexer::Type lextype)
@@ -186,13 +187,13 @@ void CLI::handleArg0 ()
   A2 a (raw, Lexer::Type::word);
   a.tag ("BINARY");
 
-  std::string basename = "artworkflow";
+  std::string basename = PACKAGE;
   auto slash = raw.rfind ('/');
   if (slash != std::string::npos)
     basename = raw.substr (slash + 1);
 
   a.attribute ("basename", basename);
-  if (basename != "artworkflow")
+  if (basename != PACKAGE)
   {
     A2 cal (basename, Lexer::Type::word);
     _args.push_back (cal);

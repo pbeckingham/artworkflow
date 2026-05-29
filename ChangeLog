@@ -13,12 +13,15 @@
 ------ development -------------------------------
 
 0.0.2 () Args and Commands
+
 - #3 Help Command
+- #6 CLI should pull basename from cmake.h
 - Implemented diagnostics command
 
 ------ current release ---------------------------
 
 0.0.1 (2026-05-26) Buildable binary
+
 - #1 Buildable binary
 
 Project started  2026-05-25
