@@ -13,6 +13,8 @@
 ------ development -------------------------------
 
 0.0.2 () Args and Commands
+- #3 Help Command
+- Implemented diagnostics command
 
 ------ current release ---------------------------
 

@@ -31,16 +31,16 @@
 
 namespace paths
 {
-  static const char *legacy_config_dir = "~/.timewarrior";
+  static const char *legacy_config_dir = "~/.artworkflow";
   static const bool uses_legacy_config = Directory (legacy_config_dir).exists ();
-  const char *timewarriordb = getenv ("TIMEWARRIORDB");
+  const char *artworkflowdb = getenv ("ARTWORKFLOWDB");
 
   #if defined(__unix__) || defined(__APPLE__) || defined(__linux__) || defined(_SYSTYPE_BSD)
   std::string getPath (const char *xdg_path)
   {
-    if (timewarriordb != nullptr)
+    if (artworkflowdb != nullptr)
     {
-      return timewarriordb;
+      return artworkflowdb;
     }
     else if (uses_legacy_config)
     {
@@ -48,7 +48,7 @@ namespace paths
     }
     else
     {
-      return std::string (xdg_path) + "/timewarrior";
+      return std::string (xdg_path) + "/artworkflow";
     }
   }
 
@@ -71,9 +71,9 @@ namespace paths
 #else
   std::string getPath ()
   {
-    if (timewarriordb != nullptr)
+    if (artworkflowdb != nullptr)
     {
-      return timewarriordb;
+      return artworkflowdb;
     }
     else
     {
@@ -154,14 +154,6 @@ namespace paths
       }
     }
 
-    // Create extensions subdirectory if necessary.
-    Directory extensionsLocation (extensionsDir ());
-
-    if (! extensionsLocation.exists ())
-    {
-      extensionsLocation.create (0700);
-    }
-
     // Create data subdirectory if necessary.
     Directory dbDataLocation (dbDataDir ());
 
@@ -190,7 +182,6 @@ namespace paths
     // Having located the config file, the 'db' location is already known.
     // This is just for subsequent internal use.
     rules.set ("temp.db", dbLocation);
-    rules.set ("temp.extensions", extensionsLocation);
     rules.set ("temp.config", configFileLocation);
 
     // Perhaps some subsequent code would like to know this is a new db and possibly a first run.

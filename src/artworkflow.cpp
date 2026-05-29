@@ -36,9 +36,6 @@ int main (int argc, const char** argv)
 {
   Timer run_time;
 
-  // TODO Remove when the command dispatch is functional and sufficiently complete.
-  enableDebugMode (true);
-
   // Lightweight version checking that doesn't require initialization or I/O.
   int status = 0;
   if (lightweightVersionCheck (argc, argv))
@@ -70,6 +67,9 @@ int main (int argc, const char** argv)
     Database database;
     Rules rules;
     initializeDataAndRules (cli, database, rules);
+
+    // Dispatch to commands.
+    status = dispatchCommand (cli, database, rules);
   }
 
   catch (const std::string& error)

@@ -53,7 +53,7 @@ int CmdHelp (CLI& cli)
     return (WIFEXITED (ret)) ? WEXITSTATUS (ret) : -1;
   }
 
-  return 0;
+  return CmdHelpUsage ();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -32,6 +32,7 @@
 #include <unistd.h>
 #include <CLI.h>
 #include <shared.h>
+#include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 bool lightweightVersionCheck (int argc, const char** argv)
@@ -55,7 +56,7 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "-h");
 
   // Hint entities.
-  cli.entity ("hint", ":adjust");
+  cli.entity ("hint", ":debug");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +65,6 @@ void initializeDataAndRules (
   Database& database,
   Rules& rules)
 {
-/*
   // Rose tint my world, make me safe from my trouble and pain.
   rules.set ("color", isatty (STDOUT_FILENO) ? "on" : "off");
 
@@ -94,10 +94,12 @@ void initializeDataAndRules (
     if (arg.hasTag ("HINT"))
     {
       if (arg.attribute ("canonical") == ":debug")   rules.set ("debug",        "on");
+/*
       if (arg.attribute ("canonical") == ":quiet")   rules.set ("verbose",      "off");
       if (arg.attribute ("canonical") == ":color")   rules.set ("color",        "on");
       if (arg.attribute ("canonical") == ":nocolor") rules.set ("color",        "off");
       if (arg.attribute ("canonical") == ":yes")     rules.set ("confirmation", "off");
+*/
     }
   }
 
@@ -120,7 +122,6 @@ void initializeDataAndRules (
   std::string dbDataDir = paths::dbDataDir ();
   // Initialize the database (no data read), but files are enumerated.
   database.initialize (dbDataDir);
-*/
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -131,11 +132,9 @@ int dispatchCommand (
 {
   int status {0};
 
-/*
   // Debug output.
   if (rules.getBoolean ("debug"))
     std::cout << cli.dump () << '\n';
-*/
 
   // Dispatch to the right command function.
   std::string command = cli.getCommand ();
