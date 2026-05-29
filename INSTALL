@@ -1,0 +1,127 @@
+# Installation Instructions
+
+Please follow the instructions below to build and install ArtWorkFlow from source.
+
+
+# Dependencies
+
+In order to build ArtWorkFlow, you will need:
+
+  - CMake (See https://cmake.org)
+  - Make
+  - Asciidoctor (for building documentation)
+
+You will need a C++ compiler that supports full C++17, which includes:
+  - GCC 8
+  - Clang 5
+
+
+# Basic Installation
+
+Briefly, these shell commands will unpack, build and install ArtWorkFlow:
+
+    $ tar xzf artworkflow-X.Y.Z.tar.gz            [1]
+    $ cd artworkflow-X.Y.Z                        [2]
+    $ cmake .                                     [3]
+    $ make                                        [4]
+    $ sudo make install                           [5]
+    $ cd .. ; rm -r artworkflow-X.Y.Z             [6]
+
+These commands are explained below:
+
+  1. Unpacks the source tarball.
+     This creates the directory artworkflow-X.Y.Z, containing all the code.
+
+  2. Change directory to the root of the distribution.
+
+  3. Invokes CMake to scan for dependencies and machine-specific details, then generate the makefiles.
+     This may take a minute.
+
+  4. Builds ArtWorkFlow.
+     This may take a minute.
+
+  5. Installs the program, documentation and other data files.
+
+  6. Removes the temporary directory.
+
+
+# Build and configurations options
+
+You can customize the configuration run with CMake variables.
+CMake configuration variables are applied with the `-D` option and consist of a `<name>` and a `<value>`:
+
+    $ cmake -D<name>=<value> .
+
+To change the installation directory, use the `CMAKE_INSTALL_PREFIX` variable:
+
+    $ cmake -DCMAKE_INSTALL_PREFIX=<path-to-installation-dir> .
+
+This variable defaults to `/usr/local` on UNIX/Linux systems.
+
+Five more variables can customize the installation process.
+The following table lists them and their default values:
+
+| Variable        | Default Value           |
+|-----------------|-------------------------|
+| `TIMEW_BINDIR`  | `bin`                   |
+| `TIMEW_DOCDIR`  | `share/doc/artworkflow` |
+| `TIMEW_MANDIR`  | `share/man`             |
+| `TIMEW_MAN1DIR` | `share/man/man1`        |
+| `TIMEW_MAN7DIR` | `share/man/man7`        |
+
+On FreeBSD or DragonFly BSD systems, the `share/` directory is omitted for the `TIMEW_MAN*DIR` variables.
+
+The `TIMEW_*` variables are combined with the value of `CMAKE_INSTALL_PREFIX` to get the absolute paths.
+
+
+# Updating ArtWorkFlow build
+
+To update the local ArtWorkFlow build, you need to update the Git repository, including the `src/libshared` submodule, run:
+
+    $ git pull --recurse-submodules
+    $ git submodule update
+
+At this point you have the fully updated sources at your disposal, and you can update your local build following the regular build instructions:
+
+    $ cmake .
+    $ make
+    $ sudo make install
+
+
+# Uninstallation
+
+There is no uninstall option in CMake makefiles.
+This is a manual process.
+
+To uninstall ArtWorkFlow, remove the files listed in the `install_manifest.txt` file that was generated when you built ArtWorkFlow.
+
+
+# ArtWorkFlow Build Notes
+
+ArtWorkFlow has dependencies that are detected by CMake in almost all cases, but there are situations and operating systems that mean you will need to offer a little help.
+
+If ArtWorkFlow does not build on your system, first take a look at the Operating System notes below.
+If this doesn't help, then go to the Troubleshooting section, which includes instructions on how to contact us for help.
+
+
+# Operating System Notes
+
+## Cygwin
+
+If `make install` fails when writing to the `/usr/local/share/` directory, this may be because your current login doesn't have permission to write to the Windows directory containing your Cygwin installation.
+
+Either login to Windows as an Administrator and try the `make install` process again, or reinstall Cygwin under your normal Windows login.
+
+
+# Troubleshooting
+
+If you've recently made changes to dependencies (by reinstalling them, for example) be sure to rerun `cmake .` before trying to execute `make` again.
+
+CMake will run and locate all the necessary pieces for the build, and create a Makefile.
+There may be errors and warnings when running CMake, or there may be compiler errors and warnings when running `make`.
+Sometimes you will run CMake with no reported problems, and the build will fail later.
+This is almost always because CMake is mistaken about some assumption.
+
+If a build does not succeed, please send the contents of the `CMakeCache.txt` and `CMakeFiles/CMakeOutput.log` files to `support@gothenburgbitfactory.org`. 
+
+If CMake runs but ArtWorkFlow does not build, please send the contents of the above files as well as a transcript from the build, which is not written to a file and must be captured from the terminal.
