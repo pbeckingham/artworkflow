@@ -54,6 +54,10 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "help");
   cli.entity ("command", "--help");
   cli.entity ("command", "-h");
+  cli.entity ("command", "version");
+  cli.entity ("command", "--version"); // Note: this only appears to overlap with
+				       // the lightweight version checking.
+  cli.entity ("command", "-v");
 
   // Hint entities.
   cli.entity ("hint", ":debug");
@@ -143,9 +147,11 @@ int dispatchCommand (
   {
     // These signatures are expected to be all different, therefore no command to fn mapping.
          if (command == "diagnostics") status = CmdDiagnostics   (     rules, database);
-    else if (command == "help" ||
-             command == "--help" ||
+    else if (command == "help"    ||
+             command == "--help"  ||
              command == "-h")          status = CmdHelp          (cli                 );
+    else if (command == "version" ||
+             command == "-v")          status = CmdVersion       (                    );
 //    else                               status = CmdReport        (cli, rules, database);
   }
   else

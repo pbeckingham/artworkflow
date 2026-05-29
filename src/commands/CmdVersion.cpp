@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2016 - 2018, 2022 - 2025, Gothenburg Bit Factory.
+// Copyright 2026, Paul Beckingham
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_COMMANDS
-#define INCLUDED_COMMANDS
+#include <algorithm>
+#include <commands.h>
+#include <iostream>
+#include <shared.h>
+#include <cmake.h>
 
-#include <CLI.h>
-#include <Database.h>
-#include <Rules.h>
+////////////////////////////////////////////////////////////////////////////////
+int CmdVersion ()
+{
+  std::cout << VERSION
+            << '\n';
+  return 0;
+}
 
-//  CmdXxx           (CLI&, Rules&, Database&);
-int CmdDiagnostics   (      Rules&, Database&);
-int CmdHelp          (CLI&                   );
-int CmdVersion       (                       );
-
-#endif
+////////////////////////////////////////////////////////////////////////////////

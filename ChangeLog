@@ -13,6 +13,8 @@
 
 0.0.3 () Rules and Database
 
+- 'version' and '-v' are now commands.
+
 ------ stable ------------------------------------
 
 0.0.2 (2026-05-28) Args and Commands
