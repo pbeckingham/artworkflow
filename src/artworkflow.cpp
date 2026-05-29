@@ -26,6 +26,7 @@
 
 #include <iomanip>
 #include <iostream>
+#include <AtomicFile.h>
 #include <Color.h>
 #include <Timer.h>
 #include <shared.h>
@@ -70,6 +71,11 @@ int main (int argc, const char** argv)
 
     // Dispatch to commands.
     status = dispatchCommand (cli, database, rules);
+
+    // Save any outstanding changes.
+    database.commit ();
+
+    AtomicFile::finalize_all ();
   }
 
   catch (const std::string& error)
