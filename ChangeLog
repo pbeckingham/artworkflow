@@ -13,7 +13,10 @@
 
 0.0.3 () Rules and Database
 
-- 'version' and '-v' are now commands.
+- 'version' and '-v' are now commands
+- Hints :debug, :quiet, :color, :nocolor, and :yes implemented
+- Began creation of artworkflow(1) man page
+- Began implementation of the default command
 
 ------ stable ------------------------------------
 

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2016 - 2018, 2022 - 2025, Gothenburg Bit Factory.
+// Copyright 2016 - 2023, Thomas Lauf, Paul Beckingham, Federico Hernandez.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,33 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_COMMANDS
-#define INCLUDED_COMMANDS
+#include <commands.h>
+#include <iostream>
+#include <artworkflow.h>
 
-#include <CLI.h>
-#include <Database.h>
-#include <Rules.h>
+////////////////////////////////////////////////////////////////////////////////
+// Returns 0 if tracking is active, 1 if not.
+int CmdDefault (Rules& rules)
+{
+  const bool verbose = rules.getBoolean ("verbose");
 
-//  CmdXxx           (CLI&, Rules&, Database&);
-int CmdDiagnostics   (      Rules&, Database&);
-int CmdHelp          (CLI&                   );
-int CmdVersion       (                       );
-int CmdDefault       (      Rules&           );
+  if (rules.getBoolean ("temp.shiny"))
+    std::cout << '\n'
+              << "Welcome to ArtWorkFlow.\n"
+              << '\n'
+              << "There is built-in help:\n"
+              << "    artworkflow help\n"
+              << "    artworkflow help <command>\n"
+              << "    (and more)\n"
+              << '\n'
+              << "There is a fully-detailed man page:\n"
+              << "    man artworkflow\n"
+              << '\n';
 
-#endif
+  if (verbose)
+    warn ("What should the default command be?");
+
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////

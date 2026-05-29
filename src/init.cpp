@@ -61,6 +61,10 @@ void initializeEntities (CLI& cli)
 
   // Hint entities.
   cli.entity ("hint", ":debug");
+  cli.entity ("hint", ":quiet");
+  cli.entity ("hint", ":color");
+  cli.entity ("hint", ":nocolor");
+  cli.entity ("hint", ":yes");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -164,7 +168,7 @@ int dispatchCommand (
     }
     else
     {
-//      status = CmdDefault (rules, database);
+      status = CmdDefault (rules);
     }
   }
 
