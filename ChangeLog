@@ -8,11 +8,14 @@
 0.0.6 ()
 0.0.5 ()
 0.0.4 ()
-0.0.3 ()
 
 ------ development -------------------------------
 
-0.0.2 () Args and Commands
+0.0.3 () Rules and Database
+
+------ stable ------------------------------------
+
+0.0.2 (2026-05-28) Args and Commands
 
 - #3 Help Command
 - #6 CLI should pull basename from cmake.h
