@@ -168,8 +168,9 @@ namespace paths
       File configFile (configFileLocation);
       configFile.create (0600);
       std::vector<std::string> defaultConfig = {
-        "reports.summary.ids = yes\n",
-        "reports.summary.annotations = yes\n",
+        "confirmation = on\n",
+        "debug = off\n",
+        "verbose = on\n",
       };
       configFile.append(defaultConfig);
     }
