@@ -36,20 +36,50 @@ class Painting
 {
 public:
   Painting () = default;
-  Painting(const std::string&);
+  Painting (const std::string&);
+
+  std::string id () const;
+  std::string title () const;
+  std::string series () const;
+  std::string start () const;
+  std::string end () const;
+  std::string varnish () const;
+  std::string action () const;
+  std::string size () const;
+  std::string sub () const;
+  std::string tagged () const;
+  std::string varnished () const;
+  std::string archived () const;
+  std::string www () const;
+  std::string complexity () const;
+  std::string notes () const;
+
+  const std::string compose () const;
 
   bool validate() const;
   std::string dump (const std::string& title = "Painting") const;
 
 private:
-  std::string _original_data;
+  void parse (const std::string&);
+
+private:
+  std::string _original_line;
 
   std::string _id;
   std::string _title;
-  std::string _category;
-  std::string _started;
-  std::string _ended;
+  std::string _series;
+  std::string _start;
+  std::string _end;
+  std::string _varnish;
+  std::string _action;
+  std::string _size;
+  std::string _sub;
+  std::string _tagged;
   std::string _varnished;
+  std::string _archived;
+  std::string _www;
+  std::string _complexity;
+  std::string _notes;
 };
 
 #endif

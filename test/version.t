@@ -35,7 +35,6 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from basetest import artworkflow, TestCase
 
-
 class TestVersion(TestCase):
     def setUp(self):
         self.t = artworkflow()
@@ -44,7 +43,6 @@ class TestVersion(TestCase):
         """Verify that  'artworkflow --version' returns something valid"""
         code, out, err = self.t("--version")
         self.assertRegex(out, r'^\d\.\d+\.\d+(-\w+)?$')
-
 
 if __name__ == "__main__":
     from simpletap import TAPTestRunner
