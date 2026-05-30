@@ -7,9 +7,13 @@
 0.0.7 ()
 0.0.6 () Report
 0.0.5 () Exhibition object I/O
-0.0.4 () Painting object I/O
 
 ------ development -------------------------------
+
+0.0.4 () Painting object I/O
+
+------ stable ------------------------------------
+------ current release ---------------------------
 
 0.0.3 (2026-05-30) Rules and Database
 
@@ -21,15 +25,11 @@
 - Implemented show command
 - Implemented default configuration settings
 
------- stable ------------------------------------
-
 0.0.2 (2026-05-28) Args and Commands
 
 - #3 Help Command
 - #6 CLI should pull basename from cmake.h
 - Implemented diagnostics command
-
------- current release ---------------------------
 
 0.0.1 (2026-05-26) Buildable binary
 
