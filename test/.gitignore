@@ -18,6 +18,7 @@ lexer.t
 list.t
 msg.t
 negative.t
+painting.t
 palette.t
 peg.t
 pig.t

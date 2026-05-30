@@ -24,9 +24,11 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <shared.h>
+#include <format.h>
 #include <Painting.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -129,21 +131,31 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
 
 void Painting::parse (const std::string& line)
 {
-  _id         = line.substr (0, 5);
-  _title      = line.substr (6, 33);
-  _series     = line.substr (34, 37);
-  _start      = line.substr (38, 49);
-  _end        = line.substr (50, 61);
-  _varnish    = line.substr (62, 73);
-  _action     = line.substr (74, 85);
-  _size       = line.substr (86, 91);
-  _sub        = line.substr (92, 95);
-  _tagged     = line.substr (96, 97);
-  _varnished  = line.substr (98, 99);
-  _archived   = line.substr (100, 102);
-  _www        = line.substr (103, 106);
-  _complexity = line.substr (107, 109);
-  _notes      = line.substr (110, std::string::npos);
+  if (line.length () > 0)
+  {
+    _id         = rtrim (line.substr (1, 4));
+    if (line.length () > 32)
+    {
+      _title      = rtrim (line.substr (6, 28));
+/*
+      _series     = line.substr (34, 3);
+      _start      = line.substr (38, 11);
+      _end        = line.substr (50, 11);
+      _varnish    = line.substr (62, 11);
+      _action     = line.substr (74, 11);
+      _size       = line.substr (86, 5);
+      _sub        = line.substr (92, 3);
+      _tagged     = line.substr (96, 1);
+      _varnished  = line.substr (98, 1);
+      _archived   = line.substr (100, 1);
+      _www        = line.substr (105, 1);
+      _complexity = line.substr (107, 2);
+      _notes      = line.substr (110);
+*/
+    }
+  }
+  else
+    throw format("Missing data to parse.");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
