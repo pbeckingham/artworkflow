@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2016, 2018 - 2022, Thomas Lauf, Paul Beckingham, Federico Hernandez.
+// Copyright 2026, Paul Beckingham
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,40 +24,32 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_DATAFILE
-#define INCLUDED_DATAFILE
+#ifndef INCLUDED_PAINTING
+#define INCLUDED_PAINTING
 
-#include <FS.h>
-#include <Datetime.h>
-//#include <Interval.h>
-//#include <Range.h>
+#include <map>
 #include <string>
 #include <vector>
 
-class Datafile
+// Represents a physical painting.
+class Painting
 {
 public:
-  Datafile () = default;
-  void initialize (const std::string&);
-  std::string name () const;
+  Painting () = default;
+  Painting(const std::string&);
 
-  const std::vector <std::string>& allLines ();
-
-//  void addInterval (const Interval&);
-//  void deleteInterval (const Interval&);
-  void commit ();
-
-  std::string dump () const;
+  bool validate() const;
+  std::string dump (const std::string& title = "Painting") const;
 
 private:
-  void load_lines ();
+  std::string _original_data;
 
-private:
-  Path                      _file         {};
-  bool                      _dirty        {false};
-  std::vector <std::string> _lines        {};
-  bool                      _lines_loaded {false};
-//  Range                     _range        {};
+  std::string _id;
+  std::string _title;
+  std::string _category;
+  std::string _started;
+  std::string _ended;
+  std::string _varnished;
 };
 
 #endif

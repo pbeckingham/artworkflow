@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2016, 2018 - 2022, Thomas Lauf, Paul Beckingham, Federico Hernandez.
+// Copyright 2026, Paul Beckingham
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,40 +24,29 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_DATAFILE
-#define INCLUDED_DATAFILE
-
-#include <FS.h>
-#include <Datetime.h>
-//#include <Interval.h>
-//#include <Range.h>
+#include <Painting.h>
+#include <sstream>
 #include <string>
-#include <vector>
 
-class Datafile
+////////////////////////////////////////////////////////////////////////////////
+Painting::Painting(const std::string& line)
 {
-public:
-  Datafile () = default;
-  void initialize (const std::string&);
-  std::string name () const;
+}
 
-  const std::vector <std::string>& allLines ();
+////////////////////////////////////////////////////////////////////////////////
+bool Painting::validate() const
+{
+  return true;
+}
 
-//  void addInterval (const Interval&);
-//  void deleteInterval (const Interval&);
-  void commit ();
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::dump (const std::string& title) const
+{
+  std::stringstream out;
 
-  std::string dump () const;
+  out << "\033[1m" << title << "\033[0m\n";
 
-private:
-  void load_lines ();
+  return out.str ();
+}
 
-private:
-  Path                      _file         {};
-  bool                      _dirty        {false};
-  std::vector <std::string> _lines        {};
-  bool                      _lines_loaded {false};
-//  Range                     _range        {};
-};
-
-#endif
+////////////////////////////////////////////////////////////////////////////////

@@ -5,13 +5,13 @@
 0.0.9 ()
 0.0.8 ()
 0.0.7 ()
-0.0.6 ()
-0.0.5 ()
-0.0.4 ()
+0.0.6 () Report
+0.0.5 () Exhibition object I/O
+0.0.4 () Painting object I/O
 
 ------ development -------------------------------
 
-0.0.3 () Rules and Database
+0.0.3 (2026-05-30) Rules and Database
 
 - 'version' and '-v' are now commands
 - Hints :debug, :quiet, :color, :nocolor, and :yes implemented

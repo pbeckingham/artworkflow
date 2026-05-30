@@ -37,6 +37,9 @@ Alphabetically:
 *artworkflow-help*(1)::
     Display help
 
+*artworkflow-show*(1)::
+    Display configuration settings
+
 *artworkflow-version*(1)::
     Display version number
 

@@ -26,7 +26,6 @@
 
 #include <AtomicFile.h>
 #include <Datafile.h>
-//#include <IntervalFactory.h>
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
@@ -38,43 +37,12 @@
 void Datafile::initialize (const std::string& name)
 {
   _file = Path (name);
-
-  // From the name, which is of the form YYYY-MM.data, extract the YYYY and MM.
-  auto basename = _file.name ();
-  auto year  = strtol (basename.substr (0, 4).c_str (), nullptr, 10);
-  auto month = strtol (basename.substr (5, 2).c_str (), nullptr, 10);
-
-  // The range is a month: [start, end).
-  Datetime start (year, month, 1, 0, 0, 0);
-  month++;
-  if (month > 12)
-  {
-    year++;
-    month = 1;
-  }
-  Datetime end (year, month, 1, 0, 0, 0);
-//  _range = Range (start, end);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 std::string Datafile::name () const
 {
   return _file.name ();
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Identifies the last incluѕion (^i) lines
-std::string Datafile::lastLine ()
-{
-  if (! _lines_loaded)
-    load_lines ();
-
-  std::vector <std::string>::reverse_iterator ri;
-  for (ri = _lines.rbegin (); ri != _lines.rend (); ri++)
-    if (ri->operator[] (0) == 'i')
-      return *ri;
-
-  return "";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -192,10 +160,6 @@ std::string Datafile::dump () const
       << "  dirty:       " << (_dirty ? "true" : "false") << '\n'
       << "  lines:       " << _lines.size () << '\n'
       << "    loaded     " << (_lines_loaded ? "true" : "false") << '\n';
-/*
-      << "  range:       " << _range.start.toISO () << " - "
-                           << _range.end.toISO () << '\n';
-*/
 
   return out.str ();
 }
