@@ -177,10 +177,11 @@ void Datafile::load_lines ()
 
     // Append the lines that were read.
     for (auto& line : read_lines)
-      _lines.push_back (line);
+      if (line[0] == '#')
+        _lines.push_back (line);
 
     _lines_loaded = true;
-    debug (format ("{1}: {2} intervals", file.name (), read_lines.size ()));
+    debug (format ("{1}: {2} objects", file.name (), read_lines.size ()));
   }
 }
 

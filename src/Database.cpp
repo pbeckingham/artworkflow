@@ -26,7 +26,6 @@
 
 #include <AtomicFile.h>
 #include <Database.h>
-//#include <IntervalFactory.h>
 #include <JSON.h>
 #include <cassert>
 #include <format.h>
@@ -200,9 +199,7 @@ const std::string* Database::reverse_iterator::operator-> () const
 Database::iterator Database::begin ()
 {
   if (_files.empty ())
-  {
     initializeDatafiles ();
-  }
 
   return iterator (_files.rbegin (), _files.rend ());
 }
@@ -211,9 +208,7 @@ Database::iterator Database::begin ()
 Database::iterator Database::end ()
 {
   if (_files.empty ())
-  {
     initializeDatafiles ();
-  }
 
   return iterator (_files.rend (), _files.rend ());
 }
@@ -223,9 +218,7 @@ Database::iterator Database::end ()
 Database::reverse_iterator Database::rbegin ()
 {
   if (_files.empty ())
-  {
     initializeDatafiles ();
-  }
 
   return {_files.begin (), _files.end ()};
 }
@@ -234,9 +227,7 @@ Database::reverse_iterator Database::rbegin ()
 Database::reverse_iterator Database::rend ()
 {
   if (_files.empty ())
-  {
     initializeDatafiles ();
-  }
 
   return reverse_iterator (_files.end (), _files.end ());
 }
@@ -251,9 +242,7 @@ void Database::initialize (const std::string& location)
 void Database::commit ()
 {
   for (auto& file : _files)
-  {
     file.commit ();
-  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -261,9 +250,7 @@ std::vector <std::string> Database::files () const
 {
   std::vector <std::string> all;
   for (auto& file : _files)
-  {
     all.push_back (file.name ());
-  }
 
   return all;
 }
@@ -273,12 +260,8 @@ std::vector <std::string> Database::files () const
 std::string Database::getLatestEntry ()
 {
   for (auto& line : *this)
-  {
     if (! line.empty ())
-    {
       return line;
-    }
-  }
 
   return "";
 }
@@ -333,9 +316,7 @@ std::string Database::dump () const
   std::stringstream out;
   out << "Database\n";
   for (auto& df : _files)
-  {
     out << df.dump ();
-  }
 
   return out.str ();
 }
@@ -355,12 +336,8 @@ unsigned int Database::getDatafile (int year, int month)
 
   // If the datafile is already initialized, return.
   for (unsigned int i = 0; i < _files.size (); ++i)
-  {
     if (_files[i].name () == basename)
-    {
       return i;
-    }
-  }
 
   // Create the Datafile.
   Datafile df;
