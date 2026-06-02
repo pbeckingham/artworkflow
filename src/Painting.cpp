@@ -74,14 +74,99 @@ std::string Painting::varnish () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+std::string Painting::action () const
+{
+  return _action;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::size () const
+{
+  return _size;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::sub () const
+{
+  return _sub;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::tagged () const
+{
+  return _tagged;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::varnished () const
+{
+  return _varnished;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::archived () const
+{
+  return _archived;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::www () const
+{
+  return _www;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::complexity () const
+{
+  return _complexity;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::notes () const
+{
+  return _notes;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 const std::string Painting::compose () const
 {
   return "composed";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Note that incomplete data should validate.
+//
+// TODO Ensure all dates are in logical sequence
+/*
+      # Logical inconsistencies in the data file.
+      if bool(varnish_date) != bool(varnish) and action != 'd':
+        errors.append(f'#{serial} {title} has inconsistent varnish information')
+
+      if start_date and action != 'd' and not size:
+        errors.append(f'#{serial} {title} is missing size information')
+
+      if start_date and action != 'd' and not substrate:
+        errors.append(f'#{serial} {title} is missing substrate information')
+
+      if end_date and not action:
+        if not tagged:
+          errors.append(f'#{serial} {title} is not tagged')
+        if not archive:
+          errors.append(f'#{serial} {title} is not listed on ArtworkArchive')
+        #if not www and 'NFS' not in notes:
+        #  errors.append(f'#{serial} {title} is not listed on paulbeckingham.com')
+
+      if action == '$' and action_date and not varnish_date:
+        errors.append(f'#{serial} {title} is sold unvarnished')
+
+      if end_date and not action and title.startswith('[') and title.endswith(']'):
+        errors.append(f'#{serial} {title} needs a title')
+*/
 bool Painting::validate () const
 {
+  if (_id    == "" || _title == "")
+    return false;
+
   return true;
 }
 
@@ -132,30 +217,62 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
 void Painting::parse (const std::string& line)
 {
   if (line.length () > 0)
-  {
     _id         = rtrim (line.substr (1, 4));
-    if (line.length () > 32)
-    {
-      _title      = rtrim (line.substr (6, 28));
-/*
-      _series     = line.substr (34, 3);
-      _start      = line.substr (38, 11);
-      _end        = line.substr (50, 11);
-      _varnish    = line.substr (62, 11);
-      _action     = line.substr (74, 11);
-      _size       = line.substr (86, 5);
-      _sub        = line.substr (92, 3);
-      _tagged     = line.substr (96, 1);
-      _varnished  = line.substr (98, 1);
-      _archived   = line.substr (100, 1);
-      _www        = line.substr (105, 1);
-      _complexity = line.substr (107, 2);
-      _notes      = line.substr (110);
-*/
-    }
-  }
   else
-    throw format("Missing data to parse.");
+    throw format("Missing id to parse.");
+
+  if (line.length () > 32)
+    _title      = rtrim (line.substr (6, 28));
+  else
+    throw format("Missing title to parse.");
+
+/*
+          1         2         3         4         5         6         7         8         9         0         1
+012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+----- --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
+ID    TITLE                       SER START       END         VARNISH     ACTION      SIZE  SUB T V AA WWW CX NOTES
+----- --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
+#378  [Pumpkins]                  STL s2025-08-09                         d2025-11-11 6x8   ACM            C2 Abandoned
+#379  Central Line Surfer         STL s2026-02-23 e2026-04-06 v2026-04-17             12x18 ACM Y C        C2 43h G:Still_Life
+*/
+  if (line.length () > 36)
+    _series     = rtrim (line.substr (34, 3));
+
+  if (line.length () > 48)
+    _start      = rtrim (line.substr (38, 11));
+
+  if (line.length () > 60)
+    _end        = rtrim (line.substr (50, 11));
+
+  if (line.length () > 72)
+    _varnish    = rtrim (line.substr (62, 11));
+
+  if (line.length () > 84)
+    _action     = rtrim (line.substr (74, 11));
+
+  if (line.length () > 90)
+    _size       = rtrim (line.substr (86, 5));
+
+  if (line.length () > 94)
+    _sub        = rtrim (line.substr (92, 3));
+
+  if (line.length () > 96)
+    _tagged     = rtrim (line.substr (96, 1));
+
+  if (line.length () > 98)
+    _varnished  = rtrim (line.substr (98, 1));
+
+  if (line.length () > 100)
+    _archived   = rtrim (line.substr (100, 1));
+
+  if (line.length () > 105)
+    _www        = rtrim (line.substr (105, 1));
+
+  if (line.length () > 108)
+    _complexity = rtrim (line.substr (107, 2));
+
+  if (line.length () > 110)
+    _notes      = rtrim (line.substr (110));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

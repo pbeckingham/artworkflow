@@ -30,21 +30,50 @@
 ////////////////////////////////////////////////////////////////////////////////
 int main (int, char**)
 {
-  UnitTest t (2);
+  UnitTest t (5);
 
   try
   {
-    Painting p ("");
+    Painting p1 ("");
     t.fail ("Painting: Missing data not detected");
   }
-  catch (const std::string& e) { t.is (e, "Missing data to parse.", "Painting: Missing data detected"); }
+  catch (const std::string& e) { t.is (e, "Missing id to parse.", "Painting: Missing id detected"); }
 
   try
   {
-    Painting p("#123  Title                                       ");
-    t.is (p.title (), "Title", "Painting: title parsed");
+    Painting p2("#123  Title                                       ");
+    t.is (p2.title (), "Title", "Painting: title parsed");
   }
   catch (const std::string& e) { t.fail ("Painting: Parsing failure"); }
+
+/*
+                                                                                                    1         1
+          1         2         3         4         5         6         7         8         9         0         1
+012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+----- --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
+ID    TITLE                       SER START       END         VARNISH     ACTION      SIZE  SUB T V AA WWW CX NOTES
+----- --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
+#S001 Juan de Pareja (Velasquez)  POR s2025-04-04 e2025-04-05 v2025-05-24             7x5   ACM Y C        C2 G:Study
+#S002 Mike Derby                  POR s2025-05-24 e2025-06-25 v2025-07-19 g2025-07-23 10x10 WP  Y W        C2 12h G:Study
+*/
+
+  std::string line = "#S001 Juan de Pareja (Velasquez)  POR s2025-04-04 e2025-04-05 v2025-05-24             7x5   ACM Y C        C2 G:Study\n";
+  Painting p3 (line);
+  t.is (p3.id (),         "S001",                       "Painting: id");
+  t.is (p3.title (),      "Juan de Pareja (Velasquez)", "Painting: title");
+  t.is (p3.series (),     "POR",                        "Painting: series");
+  t.is (p3.start (),      "s2025-04-04",                "Painting: start");
+  t.is (p3.end (),        "e2025-04-05",                "Painting: end");
+  t.is (p3.varnish (),    "v2025-05-24",                "Painting: varnish");
+  t.is (p3.action (),     "",                           "Painting: action");
+  t.is (p3.size (),       "7x5",                        "Painting: size");
+  t.is (p3.sub (),        "ACM",                        "Painting: sub");
+  t.is (p3.tagged (),     "Y",                          "Painting: tagged");
+  t.is (p3.varnished (),  "C",                          "Painting: varnished");
+  t.is (p3.archived (),   "",                           "Painting: archived");
+  t.is (p3.www (),        "",                           "Painting: www");
+  t.is (p3.complexity (), "C2",                         "Painting: complexity");
+  t.is (p3.notes (),      "G:Study",                    "Painting: notes");
 
   return 0;
 }
