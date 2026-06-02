@@ -33,7 +33,7 @@ import unittest
 # Ensure python finds the local simpletap module
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from basetest import artworkflow, TestCase
+from basetest import ArtWorkFlow, TestCase
 
 class TestVersion(TestCase):
     def setUp(self):

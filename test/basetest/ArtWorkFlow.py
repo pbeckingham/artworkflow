@@ -11,7 +11,7 @@ from .exceptions import CommandError
 from .utils import run_cmd_wait, run_cmd_wait_nofail, which, shared_binary_location, DEFAULT_EXTENSION_PATH
 
 
-class artworkflow(object):
+class ArtWorkFlow(object):
     """
     Manage an artworkflow instance
 
