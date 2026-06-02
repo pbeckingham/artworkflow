@@ -34,8 +34,10 @@ int CmdHelpUsage ()
 {
   std::cout << '\n'
             << "Usage: artworkflow [--version]\n"
+            << "       artworkflow config [<name> [<value> | '']]\n"
             << "       artworkflow diagnostics\n"
             << "       artworkflow help [<command>]\n"
+            << "       artworkflow show\n"
             << '\n';
 
   return 0;
