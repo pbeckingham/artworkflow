@@ -29,8 +29,6 @@
 
 #include <FS.h>
 #include <Datetime.h>
-//#include <Interval.h>
-//#include <Range.h>
 #include <string>
 #include <vector>
 
@@ -57,7 +55,6 @@ private:
   bool                      _dirty        {false};
   std::vector <std::string> _lines        {};
   bool                      _lines_loaded {false};
-//  Range                     _range        {};
 };
 
 #endif

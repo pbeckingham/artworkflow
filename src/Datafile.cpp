@@ -37,6 +37,7 @@
 void Datafile::initialize (const std::string& name)
 {
   _file = Path (name);
+  debug (format ("Datafile::initialize {1}", name));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
