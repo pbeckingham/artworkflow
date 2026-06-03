@@ -37,6 +37,10 @@
 void Database::initialize (const std::string& location)
 {
   _location = location;
+  debug (format ("Location: {1}", _location));
+
+  _paintings.initialize (location + "/paintings.txt");
+  _exhibitions.initialize (location + "/exhibitions.txt");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
