@@ -38,6 +38,13 @@ int CmdHelpUsage ()
             << "       artworkflow diagnostics\n"
             << "       artworkflow help [<command>]\n"
             << "       artworkflow show\n"
+            << '\n'
+            << "Hints:\n"
+            << "       :debug       Debug mode, showing all processing\n"
+            << "       :quiet       Minimum feedback\n"
+            << "       :color       Use color always\n"
+            << "       :nocolor     Do not use color\n"
+            << "       :yes         Override confirmation requests\n"
             << '\n';
 
   return 0;
