@@ -67,15 +67,19 @@ int main (int argc, const char** argv)
     // Prepare the database, but do not read data.
     Database database;
     Rules rules;
+    debug ("initializeDataAndRules");
     initializeDataAndRules (cli, database, rules);
 
     // Dispatch to commands.
+    debug ("dispatchCommand");
     status = dispatchCommand (cli, database, rules);
 
     // Save any outstanding changes.
+    debug ("database.commit");
     database.commit ();
 
     AtomicFile::finalize_all ();
+    debug ("AtomicFile::finalize_all");
   }
 
   catch (const std::string& error)
