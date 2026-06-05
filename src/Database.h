@@ -37,7 +37,6 @@ public:
   Database () = default;
   void initialize (const std::string&);
   void commit ();
-  std::vector <std::string> files () const;
 
 /*
   void addInterval (const Interval&, bool verbose);

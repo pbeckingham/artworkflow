@@ -37,10 +37,12 @@
 void Database::initialize (const std::string& location)
 {
   _location = location;
-  debug (format ("Location: {1}", _location));
-
   _paintings.initialize (location + "/paintings.txt");
   _exhibitions.initialize (location + "/exhibitions.txt");
+
+  debug (format ("Location: {1}", _location));
+  debug (format ("Paintings: {1}", _paintings.name ()));
+  debug (format ("Exhibitions: {1}", _exhibitions.name ()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -48,16 +50,6 @@ void Database::commit ()
 {
   _paintings.commit ();
   _exhibitions.commit ();
-}
-
-////////////////////////////////////////////////////////////////////////////////
-std::vector <std::string> Database::files () const
-{
-  std::vector <std::string> all;
-  all.push_back (_paintings.name());
-  all.push_back (_exhibitions.name());
-
-  return all;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

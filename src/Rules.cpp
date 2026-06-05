@@ -35,6 +35,7 @@
 #include <shared.h>
 #include <sstream>
 #include <tuple>
+#include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 Rules::Rules ()

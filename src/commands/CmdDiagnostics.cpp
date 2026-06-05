@@ -164,13 +164,6 @@ int CmdDiagnostics (
   Directory db (paths::dbDir ());
   out << "       Database: " << describeFile (db) << '\n';
 
-  for (auto& file : database.files ())
-  {
-    File df (paths::dbDataDir ());
-    df += file;
-    out << "                 " << describeFile (df) << '\n';
-  }
-
   // Determine rc.editor/$EDITOR/$VISUAL.
   char* peditor;
   if ((peditor = getenv ("VISUAL")) != nullptr)
