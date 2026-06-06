@@ -39,31 +39,38 @@ bool domGet (
   const std::string& reference,
   std::string& value)
 {
-  Pig pig (reference);
-  if (pig.skipLiteral ("dom."))
+  if (reference == "dom.newid")
   {
-    // dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]
-    if (pig.skipLiteral ("all."))
+    // TODO Load all objects, find open slot or increment on the highest.
+  }
+  else
+  {
+    Pig pig (reference);
+    if (pig.skipLiteral ("dom."))
     {
-      if (pig.skipLiteral ("ids"))
+      // dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]
+      if (pig.skipLiteral ("all."))
       {
+        if (pig.skipLiteral ("ids"))
+        {
+        }
+        else if (pig.skipLiteral ("count"))
+        {
+        }
       }
-      else if (pig.skipLiteral ("count"))
-      {
-      }
-    }
 
-    // dom.<id>.<meta>
-    // dom.<id>.[start|end|varnish|action].[year|month|day|age]
+      // TODO dom.<id>.<meta>
+      // TODO dom.<id>.[start|end|varnish|action].[year|month|day|age]
 
-    // dom.rc.<name>
-    else if (pig.skipLiteral ("rc."))
-    {
-      std::string name;
-      if (pig.getRemainder (name))
+      // dom.rc.<name>
+      else if (pig.skipLiteral ("rc."))
       {
-        value = rules.get (name);
-        return true;
+        std::string name;
+        if (pig.getRemainder (name))
+        {
+          value = rules.get (name);
+          return true;
+        }
       }
     }
   }
