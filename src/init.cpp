@@ -153,6 +153,7 @@ int dispatchCommand (
     // These signatures are expected to be all different, therefore no command to fn mapping.
          if (command == "config")      status = CmdConfig        (cli, rules          );
     else if (command == "diagnostics") status = CmdDiagnostics   (     rules, database);
+    else if (command == "get")         status = CmdGet           (cli, rules, database);
     else if (command == "help"    ||
              command == "--help"  ||
              command == "-h")          status = CmdHelp          (cli                 );

@@ -38,7 +38,6 @@ int CmdGet (
   Database& database)
 {
   auto references = cli.getDomReferences ();
-  auto filter = Interval {cli.getRange (), cli.getTags ()};
   std::vector <std::string> results;
 
   for (auto& reference : references)
