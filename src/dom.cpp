@@ -42,6 +42,8 @@ bool domGet (
   if (reference == "dom.newid")
   {
     // TODO Load all objects, find open slot or increment on the highest.
+    value = "0001";
+    return true;
   }
   else
   {
