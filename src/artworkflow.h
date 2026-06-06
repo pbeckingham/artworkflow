@@ -40,6 +40,9 @@ void setDebugColor (const Color&);
 void debug (const std::string&);
 void warn (const std::string&);
 
+// dom.cpp
+bool domGet (Database&, const Rules&, const std::string&, std::string&);
+
 // helper.cpp
 Color summaryIntervalColor (const Rules&, const std::set <std::string>&);
 Color summaryIntervalColor (std::map <std::string, Color>&, const std::set <std::string>&);

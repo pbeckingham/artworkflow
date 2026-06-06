@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2016 - 2018, 2022 - 2025, Gothenburg Bit Factory.
+// Copyright 2016, 2018 - 2023, 2025, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,20 +24,51 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_COMMANDS
-#define INCLUDED_COMMANDS
-
-#include <CLI.h>
 #include <Database.h>
-#include <Rules.h>
+#include <Duration.h>
+#include <Pig.h>
+#include <format.h>
+#include <iostream>
+#include <artworkflow.h>
+#include <vector>
 
-//  CmdXxx           (CLI&, Rules&, Database&);
-int CmdConfig        (CLI&, Rules&           );
-int CmdDiagnostics   (      Rules&, Database&);
-int CmdGet           (CLI&, Rules&, Database&);
-int CmdHelp          (CLI&                   );
-int CmdShow          (      Rules&           );
-int CmdVersion       (                       );
-int CmdDefault       (      Rules&           );
+////////////////////////////////////////////////////////////////////////////////
+bool domGet (
+  Database& database,
+  const Rules& rules,
+  const std::string& reference,
+  std::string& value)
+{
+  Pig pig (reference);
+  if (pig.skipLiteral ("dom."))
+  {
+    // dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]
+    if (pig.skipLiteral ("all."))
+    {
+      if (pig.skipLiteral ("ids"))
+      {
+      }
+      else if (pig.skipLiteral ("count"))
+      {
+      }
+    }
 
-#endif
+    // dom.<id>.<meta>
+    // dom.<id>.[start|end|varnish|action].[year|month|day|age]
+
+    // dom.rc.<name>
+    else if (pig.skipLiteral ("rc."))
+    {
+      std::string name;
+      if (pig.getRemainder (name))
+      {
+        value = rules.get (name);
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////

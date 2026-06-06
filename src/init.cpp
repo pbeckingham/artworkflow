@@ -52,6 +52,7 @@ void initializeEntities (CLI& cli)
   // Command entities.
   cli.entity ("command", "config");
   cli.entity ("command", "diagnostics");
+  cli.entity ("command", "get");
   cli.entity ("command", "help");
   cli.entity ("command", "--help");
   cli.entity ("command", "-h");

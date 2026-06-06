@@ -13,6 +13,7 @@ set (artworkflow_SRCS AtomicFile.cpp     AtomicFile.h
                       Painting.cpp       Painting.h
                       Rules.cpp          Rules.h
                       debug.cpp
+                      dom.cpp
                       helper.cpp
                       init.cpp
                       paths.cpp          paths.h

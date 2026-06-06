@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2026, Paul Beckingham
+// Copyright 2016 - 2018, 2020 - 2025, Gothenburg Bit Factory.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,51 +24,35 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
 #include <commands.h>
+#include <format.h>
 #include <iostream>
 #include <shared.h>
+#include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int CmdHelpUsage ()
+// Identify DOM references in CLI, provide space-separated results.
+int CmdGet (
+  CLI& cli,
+  Rules& rules,
+  Database& database)
 {
-  std::cout << '\n'
-            << "Usage: artworkflow [--version]\n"
-            << "       artworkflow config [<name> [<value> | '']]\n"
-            << "       artworkflow diagnostics\n"
-            << "       artworkflow get <DOM> [<DOM> ...]\n"
-            << "       artworkflow help [<command>]\n"
-            << "       artworkflow show\n"
-            << '\n'
-            << "Hints:\n"
-            << "       :debug       Debug mode, showing all processing\n"
-            << "       :quiet       Minimum feedback\n"
-            << "       :color       Use color always\n"
-            << "       :nocolor     Do not use color\n"
-            << "       :yes         Override confirmation requests\n"
-            << '\n'
-            << "DOM References:\n"
-            << "       dom.<id>.<meta>\n"
-            << "       dom.<id>.[start|end|varnish|action].[year|month|day|age]\n"
-            << "       dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]\n"
-            << '\n';
+  auto references = cli.getDomReferences ();
+  auto filter = Interval {cli.getRange (), cli.getTags ()};
+  std::vector <std::string> results;
 
-  return 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-int CmdHelp (CLI& cli)
-{
-  auto words = cli.getWords ();
-
-  if (! words.empty ())
+  for (auto& reference : references)
   {
-    std::string man_command = "man artworkflow-" + words[0];
-    int ret = system (man_command.c_str());
-    return (WIFEXITED (ret)) ? WEXITSTATUS (ret) : -1;
+    std::string value;
+
+    if (! domGet (database, rules, reference, value))
+      throw format ("DOM reference '{1}' is not valid.", reference);
+
+    results.push_back (value);
   }
 
-  return CmdHelpUsage ();
+  std::cout << join (" ", results) << '\n';
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
