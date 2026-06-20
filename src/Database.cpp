@@ -53,48 +53,54 @@ void Database::commit ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-/*
-void Database::addInterval (const Interval& interval, bool verbose)
+std::vector<Painting> Database::allPaintings ()
 {
+  return _paintings.allPaintings ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void Database::addPainting (const Painting& painting, bool verbose)
+{
+/*
   assert ((interval.end == 0) || (interval.start <= interval.end));
 
   // Get the index into _files for the appropriate Datafile, which may be created on demand.
   auto df = getDatafile (interval.start.year (), interval.start.month ());
-  _files[df].addInterval (interval);
-}
+  _files[df].addPainting (interval);
 */
+}
 
 ////////////////////////////////////////////////////////////////////////////////
-/*
-void Database::deleteInterval (const Interval& interval)
+void Database::deletePainting (const Painting& painting)
 {
+/*
   // Get the index into _files for the appropriate Datafile, which may be
   // created on demand.
   auto df = getDatafile (interval.start.year (), interval.start.month ());
 
-  _files[df].deleteInterval (interval);
-}
+  _files[df].deletePainting (interval);
 */
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // The algorithm to modify an interval is first to find and remove it from the
 // Datafile, then add it back to the right Datafile. This is because
 // modification may involve changing the start date, which could mean the
-// Interval belongs in a different file.
-/*
-void Database::modifyInterval (const Interval& from, const Interval& to, bool verbose)
+// Painting belongs in a different file.
+void Database::modifyPainting (const Painting& from, const Painting& to, bool verbose)
 {
+/*
   if (! from.empty ())
   {
-    deleteInterval (from);
+    deletePainting (from);
   }
 
   if (! to.empty ())
   {
-    addInterval (to, verbose);
+    addPainting (to, verbose);
   }
-}
 */
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 std::string Database::dump () const

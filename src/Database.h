@@ -38,11 +38,10 @@ public:
   void initialize (const std::string&);
   void commit ();
 
-/*
-  void addInterval (const Interval&, bool verbose);
-  void deleteInterval (const Interval&);
-  void modifyInterval (const Interval&, const Interval&, bool verbose);
-*/
+  std::vector <Painting> allPaintings ();
+  void addPainting (const Painting&, bool verbose);
+  void deletePainting (const Painting&);
+  void modifyPainting (const Painting&, const Painting&, bool verbose);
 
   std::string dump () const;
 

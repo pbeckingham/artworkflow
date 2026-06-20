@@ -56,16 +56,29 @@ const std::vector <std::string>& Datafile::allLines ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Accepted intervals;   day1 <= interval.start < dayN
-/*
-void Datafile::addInterval (const Interval& interval)
+const std::vector <Painting> Datafile::allPaintings ()
 {
-  // Note: end date might be zero.
-  assert (interval.startsWithin (_range));
+  std::vector <Painting> all;
+  for (auto& line : allLines ())
+    all.push_back (Painting (line));
+
+  return all;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Accepted paintings: Valid ID
+//                     Valid Title
+void Datafile::addPainting (const Painting& painting)
+{
+  assert (painting.id () != "");
 
   if (! _lines_loaded)
     load_lines ();
 
+  auto composed = painting.compose ();
+  debug (format ("Painting {1}: {2}", painting.id(), composed));
+
+/*
   const std::string serialization = interval.serialize ();
 
   // Ensure that the IntervalFactory can properly parse the serialization before
@@ -89,21 +102,18 @@ void Datafile::addInterval (const Interval& interval)
     debug (format ("Datafile::addInterval() failed.\n{1}", error));
     throw std::string ("Internal error. Failed encode / decode check.");
   }
-}
 */
+}
 
 ////////////////////////////////////////////////////////////////////////////////
-/*
-void Datafile::deleteInterval (const Interval& interval)
+void Datafile::deletePainting (const Painting& painting)
 {
-  // Note: end date might be zero.
-  assert (interval.startsWithin (_range));
+  assert (painting.id () != "");
 
   if (! _lines_loaded)
-  {
     load_lines ();
-  }
 
+/*
   auto serialized = interval.serialize ();
   auto i = std::find (_lines.begin (), _lines.end (), serialized);
   if (i == _lines.end ())
@@ -114,8 +124,8 @@ void Datafile::deleteInterval (const Interval& interval)
   _lines.erase (i);
   _dirty = true;
   debug (format ("{1}: Deleted {2}", _file.name (), serialized));
-}
 */
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 void Datafile::commit ()
