@@ -4,15 +4,18 @@
 0.1.0 (2026-) Minimal Functionality
 0.0.9 ()
 0.0.8 ()
-0.0.7 () DOM
-0.0.6 () Report
-0.0.5 () Exhibition object I/O
+0.0.7 () Report
+0.0.6 () Exhibition object I/O
 
 ------ development -------------------------------
 
-0.0.4 () Painting object I/O
+0.0.5 () Painting object I/O
 
 ------ stable ------------------------------------
+
+0.0.4 () DOM
+- #10 Get Command
+
 ------ current release ---------------------------
 
 0.0.3 (2026-05-30) Rules and Database

@@ -41,7 +41,7 @@ bool domGet (
 {
   if (reference == "dom.newid")
   {
-    // TODO Load all objects, find open slot or increment on the highest.
+    // TODO Load all objects, find open slot or increment the highest.
     value = "0001";
     return true;
   }
@@ -52,6 +52,60 @@ bool domGet (
     {
       // dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]
       if (pig.skipLiteral ("all."))
+      {
+        if (pig.skipLiteral ("ids"))
+        {
+        }
+        else if (pig.skipLiteral ("count"))
+        {
+        }
+      }
+      else if (pig.skipLiteral ("inventory."))
+      {
+        if (pig.skipLiteral ("ids"))
+        {
+        }
+        else if (pig.skipLiteral ("count"))
+        {
+        }
+      }
+      else if (pig.skipLiteral ("sold."))
+      {
+        if (pig.skipLiteral ("ids"))
+        {
+        }
+        else if (pig.skipLiteral ("count"))
+        {
+        }
+      }
+      else if (pig.skipLiteral ("gifted."))
+      {
+        if (pig.skipLiteral ("ids"))
+        {
+        }
+        else if (pig.skipLiteral ("count"))
+        {
+        }
+      }
+      else if (pig.skipLiteral ("abandoned."))
+      {
+        if (pig.skipLiteral ("ids"))
+        {
+        }
+        else if (pig.skipLiteral ("count"))
+        {
+        }
+      }
+      else if (pig.skipLiteral ("destroyed."))
+      {
+        if (pig.skipLiteral ("ids"))
+        {
+        }
+        else if (pig.skipLiteral ("count"))
+        {
+        }
+      }
+      else if (pig.skipLiteral ("wip."))
       {
         if (pig.skipLiteral ("ids"))
         {
