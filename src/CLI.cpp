@@ -29,6 +29,7 @@
 #include <DatetimeParser.h>
 #include <Duration.h>
 #include <Pig.h>
+#include <RX.h>
 #include <algorithm>
 #include <format.h>
 #include <set>
@@ -430,27 +431,16 @@ void CLI::identifyOverrides ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Scan all arguments and identify instances of '@<integer>'.
+// Scan all arguments and identify instances of:
+//   ^#?S?\d\d\d+[a-z]?$
 void CLI::identifyIds ()
 {
-  for (auto& a : _args)
-  {
-    if (a._lextype == Lexer::Type::word)
-    {
-      Pig pig (a.attribute ("raw"));
-      int digits;
-      if (pig.skipLiteral ("@")  &&
-          pig.getDigits (digits) &&
-          pig.eos ())
-      {
-        if (digits <= 0)
-          throw format ("'@{1}' is not a valid ID.", digits);
+  RX rID ("^#?S?\\d\\d\\d+[a-z]?$", true);
 
+  for (auto& a : _args)
+    if (a._lextype == Lexer::Type::word)
+      if (rID.match (a.attribute ("raw")))
         a.tag ("ID");
-        a.attribute ("value", digits);
-      }
-    }
-  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -583,15 +573,13 @@ bool CLI::exactMatch (
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::set <int> CLI::getIds () const
+std::set <std::string> CLI::getIds () const
 {
-  std::set <int> ids;
+  std::set <std::string> ids;
 
   for (auto& arg : _args)
-  {
     if (arg.hasTag ("ID"))
-      ids.insert (strtol (arg.attribute ("value").c_str (), nullptr, 10));
-  }
+      ids.insert (arg.attribute ("raw"));
 
   return ids;
 }
@@ -602,10 +590,8 @@ std::set <std::string> CLI::getTags () const
   std::set <std::string> tags;
 
   for (auto& arg : _args)
-  {
     if (arg.hasTag ("TAG"))
       tags.insert (arg.attribute ("raw"));
-  }
 
   return tags;
 }
@@ -616,13 +602,8 @@ std::string CLI::getAnnotation () const
   std::string annotation;
 
   for (auto& arg : _args)
-  {
     if (arg.hasTag ("TAG"))
-    {
       annotation = (arg.attribute ("raw"));
-    }
-
-  }
 
   return annotation;
 }
@@ -632,13 +613,10 @@ Duration CLI::getDuration () const
 {
   std::string delta;
   for (auto& arg : _args)
-  {
     if (arg.hasTag ("FILTER") &&
         arg._lextype == Lexer::Type::duration)
-    {
       delta = arg.attribute ("raw");
-    }
-  }
+
   Duration dur (delta);
   return dur;
 }
@@ -650,12 +628,8 @@ std::vector <std::string> CLI::getDomReferences () const
   std::vector <std::string> references;
 
   for (auto& arg : _args)
-  {
     if (arg.hasTag ("DOM"))
-    {
       references.emplace_back (arg.attribute ("raw"));
-    }
-  }
 
   return references;
 }
@@ -664,13 +638,9 @@ std::vector <std::string> CLI::getDomReferences () const
 bool CLI::findHint (const std::string& hint) const
 {
   for (auto& arg : _args)
-  {
     if (arg.hasTag ("HINT") &&
         arg.getToken () == ":" + hint)
-    {
       return true;
-    }
-  }
 
   return false;
 }
@@ -679,13 +649,9 @@ bool CLI::findHint (const std::string& hint) const
 bool CLI::getComplementaryHint (const std::string& base, const bool default_value) const
 {
   if (findHint (base))
-  {
     return true;
-  }
   else if (findHint ("no-" + base))
-  {
     return false;
-  }
 
   return default_value;
 }
@@ -694,9 +660,7 @@ bool CLI::getComplementaryHint (const std::string& base, const bool default_valu
 bool CLI::getHint (const std::string& base, const bool default_value) const
 {
   if (findHint (base))
-  {
     return true;
-  }
 
   return default_value;
 }
