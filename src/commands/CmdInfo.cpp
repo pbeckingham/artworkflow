@@ -40,13 +40,18 @@ int CmdInfo (
   int rc = 0;
 
   // Get the command line args that are not binary, ext or command.
-  auto words = cli.getWords ();
-  if (words.empty ())
-    std::cout << "No painting specified.\n";
-
-  for (auto& painting : database.allPaintings ())
+  auto ids = cli.getIds ();
+  if (ids.empty ())
   {
-    std::cout << painting.id () << '\n';
+    std::cout << "No painting(s) specified.\n";
+    rc = 1;
+  }
+  else
+  {
+    for (auto& id : ids)
+      for (auto& painting : database.allPaintings ())
+        if (painting.compareId (id))
+          std::cout << painting.id () << " " << painting.title () << '\n';
   }
 
   return rc;
