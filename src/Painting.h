@@ -54,6 +54,8 @@ public:
   std::string complexity () const;
   std::string notes () const;
 
+  bool compareId (const std::string&);
+
   const std::string compose () const;
 
   bool validate() const;

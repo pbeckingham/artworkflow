@@ -29,6 +29,7 @@
 #include <string>
 #include <shared.h>
 #include <format.h>
+#include <Lexer.h>
 #include <Painting.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -125,6 +126,12 @@ std::string Painting::complexity () const
 std::string Painting::notes () const
 {
   return _notes;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+bool Painting::compareId (const std::string& id)
+{
+  return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -226,15 +233,6 @@ void Painting::parse (const std::string& line)
   else
     throw format("Missing title to parse.");
 
-/*
-          1         2         3         4         5         6         7         8         9         0         1
-012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
------ --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
-ID    TITLE                       SER START       END         VARNISH     ACTION      SIZE  SUB T V AA WWW CX NOTES
------ --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
-#378  [Pumpkins]                  STL s2025-08-09                         d2025-11-11 6x8   ACM            C2 Abandoned
-#379  Central Line Surfer         STL s2026-02-23 e2026-04-06 v2026-04-17             12x18 ACM Y C        C2 43h G:Still_Life
-*/
   if (line.length () > 36)
     _series     = rtrim (line.substr (34, 3));
 
