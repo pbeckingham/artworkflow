@@ -36,6 +36,7 @@ int CmdConfig        (CLI&, Rules&           );
 int CmdDiagnostics   (      Rules&, Database&);
 int CmdGet           (CLI&, Rules&, Database&);
 int CmdHelp          (CLI&                   );
+int CmdInfo          (CLI&, Rules&, Database&);
 int CmdShow          (      Rules&           );
 int CmdVersion       (                       );
 int CmdDefault       (      Rules&           );

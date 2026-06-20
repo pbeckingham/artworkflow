@@ -56,6 +56,7 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "help");
   cli.entity ("command", "--help");
   cli.entity ("command", "-h");
+  cli.entity ("command", "information");
   cli.entity ("command", "show");
   cli.entity ("command", "version");
   cli.entity ("command", "--version"); // Note: this only appears to overlap with
@@ -157,6 +158,7 @@ int dispatchCommand (
     else if (command == "help"    ||
              command == "--help"  ||
              command == "-h")          status = CmdHelp          (cli                 );
+    else if (command == "information") status = CmdInfo          (cli, rules, database);
     else if (command == "show")        status = CmdShow          (     rules          );
     else if (command == "version" ||
              command == "-v")          status = CmdVersion       (                    );
