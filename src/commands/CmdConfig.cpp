@@ -49,9 +49,7 @@ int CmdConfig (
   //   artworkflow config name ""       # set name to blank
   //   artworkflow config name          # remove name
   if (words.empty ())
-  {
     return CmdShow (rules);
-  }
 
   const bool verbose = rules.getBoolean ("verbose");
 
@@ -60,9 +58,7 @@ int CmdConfig (
   std::string value;
 
   if (name.empty ()) // is this possible?
-  {
     return CmdShow (rules);
-  }
 
   bool change = false;
 
@@ -74,9 +70,7 @@ int CmdConfig (
     for (unsigned int i = 1; i < words.size (); ++i)
     {
       if (i > 1)
-      {
         value += " ";
-      }
 
       value += words[i];
     }
@@ -86,9 +80,7 @@ int CmdConfig (
     change = Rules::setConfigVariable (rules, name, value, confirmation);
 
     if (! change)
-    {
       rc = 1;
-    }
   }
   // artworkflow config name
   else
@@ -101,27 +93,17 @@ int CmdConfig (
       found = true;
     }
     else if (rc == 1)
-    {
       found = true;
-    }
 
     if (! found)
-    {
       throw format ("No entry named '{1}' found.", name);
-    }
   }
 
   if (verbose)
-  {
     if (change)
-    {
       std::cout << "Config file '" << rules.file () << "' modified.\n";
-    }
     else
-    {
       std::cout << "No changes made.\n";
-    }
-  }
 
   return rc;
 }
