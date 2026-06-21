@@ -46,7 +46,7 @@ public:
   std::string varnish () const;
   std::string action () const;
   std::string size () const;
-  std::string sub () const;
+  std::string substrate () const;
   std::string tagged () const;
   std::string varnished () const;
   std::string archived () const;
@@ -75,7 +75,7 @@ private:
   std::string _varnish;
   std::string _action;
   std::string _size;
-  std::string _sub;
+  std::string _substrate;
   std::string _tagged;
   std::string _varnished;
   std::string _archived;

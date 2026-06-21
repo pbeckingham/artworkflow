@@ -87,9 +87,9 @@ std::string Painting::size () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string Painting::sub () const
+std::string Painting::substrate () const
 {
-  return _sub;
+  return _substrate;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -191,7 +191,7 @@ std::string Painting::dump (const std::string& title) const
       << "_varnish    " << _varnish     << '\n'
       << "_action     " << _action      << '\n'
       << "_size       " << _size        << '\n'
-      << "_sub        " << _sub         << '\n'
+      << "_substrate  " << _substrate   << '\n'
       << "_tagged     " << _tagged      << '\n'
       << "_varnished  " << _varnished   << '\n'
       << "_archived   " << _archived    << '\n'
@@ -252,7 +252,7 @@ void Painting::parse (const std::string& line)
     _size       = rtrim (line.substr (86, 5));
 
   if (line.length () > 94)
-    _sub        = rtrim (line.substr (92, 3));
+    _substrate  = rtrim (line.substr (92, 3));
 
   if (line.length () > 96)
     _tagged     = rtrim (line.substr (96, 1));
