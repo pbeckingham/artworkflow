@@ -129,7 +129,7 @@ std::string Painting::notes () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-bool Painting::compareId (const std::string& id)
+bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
 }
