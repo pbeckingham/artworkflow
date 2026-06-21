@@ -26,6 +26,7 @@
 
 #include <iomanip>
 #include <iostream>
+#include <sol/sol.hpp>
 #include <AtomicFile.h>
 #include <Color.h>
 #include <Timer.h>
@@ -44,6 +45,8 @@ int main (int argc, const char** argv)
 
   try
   {
+    sol::state lua;
+
     // Add entities so that command line tokens such as 'help' are recognized as
     // commands.
     CLI cli;
