@@ -8,7 +8,6 @@ set (HAVE_CMAKE true)
 
 project (artworkflow)
 include (CXXSniffer)
-include (FindAsciidoctor)
 include (CheckFunctionExists)
 
 set (PROJECT_VERSION "0.0.5-dev")
