@@ -40,7 +40,19 @@ int CmdInfo (
   for (auto& id : cli.getIds ())
     for (auto& painting : database.allPaintings ())
       if (painting.matches (id))
+      {
         std::cout << painting.id () << " " << painting.title () << '\n';
+        if (painting.start () != "")
+          std::cout << "  Started     " << painting.start ().substr (1, std::string::npos) << '\n';
+        if (painting.end () != "")
+          std::cout << "  Ended       " << painting.end ().substr (1, std::string::npos) << '\n';
+        if (painting.varnish () != "")
+          std::cout << "  Varnished   " << painting.varnish ().substr (1, std::string::npos) << '\n';
+        if (painting.series () != "")
+          std::cout << "  Series      " << painting.series () << '\n';
+        if (painting.substrate () != "")
+          std::cout << "  Substrate   " << painting.substrate () << '\n';
+      }
 
   return 0;
 }
