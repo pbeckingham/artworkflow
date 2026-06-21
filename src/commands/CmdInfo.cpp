@@ -37,15 +37,7 @@ int CmdInfo (
   Rules& rules,
   Database& database)
 {
-  // Get the command line args that are not binary, ext or command.
-  auto ids = cli.getIds ();
-  if (ids.empty ())
-  {
-    std::cout << "No painting(s) specified.\n";
-    return 1;
-  }
-
-  for (auto& id : ids)
+  for (auto& id : cli.getIds ())
     for (auto& painting : database.allPaintings ())
       if (painting.matches (id))
         std::cout << painting.id () << " " << painting.title () << '\n';
