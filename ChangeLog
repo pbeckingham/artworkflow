@@ -10,6 +10,8 @@
 ------ development -------------------------------
 
 0.0.5 () Painting object I/O
+- Implemented painting objects load/parse
+- CLI now properly tags painting IDs
 
 ------ stable ------------------------------------
 

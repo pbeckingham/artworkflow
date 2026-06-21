@@ -438,9 +438,8 @@ void CLI::identifyIds ()
   RX rID ("^#?S?\\d\\d\\d+[a-z]?$", true);
 
   for (auto& a : _args)
-    if (a._lextype == Lexer::Type::word)
-      if (rID.match (a.attribute ("raw")))
-        a.tag ("ID");
+    if (rID.match (a.attribute ("raw")))
+      a.tag ("ID");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
