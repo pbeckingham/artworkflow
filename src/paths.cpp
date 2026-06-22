@@ -168,9 +168,9 @@ namespace paths
       File configFile (configFileLocation);
       configFile.create (0600);
       std::vector<std::string> defaultConfig = {
-        "confirmation = on\n",
-        "debug = off\n",
-        "verbose = on\n",
+        "confirmation = \"on\"\n",
+        "debug = \"off\"\n",
+        "verbose = \"on\"\n",
       };
       configFile.append(defaultConfig);
     }
