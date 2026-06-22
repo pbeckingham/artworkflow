@@ -70,8 +70,8 @@ int main (int argc, const char** argv)
     // Prepare the database, but do not read data.
     Database database;
     Rules rules;
-    debug ("initializeDataAndRules");
     initializeDataAndRules (cli, database, rules);
+    debug ("initializeDataAndRules"); // After initializeDataAndRules because of default values
 
     // Dispatch to commands.
     debug ("dispatchCommand");
