@@ -155,6 +155,7 @@ std::string Exhibition::dump (const std::string& title) const
 
 ////////////////////////////////////////////////////////////////////////////////
 /*
+                                                                                                    1         1
           1         2         3         4         5         6         7         8         9         0         1
 012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
 
@@ -169,7 +170,7 @@ std::string Exhibition::dump (const std::string& title) const
 void Exhibition::parse (const std::string& line)
 {
   if (line.length () > 0)
-    _id         = rtrim (line.substr (1, 7));
+    _id         = rtrim (line.substr (0, 7));
   else
     throw format("Missing id to parse.");
 

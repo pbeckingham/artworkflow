@@ -6,18 +6,23 @@
 0.0.8 () Report
 0.0.7 () Exhibition object I/O
 
+- Implemented Exhibition object
+
 ------ development -------------------------------
 
 0.0.6 () Lua configuration support
+
 - #11 Convert artworkflow.cfg to config.lua
 
 ------ stable ------------------------------------
 
 0.0.5 () Painting object I/O
+
 - Implemented painting objects load/parse
 - CLI now properly tags painting IDs
 
 0.0.4 () DOM
+
 - #10 Initial Get Command
 
 ------ current release ---------------------------
