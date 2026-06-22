@@ -12,6 +12,7 @@ set (artworkflow_SRCS AtomicFile.cpp     AtomicFile.h
                       DatetimeParser.cpp DatetimeParser.h
                       Database.cpp       Database.h
                       Datafile.cpp       Datafile.h
+                      Exhibition.cpp     Exhibition.h
                       Painting.cpp       Painting.h
                       Rules.cpp          Rules.h
                       debug.cpp
