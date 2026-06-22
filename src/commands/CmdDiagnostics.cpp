@@ -144,7 +144,7 @@ int CmdDiagnostics (
 #endif
       << "\n\n";
 
-  // Config: .taskrc found, readable, writable
+  // Config: ~/.config/artworkflow/config.lua found, readable, writable
   out << "Configuration\n";
 /*
       << "       File: " << context.config._original_file._data << " "
