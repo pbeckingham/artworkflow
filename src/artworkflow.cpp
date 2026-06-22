@@ -48,6 +48,7 @@ int main (int argc, const char** argv)
 
   try
   {
+    // Create the Lua VM and load its libraries.
     sol::state lua;
     lua.open_libraries (sol::lib::base, sol::lib::io, sol::lib::math, sol::lib::table);
 
