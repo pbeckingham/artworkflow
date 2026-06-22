@@ -95,7 +95,7 @@ namespace paths
 
 #endif
 
-  std::string configFile () { return configDir () + "/artworkflow.cfg"; }
+  std::string configFile () { return configDir () + "/config.lua"; }
   std::string dbDataDir () { return dbDir () + "/data"; }
 
   void initializeDirs (Rules& rules)
