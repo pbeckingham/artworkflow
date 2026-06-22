@@ -8,6 +8,7 @@ configuration.t
 dates.t
 datetime.t
 duration.t
+exhibition.t
 external.t
 format.t
 fs.t
