@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int main (int, char**)
 {
-  UnitTest t (5);
+  UnitTest t (17);
 
   try
   {
@@ -67,7 +67,7 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
   t.is (p3.varnish (),    "v2025-05-24",                "Painting: varnish");
   t.is (p3.action (),     "",                           "Painting: action");
   t.is (p3.size (),       "7x5",                        "Painting: size");
-  t.is (p3.sub (),        "ACM",                        "Painting: sub");
+  t.is (p3.substrate (),  "ACM",                        "Painting: substrate");
   t.is (p3.tagged (),     "Y",                          "Painting: tagged");
   t.is (p3.varnished (),  "C",                          "Painting: varnished");
   t.is (p3.archived (),   "",                           "Painting: archived");
