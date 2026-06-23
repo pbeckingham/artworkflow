@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int main (int, char**)
 {
-  UnitTest t (33);
+  UnitTest t (92);
 
   std::string ascii_text            = "This is a test";
   std::string utf8_text             = "más sábado miércoles";
