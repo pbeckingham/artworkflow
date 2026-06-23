@@ -88,10 +88,8 @@ void Datafile::addPainting (const Painting& painting)
     Interval test = IntervalFactory::fromSerialization (serialization);
     test.id = interval.id;
     if (interval != test)
-    {
       throw (format ("Encode / decode check failed:\n  {1}\nis not equal to:\n  {2}",
                      interval.dump (), test.dump ()));
-    }
 
     _lines.push_back (serialization);
     debug (format ("{1}: Added {2}", _file.name (), _lines.back ()));
@@ -117,9 +115,7 @@ void Datafile::deletePainting (const Painting& painting)
   auto serialized = interval.serialize ();
   auto i = std::find (_lines.begin (), _lines.end (), serialized);
   if (i == _lines.end ())
-  {
     throw format ("Datafile::deleteInterval failed to find '{1}'", serialized);
-  }
 
   _lines.erase (i);
   _dirty = true;
@@ -151,14 +147,10 @@ void Datafile::commit ()
         _dirty = false;
       }
       else
-      {
         throw format ("Could not write to data file {1}", _file._data);
-      }
     }
     else
-    {
       file.remove ();
-    }
   }
 }
 

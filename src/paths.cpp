@@ -39,26 +39,18 @@ namespace paths
   std::string getPath (const char *xdg_path)
   {
     if (artworkflowdb != nullptr)
-    {
       return artworkflowdb;
-    }
     else if (uses_legacy_config)
-    {
       return legacy_config_dir;
-    }
     else
-    {
       return std::string (xdg_path) + "/artworkflow";
-    }
   }
 
   const char *getenv_default (const char *env, const char *default_value)
   {
     const char *value = getenv (env);
     if (value == nullptr)
-    {
       return default_value;
-    }
 
     return value;
   }
@@ -72,13 +64,9 @@ namespace paths
   std::string getPath ()
   {
     if (artworkflowdb != nullptr)
-    {
       return artworkflowdb;
-    }
     else
-    {
       return legacy_config_dir;
-    }
   }
 
   static std::string path = getPath ();
@@ -107,9 +95,7 @@ namespace paths
         (! configLocation.readable () ||
          ! configLocation.writable () ||
          ! configLocation.executable ()))
-    {
       throw format ("Config is not readable at '{1}'", configLocation._data);
-    }
 
     Directory dbLocation = Directory (dbDir ());
     bool dataLocationExists = dbLocation.exists ();
@@ -117,20 +103,15 @@ namespace paths
             (! dbLocation.readable () ||
              ! dbLocation.writable () ||
              ! dbLocation.executable ()))
-    {
       throw format ("Database is not readable at '{1}'", dbLocation._data);
-    }
 
     std::string question = "";
     if (! configDirExists)
-    {
       question += "Create new config in " + configLocation._data + "?";
-    }
     if (! dataLocationExists && configLocation._data != dbLocation._data)
     {
-      if (question != "") {
+      if (question != "")
           question += "\n";
-      }
       question += "Create new database in " + dbLocation._data + "?";
     }
 
@@ -139,27 +120,19 @@ namespace paths
       if (!rules.getBoolean ("confirmation", true) || confirm (question))
       {
         if (! configDirExists)
-        {
           configLocation.create (0700);
-        }
         if (! dataLocationExists)
-        {
           dbLocation.create (0700);
-        }
       }
       else
-      {
         throw std::string ("Initial setup aborted by user");
-      }
     }
 
     // Create data subdirectory if necessary.
     Directory dbDataLocation (dbDataDir ());
 
     if (! dbDataLocation.exists ())
-    {
       dbDataLocation.create (0700);
-    }
 
     Path configFileLocation (configFile ());
 

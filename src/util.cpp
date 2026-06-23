@@ -60,19 +60,13 @@ std::string quoteIfNeeded (const std::string& input)
   if (quote == std::string::npos &&
       space == std::string::npos &&
       op    == std::string::npos)
-  {
     return input;
-  }
 
   std::string output;
   if (quote != std::string::npos)
-  {
     output = escape (input, '"');
-  }
   else
-  {
     output = input;
-  }
 
   return std::string ("\"") + output + "\"";
 }
@@ -81,18 +75,12 @@ std::string quoteIfNeeded (const std::string& input)
 std::string join (const std::string& glue, const std::set <std::string>& array)
 {
   if (array.empty ())
-  {
     return "";
-  }
 
   auto iterator = array.begin ();
-
   std::string value = *iterator++;
-
   while (iterator != array.end ())
-  {
     value += glue + *iterator++;
-  }
 
   return value;
 }
@@ -102,18 +90,12 @@ template <typename Container>
 std::string joinQuotedIfNeeded (const std::string& glue, const Container& container)
 {
   if (container.empty ())
-  {
     return "";
-  }
 
   auto iterator = container.begin ();
-
   std::string value = quoteIfNeeded (*iterator++);
-
   while (iterator != container.end ())
-  {
     value += glue + quoteIfNeeded (*iterator++);
-  }
 
   return value;
 }

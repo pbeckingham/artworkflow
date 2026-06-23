@@ -91,14 +91,10 @@ void Database::modifyPainting (const Painting& from, const Painting& to, bool ve
 {
 /*
   if (! from.empty ())
-  {
     deletePainting (from);
-  }
 
   if (! to.empty ())
-  {
     addPainting (to, verbose);
-  }
 */
 }
 
