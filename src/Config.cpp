@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cinttypes>
+#include <cassert>
 
 #include <Config.h>
 #include <format.h>
@@ -32,112 +33,65 @@
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-Config::Config ()
-{
-  // Load the default values.
-  _settings =
-  {
-    {"confirmation",             "on"},
-    {"debug",                    "off"},
-    {"verbose",                  "on"},
-  };
-}
-
-////////////////////////////////////////////////////////////////////////////////
 void Config::initialize (sol::state& lua)
 {
-  // TODO Retain the lua VM for settings queries.
+  // Retain the lua VM for settings queries.
+  _lua = &lua;
+  assert (_lua);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 bool Config::has (const std::string& key) const
 {
-  return _settings.find (key) != _settings.end ();
+  assert (_lua);
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Return the configuration value given the specified key.
 std::string Config::get (const std::string& key, const std::string& defaultValue) const
 {
-  auto found = _settings.find (key);
-
-  if (found != _settings.end ())
-    return found->second;
-
+  assert (_lua);
   return defaultValue;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 int Config::getInteger (const std::string& key, int defaultValue) const
 {
-  auto found = _settings.find (key);
-
-  if (found != _settings.end ())
-  {
-    int value = strtoimax (found->second.c_str (), nullptr, 10);
-
-    // Invalid values are handled.
-    // ERANGE errors are simply capped by strtoimax, which is desired behavior.
-    // Note that not all platforms behave alike, and the EINVAL is not necessarily returned.
-    if (value == 0 && (errno == EINVAL || found->second != "0"))
-      throw format ("Invalid integer value for '{1}': '{2}'", key, found->second);
-
-    return value;
-  }
-
+  assert (_lua);
   return defaultValue;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 double Config::getReal (const std::string& key) const
 {
-  auto found = _settings.find (key);
-
-  if (found != _settings.end ())
-    return strtod (found->second.c_str (), nullptr);
-
+  assert (_lua);
   return 0.0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 bool Config::getBoolean (const std::string& key, bool defaultValue) const
 {
-  auto found = _settings.find (key);
-
-  if (found != _settings.end ())
-  {
-    auto value = lowerCase (found->second);
-
-    // TODO Use only idiomatic Lua boolean values.
-    if (value == "true"   ||
-        value == "1"      ||
-        value == "y"      ||
-        value == "yes"    ||
-        value == "on")
-      return true;
-
-    return false;
-  }
-
+  assert (_lua);
   return defaultValue;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const int value)
 {
-  _settings[key] = format (value);
+  assert (_lua);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const double value)
 {
-  _settings[key] = format (value, 1, 8);
+  assert (_lua);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const std::string& value)
 {
-  _settings[key] = value;
+  assert (_lua);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

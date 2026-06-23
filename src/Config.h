@@ -36,7 +36,7 @@
 class Config
 {
 public:
-  Config ();
+  Config () = default;
   void initialize (sol::state&);
 
   bool        has        (const std::string&) const;
@@ -50,7 +50,7 @@ public:
   void set (const std::string&, const std::string&);
 
 private:
-  std::map <std::string, std::string> _settings      {};
+  sol::state* _lua {NULL};
 };
 
 #endif
