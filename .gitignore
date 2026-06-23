@@ -1,6 +1,4 @@
-libshared.git
-taskwarrior.git
-timewarrior.git
+dependencies/*.git
 CMakeFiles
 CMakeCache.txt
 *.cmake
