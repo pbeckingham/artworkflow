@@ -30,7 +30,7 @@
 #include <Color.h>
 #include <CLI.h>
 #include <Database.h>
-#include <Rules.h>
+#include <Config.h>
 #include <Palette.h>
 
 // debug.cpp
@@ -41,13 +41,13 @@ void debug (const std::string&);
 void warn (const std::string&);
 
 // dom.cpp
-bool domGet (Database&, const Rules&, const std::string&, std::string&);
+bool domGet (Database&, const Config&, const std::string&, std::string&);
 
 // init.cpp
 bool lightweightVersionCheck (int, const char**);
 void initializeEntities (CLI&);
-void initializeDataAndRules (const CLI&, Database&, Rules&);
-int dispatchCommand (CLI&, Database&, Rules&);
+void initializeDataAndConfig (const CLI&, Database&, Config&);
+int dispatchCommand (CLI&, Database&, Config&);
 
 // util.cpp
 std::string escape (const std::string&, int);
@@ -55,6 +55,6 @@ std::string quoteIfNeeded (const std::string&);
 std::string join(const std::string& glue, const std::set <std::string>& array);
 template <typename Container> std::string joinQuotedIfNeeded (const std::string&, const Container&);
 int getTerminalWidth ();
-Palette createPalette (const Rules&);
+Palette createPalette (const Config&);
 
 #endif

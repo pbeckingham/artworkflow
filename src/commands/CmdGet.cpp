@@ -34,7 +34,7 @@
 // Identify DOM references in CLI, provide space-separated results.
 int CmdGet (
   CLI& cli,
-  Rules& rules,
+  Config& config,
   Database& database)
 {
   auto references = cli.getDomReferences ();
@@ -44,7 +44,7 @@ int CmdGet (
   {
     std::string value;
 
-    if (! domGet (database, rules, reference, value))
+    if (! domGet (database, config, reference, value))
       throw format ("DOM reference '{1}' is not valid.", reference);
 
     results.push_back (value);

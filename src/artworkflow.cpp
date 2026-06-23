@@ -54,8 +54,7 @@ int main (int argc, const char** argv)
     lua.open_libraries (sol::lib::base, sol::lib::io, sol::lib::math, sol::lib::table);
 
     // Config provides settings access to all code.
-    Config config;
-    config.initialize (lua);
+    Config config (lua);
 
     // Add entities so that command line tokens such as 'help' are recognized as
     // commands.
@@ -79,13 +78,12 @@ int main (int argc, const char** argv)
 
     // Prepare the database, but do not read data.
     Database database;
-    Rules rules;
-    initializeDataAndRules (cli, database, rules);
-    debug ("initializeDataAndRules"); // After initializeDataAndRules because of default values
+    initializeDataAndConfig (cli, database, config);
+    debug ("initializeDataAndConfig"); // After initializeDataAndConfig because of default values
 
     // Dispatch to commands.
     debug ("dispatchCommand");
-    status = dispatchCommand (cli, database, rules);
+    status = dispatchCommand (cli, database, config);
 
     // Save any outstanding changes.
     debug ("database.commit");

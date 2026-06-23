@@ -30,11 +30,11 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
-int CmdDefault (Rules& rules)
+int CmdDefault (Config& config)
 {
-  const bool verbose = rules.getBoolean ("verbose");
+  const bool verbose = config.getBoolean ("verbose");
 
-  if (rules.getBoolean ("temp.shiny"))
+  if (config.getBoolean ("temp.shiny"))
     std::cout << '\n'
               << "Welcome to ArtWorkFlow.\n"
               << '\n'

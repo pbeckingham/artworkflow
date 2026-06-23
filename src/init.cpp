@@ -70,15 +70,15 @@ void initializeEntities (CLI& cli)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void initializeDataAndRules (
+void initializeDataAndConfig (
   const CLI& cli,
   Database& database,
-  Rules& rules)
+  Config& config)
 {
   // Rose tint my world, keep me safe from my trouble and pain.
-  rules.set ("color", isatty (STDOUT_FILENO) ? "on" : "off");
+  config.set ("color", isatty (STDOUT_FILENO) ? "on" : "off");
 
-  // Make common hints available via rules:
+  // Make common hints available via config:
   //   :debug   --> debug=on
   //   :quiet   --> verbose=off
   //   :color   --> color=on
@@ -88,41 +88,41 @@ void initializeDataAndRules (
   {
     if (arg.hasTag ("HINT"))
     {
-      if (arg.attribute ("canonical") == ":debug")   rules.set ("debug",        "on");
-      if (arg.attribute ("canonical") == ":quiet")   rules.set ("verbose",      "off");
-      if (arg.attribute ("canonical") == ":color")   rules.set ("color",        "on");
-      if (arg.attribute ("canonical") == ":nocolor") rules.set ("color",        "off");
-      if (arg.attribute ("canonical") == ":yes")     rules.set ("confirmation", "off");
+      if (arg.attribute ("canonical") == ":debug")   config.set ("debug",        "on");
+      if (arg.attribute ("canonical") == ":quiet")   config.set ("verbose",      "off");
+      if (arg.attribute ("canonical") == ":color")   config.set ("color",        "on");
+      if (arg.attribute ("canonical") == ":nocolor") config.set ("color",        "off");
+      if (arg.attribute ("canonical") == ":yes")     config.set ("confirmation", "off");
     }
   }
 
-  enableDebugMode (rules.getBoolean ("debug"));
-  paths::initializeDirs (rules);
+  enableDebugMode (config.getBoolean ("debug"));
+  paths::initializeDirs (config);
 
   for (auto& arg : cli._args)
   {
     if (arg.hasTag ("HINT"))
     {
-      if (arg.attribute ("canonical") == ":debug")   rules.set ("debug",        "on");
-      if (arg.attribute ("canonical") == ":quiet")   rules.set ("verbose",      "off");
-      if (arg.attribute ("canonical") == ":color")   rules.set ("color",        "on");
-      if (arg.attribute ("canonical") == ":nocolor") rules.set ("color",        "off");
-      if (arg.attribute ("canonical") == ":yes")     rules.set ("confirmation", "off");
+      if (arg.attribute ("canonical") == ":debug")   config.set ("debug",        "on");
+      if (arg.attribute ("canonical") == ":quiet")   config.set ("verbose",      "off");
+      if (arg.attribute ("canonical") == ":color")   config.set ("color",        "on");
+      if (arg.attribute ("canonical") == ":nocolor") config.set ("color",        "off");
+      if (arg.attribute ("canonical") == ":yes")     config.set ("confirmation", "off");
     }
   }
 
-  if (rules.has ("debug.indicator"))
-    setDebugIndicator (rules.get ("debug.indicator"));
+  if (config.has ("debug.indicator"))
+    setDebugIndicator (config.get ("debug.indicator"));
 
-  if (rules.has ("theme.colors.debug"))
-    setDebugColor (Color (rules.get ("theme.colors.debug")));
+  if (config.has ("theme.colors.debug"))
+    setDebugColor (Color (config.get ("theme.colors.debug")));
 
   // Apply command line overrides.
   for (auto& arg : cli._args)
   {
     if (arg.hasTag ("CONFIG"))
     {
-      rules.set (arg.attribute ("name"), arg.attribute ("value"));
+      config.set (arg.attribute ("name"), arg.attribute ("value"));
       debug (format ("Configuration override {1} = {2}", arg.attribute ("name"), arg.attribute ("value")));
     }
   }
@@ -136,12 +136,12 @@ void initializeDataAndRules (
 int dispatchCommand (
   CLI& cli,
   Database& database,
-  Rules& rules)
+  Config& config)
 {
   int status {0};
 
   // Debug output.
-  if (rules.getBoolean ("debug"))
+  if (config.getBoolean ("debug"))
     std::cout << cli.dump () << '\n';
 
   // Dispatch to the right command function.
@@ -150,15 +150,15 @@ int dispatchCommand (
   if (! command.empty ())
   {
     // These signatures are expected to be all different, therefore no command to fn mapping.
-         if (command == "diagnostics") status = CmdDiagnostics   (     rules, database);
-    else if (command == "get")         status = CmdGet           (cli, rules, database);
+         if (command == "diagnostics") status = CmdDiagnostics   (     config, database);
+    else if (command == "get")         status = CmdGet           (cli, config, database);
     else if (command == "help"    ||
              command == "--help"  ||
              command == "-h")          status = CmdHelp          (cli                 );
     else if (command == "information") status = CmdInfo          (cli,        database);
     else if (command == "version" ||
              command == "-v")          status = CmdVersion       (                    );
-//    else                               status = CmdReport        (cli, rules, database);
+//    else                               status = CmdReport        (cli, config, database);
   }
   else
   {
@@ -170,7 +170,7 @@ int dispatchCommand (
     }
     else
     {
-      status = CmdDefault (rules);
+      status = CmdDefault (config);
     }
   }
 

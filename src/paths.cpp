@@ -86,7 +86,7 @@ namespace paths
   std::string configFile () { return configDir () + "/config.lua"; }
   std::string dbDataDir () { return dbDir () + "/data"; }
 
-  void initializeDirs (Rules& rules)
+  void initializeDirs (Config& config)
   {
     Directory configLocation = Directory (configDir ());
     bool configDirExists = configLocation.exists ();
@@ -117,7 +117,7 @@ namespace paths
 
     if (! configDirExists || ! dataLocationExists)
     {
-      if (!rules.getBoolean ("confirmation", true) || confirm (question))
+      if (!config.getBoolean ("confirmation", true) || confirm (question))
       {
         if (! configDirExists)
           configLocation.create (0700);
@@ -149,16 +149,16 @@ namespace paths
     }
 
     // Load the configuration data.
-    rules.load (configFileLocation);
+    config.load (configFileLocation);
 
     // This value is not written out to disk, as there would be no point.
     // Having located the config file, the 'db' location is already known.
     // This is just for subsequent internal use.
-    rules.set ("temp.db", dbLocation);
-    rules.set ("temp.config", configFileLocation);
+    config.set ("temp.db", dbLocation);
+    config.set ("temp.config", configFileLocation);
 
     // Perhaps some subsequent code would like to know this is a new db and possibly a first run.
     if (! dataLocationExists)
-      rules.set ("temp.shiny", 1);
+      config.set ("temp.shiny", 1);
   }
 }

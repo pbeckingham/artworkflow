@@ -29,14 +29,14 @@
 
 #include <CLI.h>
 #include <Database.h>
-#include <Rules.h>
+#include <Config.h>
 
-//  CmdXxx           (CLI&, Rules&, Database&);
-int CmdDiagnostics   (      Rules&, Database&);
-int CmdGet           (CLI&, Rules&, Database&);
+//  CmdXxx           (CLI&, Config&, Database&);
+int CmdDiagnostics   (      Config&, Database&);
+int CmdGet           (CLI&, Config&, Database&);
 int CmdHelp          (CLI&                   );
 int CmdInfo          (CLI&,         Database&);
 int CmdVersion       (                       );
-int CmdDefault       (      Rules&           );
+int CmdDefault       (      Config&           );
 
 #endif

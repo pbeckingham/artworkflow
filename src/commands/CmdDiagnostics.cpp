@@ -77,7 +77,7 @@ std::string describeFile (File& file)
 
 ////////////////////////////////////////////////////////////////////////////////
 int CmdDiagnostics (
-  Rules& rules,
+  Config& config,
   Database& database)
 {
   std::stringstream out;
@@ -172,15 +172,15 @@ int CmdDiagnostics (
     out << "        $EDITOR: " << peditor << '\n';
 
   // Theme description, if present.
-  if (rules.has ("theme.description"))
-    out << "    Color theme: " << rules.get ("theme.description") << '\n';
+  if (config.has ("theme.description"))
+    out << "    Color theme: " << config.get ("theme.description") << '\n';
   else
     out << "    Color theme: Default theme\n";
 
-  if (rules.getBoolean ("color"))
+  if (config.getBoolean ("color"))
   {
     out << "                ";
-    auto palette = createPalette (rules);
+    auto palette = createPalette (config);
     for (int color = 0; color < palette.size (); ++color)
     {
       if (color && color % 16 == 0)

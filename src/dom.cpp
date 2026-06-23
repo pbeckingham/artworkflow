@@ -35,7 +35,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 bool domGet (
   Database& database,
-  const Rules& rules,
+  const Config& config,
   const std::string& reference,
   std::string& value)
 {
@@ -124,7 +124,7 @@ bool domGet (
         std::string name;
         if (pig.getRemainder (name))
         {
-          value = rules.get (name);
+          value = config.get (name);
           return true;
         }
       }

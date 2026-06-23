@@ -107,7 +107,7 @@ template std::string joinQuotedIfNeeded(const std::string&, const std::vector <s
 ////////////////////////////////////////////////////////////////////////////////
 int getTerminalWidth ()
 {
-  int terminalWidth;
+  int terminalWidth {0};
 #ifdef TIOCGSIZE
   struct ttysize ts{};
   ioctl (STDIN_FILENO, TIOCGSIZE, &ts);
@@ -131,21 +131,24 @@ int getTerminalWidth ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-Palette createPalette (const Rules& rules)
+Palette createPalette (const Config& config)
 {
   Palette p;
-  auto colors = rules.all ("theme.palette.color");
+  // TODO Provide a config value iterator.
+/*
+  auto colors = config.all ("theme.palette.color");
 
   if (! colors.empty ())
   {
     p.clear ();
     for (auto& c : colors)
     {
-      p.add (Color (rules.get (c)));
+      p.add (Color (config.get (c)));
     }
   }
 
-  p.enabled = rules.getBoolean ("color");
+  p.enabled = config.getBoolean ("color");
+*/
   return p;
 }
 

@@ -36,8 +36,8 @@
 class Config
 {
 public:
-  Config () = default;
-  void initialize (sol::state&);
+  Config (sol::state&);
+  void load (const std::string&);
 
   bool        has        (const std::string&) const;
   std::string get (const std::string&, const std::string& = "") const;
@@ -50,6 +50,7 @@ public:
   void set (const std::string&, const std::string&);
 
 private:
+  std::string _original_file {};
   sol::state* _lua {NULL};
 };
 
