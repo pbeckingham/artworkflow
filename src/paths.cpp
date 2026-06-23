@@ -31,8 +31,6 @@
 
 namespace paths
 {
-  static const char *legacy_config_dir = "~/.artworkflow";
-  static const bool uses_legacy_config = Directory (legacy_config_dir).exists ();
   const char *artworkflowdb = getenv ("ARTWORKFLOWDB");
 
   #if defined(__unix__) || defined(__APPLE__) || defined(__linux__) || defined(_SYSTYPE_BSD)
@@ -40,8 +38,6 @@ namespace paths
   {
     if (artworkflowdb != nullptr)
       return artworkflowdb;
-    else if (uses_legacy_config)
-      return legacy_config_dir;
     else
       return std::string (xdg_path) + "/artworkflow";
   }
@@ -63,10 +59,7 @@ namespace paths
 #else
   std::string getPath ()
   {
-    if (artworkflowdb != nullptr)
-      return artworkflowdb;
-    else
-      return legacy_config_dir;
+    return artworkflowdb;
   }
 
   static std::string path = getPath ();
