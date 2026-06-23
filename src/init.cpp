@@ -56,7 +56,6 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "--help");
   cli.entity ("command", "-h");
   cli.entity ("command", "information");
-  cli.entity ("command", "show");
   cli.entity ("command", "version");
   cli.entity ("command", "--version"); // Note: this only appears to overlap with
 				       // the lightweight version checking.
@@ -157,7 +156,6 @@ int dispatchCommand (
              command == "--help"  ||
              command == "-h")          status = CmdHelp          (cli                 );
     else if (command == "information") status = CmdInfo          (cli,        database);
-    else if (command == "show")        status = CmdShow          (     rules          );
     else if (command == "version" ||
              command == "-v")          status = CmdVersion       (                    );
 //    else                               status = CmdReport        (cli, rules, database);

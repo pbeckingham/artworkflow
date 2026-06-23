@@ -8,7 +8,6 @@ set (commands_SRCS CmdDefault.cpp
                    CmdDiagnostics.cpp
                    CmdGet.cpp
                    CmdHelp.cpp
-		   CmdInfo.cpp
-		   CmdShow.cpp
+                   CmdInfo.cpp
                    CmdVersion.cpp)
 add_library (commands STATIC ${commands_SRCS})
