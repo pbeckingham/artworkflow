@@ -9,6 +9,7 @@ link_directories ("/opt/homebrew/lib")
 
 set (artworkflow_SRCS AtomicFile.cpp     AtomicFile.h
                       CLI.cpp            CLI.h
+                      Config.cpp         Config.h
                       DatetimeParser.cpp DatetimeParser.h
                       Database.cpp       Database.h
                       Datafile.cpp       Datafile.h
