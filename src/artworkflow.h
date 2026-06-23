@@ -43,14 +43,6 @@ void warn (const std::string&);
 // dom.cpp
 bool domGet (Database&, const Rules&, const std::string&, std::string&);
 
-// helper.cpp
-Color summaryIntervalColor (const Rules&, const std::set <std::string>&);
-Color summaryIntervalColor (std::map <std::string, Color>&, const std::set <std::string>&);
-Color chartIntervalColor (const std::set <std::string>&, const std::map <std::string, Color>&);
-Color tagColor (const Rules&, const std::string&);
-Palette createPalette (const Rules&);
-int quantizeToNMinutes (int, int);
-
 // init.cpp
 bool lightweightVersionCheck (int, const char**);
 void initializeEntities (CLI&);
@@ -62,5 +54,7 @@ std::string escape (const std::string&, int);
 std::string quoteIfNeeded (const std::string&);
 std::string join(const std::string& glue, const std::set <std::string>& array);
 template <typename Container> std::string joinQuotedIfNeeded (const std::string&, const Container&);
+int getTerminalWidth ();
+Palette createPalette (const Rules&);
 
 #endif

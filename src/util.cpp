@@ -105,3 +105,48 @@ template std::string joinQuotedIfNeeded(const std::string&, const std::set <std:
 template std::string joinQuotedIfNeeded(const std::string&, const std::vector <std::string>&);
 
 ////////////////////////////////////////////////////////////////////////////////
+int getTerminalWidth ()
+{
+  int terminalWidth;
+#ifdef TIOCGSIZE
+  struct ttysize ts{};
+  ioctl (STDIN_FILENO, TIOCGSIZE, &ts);
+  terminalWidth = ts.ts_cols;
+#elif defined(TIOCGWINSZ)
+  struct winsize ts {};
+  ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
+  terminalWidth = ts.ws_col;
+#endif
+
+  if (terminalWidth == 0)
+  {
+    char *columns = getenv ("COLUMNS");
+    if (columns != NULL)
+    {
+      terminalWidth = atoi (columns);
+    }
+  }
+
+  return terminalWidth > 0 ? terminalWidth : 80;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+Palette createPalette (const Rules& rules)
+{
+  Palette p;
+  auto colors = rules.all ("theme.palette.color");
+
+  if (! colors.empty ())
+  {
+    p.clear ();
+    for (auto& c : colors)
+    {
+      p.add (Color (rules.get (c)));
+    }
+  }
+
+  p.enabled = rules.getBoolean ("color");
+  return p;
+}
+
+////////////////////////////////////////////////////////////////////////////////
