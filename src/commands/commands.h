@@ -32,7 +32,6 @@
 #include <Rules.h>
 
 //  CmdXxx           (CLI&, Rules&, Database&);
-int CmdConfig        (CLI&, Rules&           );
 int CmdDiagnostics   (      Rules&, Database&);
 int CmdGet           (CLI&, Rules&, Database&);
 int CmdHelp          (CLI&                   );

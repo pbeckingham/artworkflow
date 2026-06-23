@@ -50,7 +50,6 @@ bool lightweightVersionCheck (int argc, const char** argv)
 void initializeEntities (CLI& cli)
 {
   // Command entities.
-  cli.entity ("command", "config");
   cli.entity ("command", "diagnostics");
   cli.entity ("command", "get");
   cli.entity ("command", "help");
@@ -77,7 +76,7 @@ void initializeDataAndRules (
   Database& database,
   Rules& rules)
 {
-  // Rose tint my world, make me safe from my trouble and pain.
+  // Rose tint my world, keep me safe from my trouble and pain.
   rules.set ("color", isatty (STDOUT_FILENO) ? "on" : "off");
 
   // Make common hints available via rules:
@@ -152,8 +151,7 @@ int dispatchCommand (
   if (! command.empty ())
   {
     // These signatures are expected to be all different, therefore no command to fn mapping.
-         if (command == "config")      status = CmdConfig        (cli, rules          );
-    else if (command == "diagnostics") status = CmdDiagnostics   (     rules, database);
+         if (command == "diagnostics") status = CmdDiagnostics   (     rules, database);
     else if (command == "get")         status = CmdGet           (cli, rules, database);
     else if (command == "help"    ||
              command == "--help"  ||

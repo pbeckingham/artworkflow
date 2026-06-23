@@ -4,8 +4,7 @@ include_directories (${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src/commands
                      ${CMAKE_SOURCE_DIR}/src/libshared)
 
-set (commands_SRCS CmdConfig.cpp
-                   CmdDefault.cpp
+set (commands_SRCS CmdDefault.cpp
                    CmdDiagnostics.cpp
                    CmdGet.cpp
                    CmdHelp.cpp
