@@ -33,7 +33,6 @@ namespace paths
 {
   const char *artworkflowdb = getenv ("ARTWORKFLOWDB");
 
-  #if defined(__unix__) || defined(__APPLE__) || defined(__linux__) || defined(_SYSTYPE_BSD)
   std::string getPath (const char *xdg_path)
   {
     if (artworkflowdb != nullptr)
@@ -55,27 +54,6 @@ namespace paths
   static std::string data_dir = getPath (getenv_default ("XDG_DATA_HOME", "~/.local/share"));
   std::string configDir () { return conf_dir; }
   std::string dbDir () { return data_dir; }
-
-#else
-  std::string getPath ()
-  {
-    return artworkflowdb;
-  }
-
-  static std::string path = getPath ();
-
-  std::string configDir ()
-  {
-      return path;
-  }
-
-  std::string dbDir ()
-  {
-      return path;
-  }
-
-#endif
-
   std::string configFile () { return configDir () + "/config.lua"; }
   std::string dbDataDir () { return dbDir () + "/data"; }
 
