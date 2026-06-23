@@ -34,7 +34,6 @@
 // Identify DOM references in CLI, provide space-separated results.
 int CmdInfo (
   CLI& cli,
-  Rules& rules,
   Database& database)
 {
   for (auto& id : cli.getIds ())

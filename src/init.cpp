@@ -156,7 +156,7 @@ int dispatchCommand (
     else if (command == "help"    ||
              command == "--help"  ||
              command == "-h")          status = CmdHelp          (cli                 );
-    else if (command == "information") status = CmdInfo          (cli, rules, database);
+    else if (command == "information") status = CmdInfo          (cli,        database);
     else if (command == "show")        status = CmdShow          (     rules          );
     else if (command == "version" ||
              command == "-v")          status = CmdVersion       (                    );
