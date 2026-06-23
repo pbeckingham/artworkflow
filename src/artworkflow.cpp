@@ -30,6 +30,7 @@
 #define SOL_ALL_SAFETIES_ON 1
 #include <sol/sol.hpp>
 
+#include <Config.h>
 #include <AtomicFile.h>
 #include <Color.h>
 #include <Timer.h>
@@ -51,6 +52,10 @@ int main (int argc, const char** argv)
     // Create the Lua VM and load its libraries.
     sol::state lua;
     lua.open_libraries (sol::lib::base, sol::lib::io, sol::lib::math, sol::lib::table);
+
+    // Config provides settings access to all code.
+    Config config;
+    config.initialize (lua);
 
     // Add entities so that command line tokens such as 'help' are recognized as
     // commands.

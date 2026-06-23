@@ -27,6 +27,9 @@
 #ifndef INCLUDED_CONFIG
 #define INCLUDED_CONFIG
 
+#define SOL_ALL_SAFETIES_ON 1
+#include <sol/sol.hpp>
+
 #include <map>
 #include <string>
 
@@ -34,6 +37,7 @@ class Config
 {
 public:
   Config ();
+  void initialize (sol::state&);
 
   bool        has        (const std::string&) const;
   std::string get (const std::string&, const std::string& = "") const;

@@ -44,6 +44,12 @@ Config::Config ()
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void Config::initialize (sol::state& lua)
+{
+  // TODO Retain the lua VM for settings queries.
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Config::has (const std::string& key) const
 {
   return _settings.find (key) != _settings.end ();
