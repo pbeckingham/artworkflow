@@ -44,8 +44,11 @@ int main (int argc, const char** argv)
 
   // Lightweight version checking that doesn't require initialization or I/O.
   int status = 0;
-  if (lightweightVersionCheck (argc, argv))
+  if (argc == 2 && std::string (argv[1]) == "--version")
+  {
+    std::cout << VERSION << '\n';
     return status;
+  }
 
   try
   {

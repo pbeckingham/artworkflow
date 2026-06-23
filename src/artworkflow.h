@@ -44,7 +44,6 @@ void warn (const std::string&);
 bool domGet (Database&, const Config&, const std::string&, std::string&);
 
 // init.cpp
-bool lightweightVersionCheck (int, const char**);
 void initializeEntities (CLI&);
 void initializeDataAndConfig (const CLI&, Database&, Config&);
 int dispatchCommand (CLI&, Database&, Config&);

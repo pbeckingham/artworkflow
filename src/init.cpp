@@ -35,18 +35,6 @@
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-bool lightweightVersionCheck (int argc, const char** argv)
-{
-  if (argc == 2 && std::string (argv[1]) == "--version")
-  {
-    std::cout << VERSION << '\n';
-    return true;
-  }
-
-  return false;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 void initializeEntities (CLI& cli)
 {
   // Command entities.
