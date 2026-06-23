@@ -29,7 +29,7 @@ set (shared_SRCS Args.cpp          Args.h
                  shared.cpp        shared.h
                  unicode.cpp       unicode.h
                  utf8.cpp          utf8.h
-		                   wcwidth.h)
+		                   widechar_width_c.h)
 
 add_library (shared STATIC ${shared_SRCS})
 
