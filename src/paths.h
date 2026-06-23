@@ -36,6 +36,5 @@ namespace paths {
     std::string configFile ();
     std::string dbDir ();
     std::string dbDataDir ();
-    std::string extensionsDir ();
 }
 #endif
