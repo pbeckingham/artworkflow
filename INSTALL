@@ -9,7 +9,6 @@ In order to build ArtWorkFlow, you will need:
 
   - CMake (See https://cmake.org)
   - Make
-  - Asciidoctor (for building documentation)
 
 You will need a C++ compiler that supports full C++17, which includes:
   - GCC 8
@@ -61,25 +60,24 @@ This variable defaults to `/usr/local` on UNIX/Linux systems.
 Five more variables can customize the installation process.
 The following table lists them and their default values:
 
-| Variable        | Default Value           |
-|-----------------|-------------------------|
-| `TIMEW_BINDIR`  | `bin`                   |
-| `TIMEW_DOCDIR`  | `share/doc/artworkflow` |
-| `TIMEW_MANDIR`  | `share/man`             |
-| `TIMEW_MAN1DIR` | `share/man/man1`        |
-| `TIMEW_MAN7DIR` | `share/man/man7`        |
+| Variable              | Default Value           |
+|-----------------------|-------------------------|
+| `ARTWORKFLOW_BINDIR`  | `bin`                   |
+| `ARTWORKFLOW_DOCDIR`  | `share/doc/artworkflow` |
+| `ARTWORKFLOW_MANDIR`  | `share/man`             |
+| `ARTWORKFLOW_MAN1DIR` | `share/man/man1`        |
+| `ARTWORKFLOW_MAN7DIR` | `share/man/man7`        |
 
-On FreeBSD or DragonFly BSD systems, the `share/` directory is omitted for the `TIMEW_MAN*DIR` variables.
+On FreeBSD or DragonFly BSD systems, the `share/` directory is omitted for the `ARTWORKFLOW_MAN*DIR` variables.
 
-The `TIMEW_*` variables are combined with the value of `CMAKE_INSTALL_PREFIX` to get the absolute paths.
+The `ARTWORKFLOW_*` variables are combined with the value of `CMAKE_INSTALL_PREFIX` to get the absolute paths.
 
 
 # Updating ArtWorkFlow build
 
-To update the local ArtWorkFlow build, you need to update the Git repository, including the `src/libshared` submodule, run:
+To update the local ArtWorkFlow build, you need to update the Git repository, run:
 
-    $ git pull --recurse-submodules
-    $ git submodule update
+    $ git pull
 
 At this point you have the fully updated sources at your disposal, and you can update your local build following the regular build instructions:
 
@@ -122,6 +120,6 @@ There may be errors and warnings when running CMake, or there may be compiler er
 Sometimes you will run CMake with no reported problems, and the build will fail later.
 This is almost always because CMake is mistaken about some assumption.
 
-If a build does not succeed, please send the contents of the `CMakeCache.txt` and `CMakeFiles/CMakeOutput.log` files to `support@gothenburgbitfactory.org`. 
+If a build does not succeed, please send the contents of the `CMakeCache.txt` and `CMakeFiles/CMakeOutput.log` files to `paul@beckingham.net`. 
 
 If CMake runs but ArtWorkFlow does not build, please send the contents of the above files as well as a transcript from the build, which is not written to a file and must be captured from the terminal.

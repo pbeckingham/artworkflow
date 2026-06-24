@@ -3,7 +3,7 @@ Manage creation, deadlines, exhibitions, deliverables, and workflow of the profe
 
 # Description
 A CLI tool to enter, modifty and delete creative metadata for multiple objects, namely work,
-exhibitions, submissions, finances.
+exhibitions, submissions.
 
 Reporting includes the ability to enumerate and filter objects.
 
