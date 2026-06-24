@@ -70,7 +70,7 @@ int Config::getInteger (const std::string& key, int defaultValue) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-double Config::getReal (const std::string& key) const
+double Config::getReal (const std::string& key, double defaultValue) const
 {
   assert (_lua);
   return 0.0;

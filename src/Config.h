@@ -42,7 +42,7 @@ public:
   bool        has        (const std::string&) const;
   std::string get (const std::string&, const std::string& = "") const;
   int         getInteger (const std::string&, int = 0) const;
-  double      getReal    (const std::string&) const;
+  double      getReal    (const std::string&, double = 0.0) const;
   bool        getBoolean (const std::string&, bool = false) const;
 
   void set (const std::string&, int);
