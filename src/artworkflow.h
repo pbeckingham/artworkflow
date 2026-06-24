@@ -47,6 +47,10 @@ bool domGet (Database&, const Config&, const std::string&, std::string&);
 void initializeEntities (CLI&);
 void initializeDataAndConfig (const CLI&, Database&, Config&);
 int dispatchCommand (CLI&, Database&, Config&);
+std::string getConfigLocation ();
+std::string getDataLocation ();
+std::string getConfigFile ();
+std::string getDataDirectory ();
 
 // util.cpp
 std::string escape (const std::string&, int);

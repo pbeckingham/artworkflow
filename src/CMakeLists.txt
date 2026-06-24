@@ -17,7 +17,6 @@ set (artworkflow_SRCS AtomicFile.cpp     AtomicFile.h
                       debug.cpp
                       dom.cpp
                       init.cpp
-                      paths.cpp          paths.h
                       util.cpp)
 
 add_library (artworkflow STATIC ${artworkflow_SRCS})

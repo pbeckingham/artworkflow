@@ -27,7 +27,6 @@
 #include <cmake.h>
 #include <format.h>
 #include <iostream>
-#include <paths.h>
 #include <shared.h>
 #include <artworkflow.h>
 
@@ -158,10 +157,10 @@ int CmdDiagnostics (
       << '\n';
 */
 
-  File cfg (paths::configFile ());
+  File cfg (getConfigFile ());
   out << "            Cfg: " << describeFile (cfg) << '\n';
 
-  Directory db (paths::dbDir ());
+  Directory db (getDataLocation ());
   out << "       Database: " << describeFile (db) << '\n';
 
   // Determine rc.editor/$EDITOR/$VISUAL.

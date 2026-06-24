@@ -85,7 +85,85 @@ void initializeDataAndConfig (
   }
 
   enableDebugMode (config.getBoolean ("debug"));
-  paths::initializeDirs (config);
+//  paths::initializeDirs (config);
+/*
+void initializeConfigAndDatabase (Config& config)
+{
+  Directory configLocation = Directory (conf_dir);
+  bool configDirExists = configLocation.exists ();
+
+  if (configDirExists &&
+      (! configLocation.readable () ||
+       ! configLocation.writable () ||
+       ! configLocation.executable ()))
+    throw format ("Config is not readable at '{1}'", configLocation._data);
+
+  Directory dbLocation = Directory (getDataLocation ());
+  bool dataLocationExists = dbLocation.exists ();
+  if (dataLocationExists &&
+          (! dbLocation.readable () ||
+           ! dbLocation.writable () ||
+           ! dbLocation.executable ()))
+    throw format ("Database is not readable at '{1}'", dbLocation._data);
+
+  std::string question = "";
+  if (! configDirExists)
+    question += "Create new config in " + configLocation._data + "?";
+
+  if (! dataLocationExists && configLocation._data != dbLocation._data)
+  {
+    if (question != "")
+        question += "\n";
+    question += "Create new database in " + dbLocation._data + "?";
+  }
+
+  if (! configDirExists || ! dataLocationExists)
+  {
+    if (!config.getBoolean ("confirmation", true) || confirm (question))
+    {
+      if (! configDirExists)
+        configLocation.create (0700);
+      if (! dataLocationExists)
+        dbLocation.create (0700);
+    }
+    else
+      throw std::string ("Initial setup aborted by user");
+  }
+
+  // Create data subdirectory if necessary.
+  Directory dbDataLocation (getDataLocation ());
+
+  if (! dbDataLocation.exists ())
+    dbDataLocation.create (0700);
+
+  Path configFileLocation (getConfigLocation ());
+
+  if (! configFileLocation.exists ())
+  {
+    File configFile (configFileLocation);
+    configFile.create (0600);
+    std::vector<std::string> defaultConfig = {
+      "confirmation = \"on\"\n",
+      "debug = \"off\"\n",
+      "verbose = \"on\"\n",
+    };
+    configFile.append(defaultConfig);
+  }
+
+  // Load the configuration data.
+  config.load (configFileLocation);
+
+  // This value is not written out to disk, as there would be no point.
+  // Having located the config file, the 'db' location is already known.
+  // This is just for subsequent internal use.
+  config.set ("temp.db", dbLocation);
+  config.set ("temp.config", configFileLocation);
+
+  // Perhaps some subsequent code would like to know this is a new db and possibly a first run.
+  if (! dataLocationExists)
+    config.set ("temp.shiny", 1);
+}
+*/
 
   for (auto& arg : cli._args)
   {
@@ -115,9 +193,8 @@ void initializeDataAndConfig (
     }
   }
 
-  std::string dbDataDir = paths::dbDataDir ();
   // Initialize the database (no data read), but files are enumerated.
-  database.initialize (dbDataDir);
+  database.initialize (getDataDirectory ());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,6 +240,38 @@ int dispatchCommand (
   }
 
   return status;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string getConfigLocation ()
+{
+  auto p = getenv ("XDG_CONFIG_HOME");
+  if (p)
+    return std::string (p);
+
+  return "~/.config";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string getDataLocation ()
+{
+  auto p = getenv ("XDG_DATA_HOME");
+  if (p)
+    return std::string (p);
+
+  return "~/.local/share";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string getConfigFile ()
+{
+  return getConfigLocation () + "/config.lua";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string getDataDirectory ()
+{
+  return getDataLocation () + "/data";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
