@@ -76,11 +76,11 @@ void initializeDataAndConfig (
   {
     if (arg.hasTag ("HINT"))
     {
-      if (arg.attribute ("canonical") == ":debug")   config.set ("debug",        "on");
-      if (arg.attribute ("canonical") == ":quiet")   config.set ("verbose",      "off");
-      if (arg.attribute ("canonical") == ":color")   config.set ("color",        "on");
-      if (arg.attribute ("canonical") == ":nocolor") config.set ("color",        "off");
-      if (arg.attribute ("canonical") == ":yes")     config.set ("confirmation", "off");
+      if (arg.attribute ("canonical") == ":debug")   config.set ("debug",        true);
+      if (arg.attribute ("canonical") == ":quiet")   config.set ("verbose",      false);
+      if (arg.attribute ("canonical") == ":color")   config.set ("color",        true);
+      if (arg.attribute ("canonical") == ":nocolor") config.set ("color",        false);
+      if (arg.attribute ("canonical") == ":yes")     config.set ("confirmation", false);
     }
   }
 
