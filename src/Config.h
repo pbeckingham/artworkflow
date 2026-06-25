@@ -45,9 +45,10 @@ public:
   double      getReal    (const std::string&, double = 0.0) const;
   bool        getBoolean (const std::string&, bool = false) const;
 
+  void set (const std::string&, const std::string&);
   void set (const std::string&, int);
   void set (const std::string&, double);
-  void set (const std::string&, const std::string&);
+  void set (const std::string&, bool);
 
 private:
   std::string _original_file {};

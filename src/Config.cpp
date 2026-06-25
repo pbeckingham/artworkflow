@@ -44,7 +44,17 @@ void Config::load (const std::string& file)
 {
   assert (_lua);
   _original_file = file;
-  // TODO Load the lua file.
+
+  try
+  {
+    _lua->safe_script_file (_original_file);
+    debug ("Configuration file loaded");
+  }
+  catch (sol::error& e)
+  {
+    debug ("Configuration file error:");
+    std::cout << std::string (e.what ()) << '\n';
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +94,12 @@ bool Config::getBoolean (const std::string& key, bool defaultValue) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void Config::set (const std::string& key, const std::string& value)
+{
+  assert (_lua);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const int value)
 {
   assert (_lua);
@@ -96,7 +112,7 @@ void Config::set (const std::string& key, const double value)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void Config::set (const std::string& key, const std::string& value)
+void Config::set (const std::string& key, const bool value)
 {
   assert (_lua);
 }
