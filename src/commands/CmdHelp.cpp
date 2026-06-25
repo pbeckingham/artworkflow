@@ -38,7 +38,6 @@ int CmdHelpUsage ()
             << "       artworkflow get <DOM> [<DOM> ...]\n"
             << "       artworkflow help [<command>]\n"
             << "       artworkflow info <id>\n"
-            << "       artworkflow show\n"
             << '\n'
             << "Hints:\n"
             << "       :debug       Debug mode, showing all processing\n"
