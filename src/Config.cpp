@@ -69,52 +69,56 @@ bool Config::has (const std::string& key) const
 std::string Config::get (const std::string& key, const std::string& defaultValue) const
 {
   assert (_lua);
-  return defaultValue;
+  return (*_lua)[key].get_or<std::string> (defaultValue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 int Config::getInteger (const std::string& key, int defaultValue) const
 {
   assert (_lua);
-  return defaultValue;
+  return (*_lua)[key].get_or (defaultValue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 double Config::getReal (const std::string& key, double defaultValue) const
 {
   assert (_lua);
-  return 0.0;
+  return (*_lua)[key].get_or (defaultValue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 bool Config::getBoolean (const std::string& key, bool defaultValue) const
 {
   assert (_lua);
-  return defaultValue;
+  return (*_lua)[key].get_or (defaultValue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const std::string& value)
 {
   assert (_lua);
+  (*_lua)[key] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const int value)
 {
   assert (_lua);
+  (*_lua)[key] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const double value)
 {
   assert (_lua);
+  (*_lua)[key] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const bool value)
 {
   assert (_lua);
+  (*_lua)[key] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
