@@ -122,9 +122,7 @@ int getTerminalWidth ()
   {
     char *columns = getenv ("COLUMNS");
     if (columns != NULL)
-    {
       terminalWidth = atoi (columns);
-    }
   }
 
   return terminalWidth > 0 ? terminalWidth : 80;

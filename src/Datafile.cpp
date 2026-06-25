@@ -140,9 +140,7 @@ void Datafile::commit ()
         // Write out all the lines.
         file.truncate ();
         for (auto& line : _lines)
-        {
           file.write_raw (line + '\n');
-        }
 
         _dirty = false;
       }

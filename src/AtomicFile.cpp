@@ -166,9 +166,8 @@ size_t AtomicFile::impl::size () const
   struct stat s;
   const char *filename = (is_temp_active) ? temp_file._data.c_str () : real_file._data.c_str ();
   if (stat (filename, &s))
-  {
     throw format ("stat error {1}: {2}", errno, strerror (errno));
-  }
+
   return s.st_size;
 }
 
@@ -205,11 +204,10 @@ void AtomicFile::impl::remove ()
 ////////////////////////////////////////////////////////////////////////////////
 void AtomicFile::impl::read (std::string& content)
 {
+  // Close the file before reading it in order to flush any buffers.
   if (is_temp_active)
-  {
-    // Close the file before reading it in order to flush any buffers.
     temp_file.close ();
-  }
+
   return (is_temp_active) ? temp_file.read (content) :
                             real_file.read (content);
 }
@@ -217,11 +215,10 @@ void AtomicFile::impl::read (std::string& content)
 ////////////////////////////////////////////////////////////////////////////////
 void AtomicFile::impl::read (std::vector <std::string>& lines)
 {
+  // Close the file before reading it in order to flush any buffers.
   if (is_temp_active)
-  {
-    // Close the file before reading it in order to flush any buffers.
     temp_file.close ();
-  }
+
   return (is_temp_active) ? temp_file.read (lines) :
                             real_file.read (lines);
 }
@@ -236,10 +233,8 @@ void AtomicFile::impl::append (const std::string& content)
       is_temp_active = true;
 
       if (real_file.exists () && ! File::copy (real_file, temp_file))
-      {
         throw format ("Failed to copy '{1}' to '{2}'",
                       real_file.name (), temp_file.name ());
-      }
     }
     return temp_file.append (content);
   }
@@ -274,10 +269,8 @@ void AtomicFile::impl::finalize ()
     {
       debug (format ("Moving '{1}' -> '{2}'", temp_file._data, real_file._data));
       if (std::rename (temp_file._data.c_str (), real_file._data.c_str ()))
-      {
         throw format("Failed copying '{1}' to '{2}'. Database corruption possible.",
             temp_file._data, real_file._data);
-      }
     }
     else
     {
@@ -304,9 +297,7 @@ AtomicFile::AtomicFile (const Path& path)
     impl::atomic_files.push_back (pimpl);
   }
   else
-  {
     pimpl = *it;
-  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -415,9 +406,7 @@ void AtomicFile::write (const Path& path, const std::vector <std::string>& lines
   AtomicFile file (path);
   file.truncate ();
   for (const auto& line : lines)
-  {
     file.append (line + '\n');
-  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -436,18 +425,13 @@ void AtomicFile::read (const Path& path, std::vector <std::string>& lines)
 void AtomicFile::finalize_all ()
 {
   if (! impl::allow_atomics)
-  {
     throw std::string {"Unable to update database."};
-  }
 
   // Step 1: Close / Flush all the atomic files that may still be open. If any
   // of the files fail this step (close () will throw) then we do not want to
   // move on to step 2
   for (auto& file : impl::atomic_files)
-  {
     file->close ();
-  }
-
 
   sigset_t new_mask;
   sigset_t old_mask;
@@ -456,21 +440,15 @@ void AtomicFile::finalize_all ()
   // Step 2: Rename the temp files to the *real* file
   sigprocmask (SIG_SETMASK, &new_mask, &old_mask);
   for (auto& file : impl::atomic_files)
-  {
     file->finalize ();
-  }
   sigprocmask (SIG_SETMASK, &old_mask, nullptr);
 
   // Step 3: Cleanup any references
   impl::atomic_files_t new_atomic_files;
   for (auto& file : impl::atomic_files)
-  {
     // Delete entry if we are holding the last reference
     if (file.use_count () > 1)
-    {
       new_atomic_files.push_back(file);
-    }
-  }
 
   new_atomic_files.swap(impl::atomic_files);
 }

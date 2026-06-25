@@ -59,9 +59,7 @@ void debug (const std::string& msg)
     std::stringstream sstr (msg);
     std::string line;
     while (std::getline (sstr, line, '\n'))
-    {
       std::cout << debugColor.colorize (debugIndicator + " " + line) << "\n";
-    }
   }
 }
 

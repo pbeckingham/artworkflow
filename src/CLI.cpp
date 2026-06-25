@@ -304,7 +304,8 @@ std::string CLI::findSubCommand(const std::set<std::string>& subCommands) {
         a.hasTag("HINT")) {
       continue;
     }
-    if (subCommands.find(a.attribute("raw")) != subCommands.end()) {
+    if (subCommands.find(a.attribute("raw")) != subCommands.end())
+    {
       a.tag ("CMD");
       return a.attribute("raw");
     }
@@ -451,9 +452,7 @@ void CLI::canonicalizeNames ()
   {
     // Do not canonicalize the BINARY
     if (a.hasTag ("BINARY"))
-    {
       continue;
-    }
 
     auto raw = a.attribute ("raw");
     std::string canonical = raw;
@@ -525,9 +524,7 @@ void CLI::identifyFilter ()
 
     else if (a._lextype == Lexer::Type::date ||
              a._lextype == Lexer::Type::duration)
-    {
       a.tag ("FILTER");
-    }
 
     else if (raw == "from"   ||
              raw == "since"  ||
