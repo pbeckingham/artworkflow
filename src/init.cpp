@@ -150,9 +150,13 @@ void initializeConfigAndDatabase (Config& config)
     configFile.append(defaultConfig);
   }
 
-  // Load the configuration data.
-  config.load (configFileLocation);
+*/
 
+  // Load the configuration data.
+  File configFile (getConfigFile ());
+  config.load (configFile.realpath ());
+
+/*
   // This value is not written out to disk, as there would be no point.
   // Having located the config file, the 'db' location is already known.
   // This is just for subsequent internal use.
@@ -265,13 +269,13 @@ std::string getDataLocation ()
 ////////////////////////////////////////////////////////////////////////////////
 std::string getConfigFile ()
 {
-  return getConfigLocation () + "/config.lua";
+  return getConfigLocation () + "/artworkflow/config.lua";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 std::string getDataDirectory ()
 {
-  return getDataLocation () + "/data";
+  return getDataLocation () + "/artworkflow/data";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
