@@ -52,11 +52,9 @@ int main (int argc, const char** argv)
 
   try
   {
-    // Create the Lua VM and load its libraries.
+    // Create the Lua VM, load its libraries, and construct the Config object.
     sol::state lua;
     lua.open_libraries (sol::lib::base, sol::lib::io, sol::lib::math, sol::lib::table);
-
-    // Config provides settings access to all code.
     Config config (lua);
 
     // Add entities so that command line tokens such as 'help' are recognized as
