@@ -145,17 +145,6 @@ int CmdDiagnostics (
 
   // Config: ~/.config/artworkflow/config.lua found, readable, writable
   out << "Configuration\n";
-/*
-      << "       File: " << context.config._original_file._data << " "
-      << (context.config._original_file.exists ()
-           ? STRING_CMD_DIAG_FOUND
-           : STRING_CMD_DIAG_MISSING)
-      << ", " << context.config._original_file.size () << " " << "bytes"
-      << ", mode "
-      << std::setbase (8)
-      << context.config._original_file.mode ()
-      << '\n';
-*/
 
   File cfg (getConfigFile ());
   out << "            Cfg: " << describeFile (cfg) << '\n';
