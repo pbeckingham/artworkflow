@@ -50,6 +50,7 @@ int CmdHelpUsage ()
             << "       dom.<id>.<meta>\n"
             << "       dom.<id>.[start|end|varnish|action].[year|month|day|age]\n"
             << "       dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]\n"
+            << "       dom.config.<name>\n"
             << '\n';
 
   return 0;

@@ -43,7 +43,6 @@ int CmdGet (
   for (auto& reference : references)
   {
     std::string value;
-
     if (! domGet (database, config, reference, value))
       throw format ("DOM reference '{1}' is not valid.", reference);
 

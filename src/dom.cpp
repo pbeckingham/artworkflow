@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2016, 2018 - 2023, 2025, Gothenburg Bit Factory.
+// Copyright 2026, Paul Beckingham.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -118,8 +118,8 @@ bool domGet (
       // TODO dom.<id>.<meta>
       // TODO dom.<id>.[start|end|varnish|action].[year|month|day|age]
 
-      // dom.rc.<name>
-      else if (pig.skipLiteral ("rc."))
+      // dom.comfig.<name>
+      else if (pig.skipLiteral ("config."))
       {
         std::string name;
         if (pig.getRemainder (name))
