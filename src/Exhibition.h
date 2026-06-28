@@ -24,8 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_PAINTING
-#define INCLUDED_PAINTING
+#ifndef INCLUDED_EXHIBITION
+#define INCLUDED_EXHIBITION
 
 #include <map>
 #include <string>
