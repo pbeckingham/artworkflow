@@ -99,6 +99,52 @@ void Database::modifyPainting (const Painting& from, const Painting& to, bool ve
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+std::vector<Exhibition> Database::allExhibitions ()
+{
+  return _paintings.allExhibitions ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void Database::addExhibition (const Exhibition& painting, bool verbose)
+{
+/*
+  assert ((interval.end == 0) || (interval.start <= interval.end));
+
+  // Get the index into _files for the appropriate Datafile, which may be created on demand.
+  auto df = getDatafile (interval.start.year (), interval.start.month ());
+  _files[df].addExhibition (interval);
+*/
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void Database::deleteExhibition (const Exhibition& painting)
+{
+/*
+  // Get the index into _files for the appropriate Datafile, which may be
+  // created on demand.
+  auto df = getDatafile (interval.start.year (), interval.start.month ());
+
+  _files[df].deleteExhibition (interval);
+*/
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// The algorithm to modify an interval is first to find and remove it from the
+// Datafile, then add it back to the right Datafile. This is because
+// modification may involve changing the start date, which could mean the
+// Exhibition belongs in a different file.
+void Database::modifyExhibition (const Exhibition& from, const Exhibition& to, bool verbose)
+{
+/*
+  if (! from.empty ())
+    deleteExhibition (from);
+
+  if (! to.empty ())
+    addExhibition (to, verbose);
+*/
+}
+
+////////////////////////////////////////////////////////////////////////////////
 std::string Database::dump () const
 {
   std::stringstream out;

@@ -28,6 +28,8 @@
 #define INCLUDED_DATABASE
 
 #include <Datafile.h>
+#include <Painting.h>
+#include <Exhibition.h>
 #include <string>
 #include <vector>
 
@@ -42,6 +44,11 @@ public:
   void addPainting (const Painting&, bool verbose);
   void deletePainting (const Painting&);
   void modifyPainting (const Painting&, const Painting&, bool verbose);
+
+  std::vector <Exhibition> allExhibitions ();
+  void addExhibition (const Exhibition&, bool verbose);
+  void deleteExhibition (const Exhibition&);
+  void modifyExhibition (const Exhibition&, const Exhibition&, bool verbose);
 
   std::string dump () const;
 

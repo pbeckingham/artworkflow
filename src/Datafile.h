@@ -30,6 +30,7 @@
 #include <FS.h>
 #include <Datetime.h>
 #include <Painting.h>
+#include <Exhibition.h>
 #include <string>
 #include <vector>
 
@@ -42,9 +43,11 @@ public:
 
   const std::vector <std::string>& allLines ();
   const std::vector <Painting> allPaintings ();
-
   void addPainting (const Painting&);
   void deletePainting (const Painting&);
+  const std::vector <Exhibition> allExhibitions ();
+  void addExhibition (const Exhibition&);
+  void deleteExhibition (const Exhibition&);
   void commit ();
 
   std::string dump () const;

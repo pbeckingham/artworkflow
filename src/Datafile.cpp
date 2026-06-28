@@ -124,6 +124,74 @@ void Datafile::deletePainting (const Painting& painting)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+const std::vector <Exhibition> Datafile::allExhibitions ()
+{
+  std::vector <Exhibition> all;
+  for (auto& line : allLines ())
+    all.push_back (Exhibition (line));
+
+  return all;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Accepted exhibitions: Valid ID
+//                     Valid Title
+void Datafile::addExhibition (const Exhibition& exhibition)
+{
+  assert (exhibition.id () != "");
+
+  if (! _lines_loaded)
+    load_lines ();
+
+  auto composed = exhibition.compose ();
+  debug (format ("Exhibition {1}: {2}", exhibition.id(), composed));
+
+/*
+  const std::string serialization = interval.serialize ();
+
+  // Ensure that the IntervalFactory can properly parse the serialization before
+  // adding it to the database.
+  try
+  {
+    Interval test = IntervalFactory::fromSerialization (serialization);
+    test.id = interval.id;
+    if (interval != test)
+      throw (format ("Encode / decode check failed:\n  {1}\nis not equal to:\n  {2}",
+                     interval.dump (), test.dump ()));
+
+    _lines.push_back (serialization);
+    debug (format ("{1}: Added {2}", _file.name (), _lines.back ()));
+    _dirty = true;
+  }
+  catch (const std::string& error)
+  {
+    debug (format ("Datafile::addInterval() failed.\n{1}", error));
+    throw std::string ("Internal error. Failed encode / decode check.");
+  }
+*/
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void Datafile::deleteExhibition (const Exhibition& exhibition)
+{
+  assert (exhibition.id () != "");
+
+  if (! _lines_loaded)
+    load_lines ();
+
+/*
+  auto serialized = interval.serialize ();
+  auto i = std::find (_lines.begin (), _lines.end (), serialized);
+  if (i == _lines.end ())
+    throw format ("Datafile::deleteInterval failed to find '{1}'", serialized);
+
+  _lines.erase (i);
+  _dirty = true;
+  debug (format ("{1}: Deleted {2}", _file.name (), serialized));
+*/
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void Datafile::commit ()
 {
   // The _dirty flag indicates that the file needs to be written.
