@@ -61,6 +61,7 @@ public:
   bool is_sold () const;
   bool is_gifted () const;
   bool is_abandoned () const;
+  bool is_destroyed () const;
 
   bool matches (const std::string&);
 

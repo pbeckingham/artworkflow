@@ -171,6 +171,12 @@ bool Painting::is_abandoned () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_destroyed () const
+{
+  return _action != "" && _action[0] == 'd';
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
