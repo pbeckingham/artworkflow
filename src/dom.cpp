@@ -124,6 +124,7 @@ bool domGet (
         std::string name;
         if (pig.getRemainder (name))
         {
+          // TODO Need type coercion. If it's a boolean, render it as a string, etc.
           value = config.get (name);
           return true;
         }
