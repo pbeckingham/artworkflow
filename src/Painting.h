@@ -54,6 +54,8 @@ public:
   std::string complexity () const;
   std::string notes () const;
 
+  bool is_concept () const;
+
   bool matches (const std::string&);
 
   const std::string compose () const;

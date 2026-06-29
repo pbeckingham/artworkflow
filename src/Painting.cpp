@@ -129,6 +129,12 @@ std::string Painting::notes () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_concept () const
+{
+  return _id != "" && _title != "" && _start == "";
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
