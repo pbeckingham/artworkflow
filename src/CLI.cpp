@@ -128,6 +128,7 @@ std::string A2::dump () const
     else if (tag == "FILTER")        tags += "\033[1;37;45m"             + tag + "\033[0m ";
     else if (tag == "CONFIG")        tags += "\033[1;37;101m"            + tag + "\033[0m ";
     else if (tag == "ID")            tags += "\033[38;5;7m\033[48;5;34m" + tag + "\033[0m ";
+    else if (tag == "EID")           tags += "\033[38;5;7m\033[48;5;34m" + tag + "\033[0m ";
     else                             tags += "\033[32m"                  + tag + "\033[0m ";
   }
 
@@ -580,7 +581,7 @@ std::set <std::string> CLI::getIds () const
   std::set <std::string> ids;
 
   for (auto& arg : _args)
-    if (arg.hasTag ("ID"))
+    if (arg.hasTag ("ID") || arg.hasTag ("EID"))
       ids.insert (arg.attribute ("raw"));
 
   return ids;
