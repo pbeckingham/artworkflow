@@ -177,6 +177,12 @@ bool Painting::is_destroyed () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_varnished () const
+{
+  return _varnish != "";
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
