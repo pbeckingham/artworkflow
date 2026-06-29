@@ -56,6 +56,7 @@ public:
 
   bool is_concept () const;
   bool is_wip () const;
+  bool is_drying () const;
 
   bool matches (const std::string&);
 

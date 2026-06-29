@@ -141,6 +141,12 @@ bool Painting::is_wip () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_drying () const
+{
+  return _end != "" && _varnish == "";
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
