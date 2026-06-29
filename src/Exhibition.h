@@ -48,6 +48,8 @@ public:
   std::string pickup () const;
   std::string title () const;
 
+  bool matches (const std::string&);
+
   const std::string compose () const;
 
   bool validate (std::vector <std::string>&) const;
