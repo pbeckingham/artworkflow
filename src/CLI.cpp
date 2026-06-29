@@ -433,13 +433,20 @@ void CLI::identifyOverrides ()
 ////////////////////////////////////////////////////////////////////////////////
 // Scan all arguments and identify instances of:
 //   ^#?S?\d\d\d+[a-z]?$
+//   ^\d{4}\.\d+$
 void CLI::identifyIds ()
 {
-  RX rID ("^#?S?\\d\\d\\d+[a-z]?$", true);
+  RX rPaintingID ("^#?S?\\d\\d\\d+[a-z]?$", true);
+  RX rExhibitionID ("^\\d{4}\\.\\d+$");
 
   for (auto& a : _args)
-    if (rID.match (a.attribute ("raw")))
+  {
+    if (rPaintingID.match (a.attribute ("raw")))
       a.tag ("ID");
+
+    if (rExhibitionID.match (a.attribute ("raw")))
+      a.tag ("EID");
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
