@@ -159,6 +159,12 @@ bool Painting::is_sold () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_gifted () const
+{
+  return _action != "" && _action[0] == 'g';
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
