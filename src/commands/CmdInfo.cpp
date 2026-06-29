@@ -49,8 +49,20 @@ int CmdInfo (
           std::cout << "  Varnished   " << painting.varnish ().substr (1, std::string::npos) << '\n';
         if (painting.series () != "")
           std::cout << "  Series      " << painting.series () << '\n';
+        if (painting.size () != "")
+          std::cout << "  Size        " << painting.size () << '\n';
         if (painting.substrate () != "")
           std::cout << "  Substrate   " << painting.substrate () << '\n';
+        if (painting.tagged () != "")
+          std::cout << "  Tagged      " << painting.tagged () << '\n';
+        if (painting.varnished () != "")
+          std::cout << "  Varnished   " << painting.varnished () << '\n';
+        if (painting.archived () != "")
+          std::cout << "  Archived    " << painting.archived () << '\n';
+        if (painting.www () != "")
+          std::cout << "  WWW         " << painting.www () << '\n';
+        if (painting.complexity () != "")
+          std::cout << "  Complexity  " << painting.complexity () << '\n';
       }
 
   return 0;
