@@ -153,6 +153,12 @@ bool Painting::is_inventory () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_sold () const
+{
+  return _action != "" && _action[0] == '$';
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
