@@ -135,6 +135,12 @@ bool Painting::is_concept () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_wip () const
+{
+  return _start != "" && _end == "";
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");

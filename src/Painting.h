@@ -55,6 +55,7 @@ public:
   std::string notes () const;
 
   bool is_concept () const;
+  bool is_wip () const;
 
   bool matches (const std::string&);
 
