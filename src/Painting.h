@@ -58,7 +58,7 @@ public:
 
   const std::string compose () const;
 
-  bool validate() const;
+  bool validate (std::vector <std::string>&) const;
   std::string dump (const std::string& title = "Painting") const;
 
 private:

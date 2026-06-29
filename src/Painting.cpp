@@ -144,35 +144,87 @@ const std::string Painting::compose () const
 // Note that incomplete data should validate.
 //
 // TODO Ensure all dates are in logical sequence
-/*
-      # Logical inconsistencies in the data file.
-      if bool(varnish_date) != bool(varnish) and action != 'd':
-        errors.append(f'#{serial} {title} has inconsistent varnish information')
-
-      if start_date and action != 'd' and not size:
-        errors.append(f'#{serial} {title} is missing size information')
-
-      if start_date and action != 'd' and not substrate:
-        errors.append(f'#{serial} {title} is missing substrate information')
-
-      if end_date and not action:
-        if not tagged:
-          errors.append(f'#{serial} {title} is not tagged')
-        if not archive:
-          errors.append(f'#{serial} {title} is not listed on ArtworkArchive')
-        #if not www and 'NFS' not in notes:
-        #  errors.append(f'#{serial} {title} is not listed on paulbeckingham.com')
-
-      if action == '$' and action_date and not varnish_date:
-        errors.append(f'#{serial} {title} is sold unvarnished')
-
-      if end_date and not action and title.startswith('[') and title.endswith(']'):
-        errors.append(f'#{serial} {title} needs a title')
-*/
-bool Painting::validate () const
+// TODO Ensure completion hours are tracked
+bool Painting::validate (std::vector <std::string>& errors) const
 {
-  if (_id    == "" || _title == "")
+  if (_id == "")
+  {
+    errors.push_back ("Missing ID");
     return false;
+  }
+
+  if (_title == "")
+  {
+    errors.push_back (format ("{1} Missing title", _id));
+    return false;
+  }
+
+  if ((_varnished != "" && _varnish == "") ||
+      (_varnished == "" && _varnish != ""))
+  {
+    errors.push_back (format ("{1} Inconsistent varnish information", _id));
+    return false;
+  }
+
+  if (_action != "" && (_action [0] == '$' || _action[0] == 'g') && _varnish == "")
+  {
+    errors.push_back (format ("{1} Sold unvarnished", _id));
+    return false;
+  }
+
+  if (_series == "")
+  {
+    errors.push_back (format ("{1} is missing a series", _id));
+    return false;
+  }
+
+  if ((_end != "" || _varnish != "") && _start == "")
+  {
+    errors.push_back (format ("{1} is missing a start date", _id));
+    return false;
+  }
+
+  if (_varnish != "" && _end == "")
+  {
+    errors.push_back (format ("{1} is missing an end date", _id));
+    return false;
+  }
+
+  if (_substrate == "")
+  {
+    errors.push_back (format ("{1} is missing a subsstrate", _id));
+    return false;
+  }
+
+  if (_size == "")
+  {
+    errors.push_back (format ("{1} is missing a size", _id));
+    return false;
+  }
+
+  if (_end != "" && _tagged == "")
+  {
+    errors.push_back (format ("{1} is not tagged", _id));
+    return false;
+  }
+
+  if (_varnished != "" && _www == "")
+  {
+    errors.push_back (format ("{1} is not posted on website", _id));
+    return false;
+  }
+
+  if (_varnished != "" && _archived == "")
+  {
+    errors.push_back (format ("{1} is not archived", _id));
+    return false;
+  }
+
+  if (_end != "" && _complexity == "")
+  {
+    errors.push_back (format ("{1} is missing a complexity", _id));
+    return false;
+  }
 
   return true;
 }
