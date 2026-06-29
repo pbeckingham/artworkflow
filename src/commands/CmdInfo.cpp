@@ -37,33 +37,55 @@ int CmdInfo (
   Database& database)
 {
   for (auto& id : cli.getIds ())
+  {
     for (auto& painting : database.allPaintings ())
       if (painting.matches (id))
       {
         std::cout << painting.id () << " " << painting.title () << '\n';
         if (painting.start () != "")
-          std::cout << "  Started     " << painting.start ().substr (1, std::string::npos) << '\n';
+          std::cout << "  Started      " << painting.start ().substr (1, std::string::npos) << '\n';
         if (painting.end () != "")
-          std::cout << "  Ended       " << painting.end ().substr (1, std::string::npos) << '\n';
+          std::cout << "  Ended        " << painting.end ().substr (1, std::string::npos) << '\n';
         if (painting.varnish () != "")
-          std::cout << "  Varnished   " << painting.varnish ().substr (1, std::string::npos) << '\n';
+          std::cout << "  Varnished    " << painting.varnish ().substr (1, std::string::npos) << '\n';
         if (painting.series () != "")
-          std::cout << "  Series      " << painting.series () << '\n';
+          std::cout << "  Series       " << painting.series () << '\n';
         if (painting.size () != "")
-          std::cout << "  Size        " << painting.size () << '\n';
+          std::cout << "  Size         " << painting.size () << '\n';
         if (painting.substrate () != "")
-          std::cout << "  Substrate   " << painting.substrate () << '\n';
+          std::cout << "  Substrate    " << painting.substrate () << '\n';
         if (painting.tagged () != "")
-          std::cout << "  Tagged      " << painting.tagged () << '\n';
+          std::cout << "  Tagged       " << painting.tagged () << '\n';
         if (painting.varnished () != "")
-          std::cout << "  Varnished   " << painting.varnished () << '\n';
+          std::cout << "  Varnished    " << painting.varnished () << '\n';
         if (painting.archived () != "")
-          std::cout << "  Archived    " << painting.archived () << '\n';
+          std::cout << "  Archived     " << painting.archived () << '\n';
         if (painting.www () != "")
-          std::cout << "  WWW         " << painting.www () << '\n';
+          std::cout << "  WWW          " << painting.www () << '\n';
         if (painting.complexity () != "")
-          std::cout << "  Complexity  " << painting.complexity () << '\n';
+          std::cout << "  Complexity   " << painting.complexity () << '\n';
       }
+
+    for (auto& exhibition : database.allExhibitions ())
+      if (exhibition.matches (id))
+      {
+        std::cout << exhibition.id () << " " << exhibition.title () << '\n';
+        if (exhibition.submission () != "")
+          std::cout << "  Submission   " << exhibition.submission () << '\n';
+        if (exhibition.notification () != "")
+          std::cout << "  Notification " << exhibition.notification () << '\n';
+        if (exhibition.delivery () != "")
+          std::cout << "  Delivery     " << exhibition.delivery () << '\n';
+        if (exhibition.opening () != "")
+          std::cout << "  Opening      " << exhibition.opening () << '\n';
+        if (exhibition.reception () != "")
+          std::cout << "  Reception    " << exhibition.reception () << '\n';
+        if (exhibition.closing () != "")
+          std::cout << "  Closing      " << exhibition.closing () << '\n';
+        if (exhibition.pickup () != "")
+          std::cout << "  Pickup       " << exhibition.pickup () << '\n';
+      }
+  }
 
   return 0;
 }
