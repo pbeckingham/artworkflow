@@ -39,6 +39,7 @@ bool domGet (
   const std::string& reference,
   std::string& value)
 {
+  // Find the lowest ID that is not currently used.
   if (reference == "dom.newid")
   {
     // Load all objects, extract the integer form or ID.

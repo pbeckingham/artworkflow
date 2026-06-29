@@ -47,6 +47,7 @@ int CmdHelpUsage ()
             << "       :yes         Override confirmation requests\n"
             << '\n'
             << "DOM References:\n"
+            << "       dom.newid\n"
             << "       dom.<id>.<meta>\n"
             << "       dom.<id>.[start|end|varnish|action].[year|month|day|age]\n"
             << "       dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]\n"
