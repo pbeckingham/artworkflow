@@ -41,8 +41,22 @@ bool domGet (
 {
   if (reference == "dom.newid")
   {
-    // TODO Load all objects, find open slot or increment the highest.
-    value = "0001";
+    // Load all objects, extract the integer form or ID.
+    std::vector <int> ids;
+    for (auto& p : database.allPaintings ())
+      ids.push_back (strtol (p.id ().c_str (), nullptr, 10));
+
+    // Find the first gap.
+    int id = 1;
+    while (std::find (ids.begin (), ids.end (), id) != ids.end ())
+      ++id;
+
+    // Use whichever number id contains. This is safe and free of wrapping
+    // below INT_MAX, which is a lot.
+    debug (format ("{1} paintings loaded", ids.size ()));
+    debug (format ("{1} is free", id));
+
+    value = "#" + rightJustifyZero (id, 3);
     return true;
   }
   else
