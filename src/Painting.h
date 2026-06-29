@@ -57,6 +57,7 @@ public:
   bool is_concept () const;
   bool is_wip () const;
   bool is_drying () const;
+  bool is_inventory () const;
 
   bool matches (const std::string&);
 
