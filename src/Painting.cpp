@@ -165,6 +165,12 @@ bool Painting::is_gifted () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_abandoned () const
+{
+  return _notes.find ("Abandoned") != std::string::npos;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
