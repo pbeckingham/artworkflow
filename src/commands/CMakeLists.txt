@@ -10,5 +10,6 @@ set (commands_SRCS CmdDefault.cpp
                    CmdGet.cpp
                    CmdHelp.cpp
                    CmdInfo.cpp
+                   CmdNew.cpp
                    CmdVersion.cpp)
 add_library (commands STATIC ${commands_SRCS})

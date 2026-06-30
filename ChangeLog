@@ -10,6 +10,8 @@
 0.0.7 () Exhibition object I/O
 
 - Implemented Exhibition object
+- Extended info command to show exhibitions
+- Implemented dom.newid
 
 ------ stable ------------------------------------
 ------ current release ---------------------------
