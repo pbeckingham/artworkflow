@@ -32,6 +32,7 @@
 #include <RX.h>
 #include <Lexer.h>
 #include <Painting.h>
+#include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 Painting::Painting (const std::string& line)
@@ -310,10 +311,10 @@ std::string Painting::dump (const std::string& title) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// A painting ID is: ^#S?\d\d\d[a-d]?\s
+// A painting ID is: ^#S?\d\d\d[a-d]?
 bool Painting::is_painting (const std::string& line)
 {
-  RX id ("^#S?\d\d\d[a-d]?\s");
+  RX id ("^#S?\\d\\d\\d[a-d]?");
   return id.match (line);
 }
 
