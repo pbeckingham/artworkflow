@@ -85,7 +85,7 @@ void PEG::loadFromString (const std::string& input)
   std::string rule_name;
   for (auto& line : loadImports (split (input, '\n')))
   {
-    line = trim (removeComment (line));
+    line = Lexer::trim (removeComment (line));
 
     // Skip blank lines with no semantics.
     if (line.empty () && rule_name.empty ())
@@ -286,11 +286,11 @@ std::vector <std::string> PEG::loadImports (const std::vector <std::string>& lin
 
   for (auto& line : lines)
   {
-    auto copy = trim (removeComment (line));
+    auto copy = Lexer::trim (removeComment (line));
 
     if (copy.find ("import ") == 0)
     {
-      File file (trim (copy.substr (7)));
+      File file (Lexer::trim (copy.substr (7)));
       if (file.exists () &&
           file.readable ())
       {

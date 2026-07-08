@@ -31,6 +31,7 @@
 #include <cmath>
 #include <csignal>
 #include <cstring>
+#include <Lexer.h>
 #include <format.h>
 #include <iostream>
 #include <shared.h>
@@ -155,44 +156,6 @@ std::string str_replace (
   }
 
   return modified;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-std::string trim (const std::string& input, const std::string& edible)
-{
-  auto start = input.find_first_not_of (edible);
-  auto end   = input.find_last_not_of  (edible);
-
-  if (start == std::string::npos)
-    return "";
-
-  if (end == std::string::npos)
-    return input.substr (start);
-
-  return input.substr (start, end - start + 1);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-std::string ltrim (const std::string& input, const std::string& edible)
-{
-  auto start = input.find_first_not_of (edible);
-  if (start == std::string::npos)
-    return "";
-
-  return input.substr (start);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-std::string rtrim (const std::string& input, const std::string& edible)
-{
-  if (input.find_first_not_of (edible) == std::string::npos)
-    return "";
-
-  auto end = input.find_last_not_of (edible);
-  if (end == std::string::npos)
-    return input;
-
-  return input.substr (0, end + 1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -679,7 +642,7 @@ bool confirm (const std::string& question)
 
     std::string answer;
     std::getline (std::cin, answer);
-    answer = std::cin.eof () ? "no" : lowerCase (trim (answer));
+    answer = std::cin.eof () ? "no" : lowerCase (Lexer::trim (answer));
 
     autoComplete (answer, options, matches, 1); // Hard-coded 1.
   }

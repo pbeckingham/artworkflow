@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <Color.h>
+#include <Lexer.h>
 #include <cstdlib>
 #include <format.h>
 #include <shared.h>
@@ -144,7 +145,7 @@ Color::Color (const std::string& spec)
   int index;
   for (auto& word : words)
   {
-    word = lowerCase (trim (word));
+    word = lowerCase (Lexer::trim (word));
 
          if (word == "bold")      fg_value |= _COLOR_BOLD;
     else if (word == "bright")    bg_value |= _COLOR_BRIGHT;

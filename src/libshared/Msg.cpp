@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <Msg.h>
+#include <Lexer.h>
 #include <format.h>
 #include <shared.h>
 
@@ -102,7 +103,7 @@ bool Msg::parse (const std::string& input)
     if (delimiter == std::string::npos)
         throw std::string ("Malformed message header '") + i + '\'';
 
-    _header[trim (i.substr (0, delimiter))] = trim (i.substr (delimiter + 1));
+    _header[Lexer::trim (i.substr (0, delimiter))] = Lexer::trim (i.substr (delimiter + 1));
   }
 
   // Parse payload.

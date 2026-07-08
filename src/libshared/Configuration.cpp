@@ -27,6 +27,7 @@
 #include <Configuration.h>
 #include <FS.h>
 #include <JSON.h>
+#include <Lexer.h>
 #include <cinttypes>
 #include <cstdlib>
 #include <format.h>
@@ -180,14 +181,14 @@ void Configuration::parse (
       line = line.substr (0, pound);
 
     // Skip empty lines.
-    line = trim (line);
+    line = Lexer::trim (line);
     if (!line.empty ())
     {
       auto equal = line.find ('=');
       if (equal != std::string::npos)
       {
-        std::string key   = trim (line.substr (0, equal));
-        std::string value = trim (line.substr (equal+1, line.length () - equal));
+        std::string key   = Lexer::trim (line.substr (0, equal));
+        std::string value = Lexer::trim (line.substr (equal+1, line.length () - equal));
         value = Path::expand(value);
 
         (*this)[key] = json::decode (value);
@@ -197,7 +198,7 @@ void Configuration::parse (
         auto include = line.find ("include");
         if (include != std::string::npos)
         {
-          Path included (trim (line.substr (include + 7)));
+          Path included (Lexer::trim (line.substr (include + 7)));
 
           do
           {
