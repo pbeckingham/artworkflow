@@ -29,6 +29,7 @@
 #include <string>
 #include <shared.h>
 #include <format.h>
+#include <RX.h>
 #include <Lexer.h>
 #include <Painting.h>
 
@@ -306,6 +307,14 @@ std::string Painting::dump (const std::string& title) const
       << "_notes      " << _notes       << '\n';
 
   return out.str ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// A painting ID is: ^#S?\d\d\d[a-d]?\s
+bool Painting::is_painting (const std::string& line)
+{
+  RX id ("^#S?\d\d\d[a-d]?\s");
+  return id.match (line);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
