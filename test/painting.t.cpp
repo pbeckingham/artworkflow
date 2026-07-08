@@ -57,7 +57,7 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
 #S002 Mike Derby                  POR s2025-05-24 e2025-06-25 v2025-07-19 g2025-07-23 10x10 WP  Y W        C2 12h G:Study
 */
 
-  std::string line = "#S001 Juan de Pareja (Velasquez)  POR s2025-04-04 e2025-04-05 v2025-05-24             7x5   ACM Y C        C2 G:Study\n";
+  std::string line = "#S001 Juan de Pareja (Velasquez)  POR s2025-04-04 e2025-04-05 v2025-05-24             7x5   ACM Y C        C2 24h G:Study\n";
   Painting p3 (line);
   t.is (p3.id (),         "S001",                       "Painting: id");
   t.is (p3.title (),      "Juan de Pareja (Velasquez)", "Painting: title");
@@ -73,7 +73,7 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
   t.is (p3.archived (),   "",                           "Painting: archived");
   t.is (p3.www (),        "",                           "Painting: www");
   t.is (p3.complexity (), "C2",                         "Painting: complexity");
-  t.is (p3.notes (),      "G:Study",                    "Painting: notes");
+  t.is (p3.notes (),      "24h G:Study",                "Painting: notes");
 
   return 0;
 }
