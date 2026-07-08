@@ -25,6 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <Args.h>
+#include <Lexer.h>
 #include <cstring>
 #include <shared.h>
 #include <sstream>
@@ -63,7 +64,7 @@ void Args::scan (int argc, const char** argv)
     // Is an option or named arg.
     if (argv[i][0] == '-' && strlen (argv[i]) > 1)
     {
-      auto name = ltrim (argv[i], "-");
+      auto name = Lexer::trimLeft (argv[i], "-");
 
       std::string canonical;
       if (canonicalizeOption (name, canonical))
