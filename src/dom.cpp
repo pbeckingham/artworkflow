@@ -27,12 +27,18 @@
 #include <Database.h>
 #include <Duration.h>
 #include <Pig.h>
+#include <RX.h>
+#include <Lexer.h>
 #include <format.h>
+#include <shared.h>
 #include <iostream>
 #include <artworkflow.h>
 #include <vector>
+#include <cassert>
 
 ////////////////////////////////////////////////////////////////////////////////
+// dom.newid
+// dom.<id>.<meta>
 bool domGet (
   Database& database,
   const Config& config,
@@ -65,6 +71,107 @@ bool domGet (
     Pig pig (reference);
     if (pig.skipLiteral ("dom."))
     {
+      // dom.<id>.<meta>
+      RX idrx ("^S?\\d\\d\\d[a-d]?\\.");
+      std::vector <std::string> ids;
+      if (idrx.match (ids, pig.str ()))
+      {
+        assert (ids.size () == 1);
+        auto id = Lexer::trimRight (ids[0], ".");
+        pig.skipN (ids[0].length ());
+        auto meta = pig.str ();
+
+        for (auto& painting : database.allPaintings ())
+        {
+          if (painting.matches (id))
+          {
+            value = "";
+            if (meta == "id")
+            {
+              value = painting.id ();
+              return true;
+            }
+            else if (meta == "title")
+            {
+              value = painting.title ();
+              return true;
+            }
+            else if (meta == "series")
+            {
+              value = painting.series ();
+              return true;
+            }
+            else if (meta == "start")
+            {
+              value = painting.start ().substr (1);
+              return true;
+            }
+            else if (meta == "end")
+            {
+              value = painting.end ().substr (1);
+              return true;
+            }
+            else if (meta == "varnish")
+            {
+              value = painting.varnish ().substr (1);
+              return true;
+            }
+            else if (meta == "action")
+            {
+              value = painting.action ().substr (1);
+              return true;
+            }
+            else if (meta == "size")
+            {
+              value = painting.size ();
+              return true;
+            }
+            else if (meta == "substrate")
+            {
+              value = painting.substrate ();
+              return true;
+            }
+            else if (meta == "tagged")
+            {
+              value = painting.tagged ();
+              return true;
+            }
+            else if (meta == "varnished")
+            {
+              value = painting.varnished ();
+              return true;
+            }
+            else if (meta == "archived")
+            {
+              value = painting.archived ();
+              return true;
+            }
+            else if (meta == "www")
+            {
+              value = painting.www ();
+              return true;
+            }
+            else if (meta == "complexity")
+            {
+              value = painting.complexity ();
+              return true;
+            }
+            else if (meta == "notes")
+            {
+              value = painting.notes ();
+              return true;
+            }
+
+            // TODO: hours?
+            // TODO: Awards?
+            // TODO: Groups?
+          }
+        }
+      }
+
+      // TODO: dom.<eid>.?
+      // TODO: dom.<id>.[start|end|varnish|action].[year|month|day|age]
+
       // dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]
       if (pig.skipLiteral ("all."))
       {
