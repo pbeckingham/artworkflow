@@ -47,7 +47,7 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "new");
   cli.entity ("command", "version");
   cli.entity ("command", "--version"); // Note: this only appears to overlap with
-				       // the lightweight version checking.
+                                       // the lightweight version checking.
   cli.entity ("command", "-v");
 
   // Hint entities.

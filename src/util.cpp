@@ -140,9 +140,7 @@ Palette createPalette (const Config& config)
   {
     p.clear ();
     for (auto& c : colors)
-    {
       p.add (Color (config.get (c)));
-    }
   }
 
   p.enabled = config.getBoolean ("color");
