@@ -30,6 +30,7 @@
 #include <shared.h>
 #include <format.h>
 #include <RX.h>
+#include <Lexer.h>
 #include <Painting.h>
 #include <artworkflow.h>
 
@@ -186,7 +187,7 @@ bool Painting::is_varnished () const
 ////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
-  return ltrim (_id, "#") == ltrim (id, "#");
+  return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -339,53 +340,53 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
 void Painting::parse (const std::string& line)
 {
   if (line.length () > 0)
-    _id         = rtrim (line.substr (1, 4));
+    _id         = Lexer::trimRight (line.substr (1, 4));
   else
     throw format("Missing id to parse.");
 
   if (line.length () > 32)
-    _title      = rtrim (line.substr (6, 28));
+    _title      = Lexer::trimRight (line.substr (6, 28));
   else
     throw format("Missing title to parse.");
 
   if (line.length () > 36)
-    _series     = rtrim (line.substr (34, 3));
+    _series     = Lexer::trimRight (line.substr (34, 3));
 
   if (line.length () > 48)
-    _start      = rtrim (line.substr (38, 11));
+    _start      = Lexer::trimRight (line.substr (38, 11));
 
   if (line.length () > 60)
-    _end        = rtrim (line.substr (50, 11));
+    _end        = Lexer::trimRight (line.substr (50, 11));
 
   if (line.length () > 72)
-    _varnish    = rtrim (line.substr (62, 11));
+    _varnish    = Lexer::trimRight (line.substr (62, 11));
 
   if (line.length () > 84)
-    _action     = rtrim (line.substr (74, 11));
+    _action     = Lexer::trimRight (line.substr (74, 11));
 
   if (line.length () > 90)
-    _size       = rtrim (line.substr (86, 5));
+    _size       = Lexer::trimRight (line.substr (86, 5));
 
   if (line.length () > 94)
-    _substrate  = rtrim (line.substr (92, 3));
+    _substrate  = Lexer::trimRight (line.substr (92, 3));
 
   if (line.length () > 96)
-    _tagged     = rtrim (line.substr (96, 1));
+    _tagged     = Lexer::trimRight (line.substr (96, 1));
 
   if (line.length () > 98)
-    _varnished  = rtrim (line.substr (98, 1));
+    _varnished  = Lexer::trimRight (line.substr (98, 1));
 
   if (line.length () > 100)
-    _archived   = rtrim (line.substr (100, 1));
+    _archived   = Lexer::trimRight (line.substr (100, 1));
 
   if (line.length () > 105)
-    _www        = rtrim (line.substr (105, 1));
+    _www        = Lexer::trimRight (line.substr (105, 1));
 
   if (line.length () > 108)
-    _complexity = rtrim (line.substr (107, 2));
+    _complexity = Lexer::trimRight (line.substr (107, 2));
 
   if (line.length () > 110)
-    _notes      = rtrim (line.substr (110));
+    _notes      = Lexer::trimRight (line.substr (110));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
