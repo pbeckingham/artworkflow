@@ -66,21 +66,20 @@ public:
   bool canonicalize (std::string&, const std::string&, const std::string&) const;
   std::string getBinary () const;
   std::string getCommand () const;
-  bool getComplementaryHint (const std::string&, bool) const;
   bool getHint(const std::string&, bool) const;
   std::string findSubCommand(const std::set<std::string>&);
   std::string getSubCommand(const std::set<std::string>&, const std::string&);
   std::set <std::string> getIds () const;
   std::set <std::string> getTags () const;
   std::string getAnnotation() const;
-  Duration getDuration() const;
   std::vector <std::string> getDomReferences () const;
   std::string dump (const std::string& title = "CLI Parser") const;
 
 private:
   void handleArg0 ();
   void lexArguments ();
-  void identifyOverrides ();
+  void identifyDOM ();
+//  void identifyOverrides ();
   void identifyIds ();
   void canonicalizeNames ();
   void identifyFilter ();

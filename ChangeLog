@@ -12,6 +12,7 @@
 - Implemented Exhibition object
 - Extended info command to show exhibitions
 - Implemented dom.newid
+- Added stub 'new' command
 
 ------ stable ------------------------------------
 ------ current release ---------------------------

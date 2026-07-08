@@ -129,6 +129,8 @@ std::string A2::dump () const
     else if (tag == "CONFIG")        tags += "\033[1;37;101m"            + tag + "\033[0m ";
     else if (tag == "ID")            tags += "\033[38;5;7m\033[48;5;34m" + tag + "\033[0m ";
     else if (tag == "EID")           tags += "\033[38;5;7m\033[48;5;34m" + tag + "\033[0m ";
+    else if (tag == "DOM" || tag == "READ" || tag == "WRITE")
+                                     tags += "\033[1;37;42m"             + tag + "\033[0m ";
     else                             tags += "\033[32m"                  + tag + "\033[0m ";
   }
 
@@ -274,7 +276,8 @@ void CLI::analyze ()
   _args.clear ();
   handleArg0 ();
   lexArguments ();
-  identifyOverrides ();
+  identifyDOM ();
+  //identifyOverrides ();
   identifyIds ();
   canonicalizeNames ();
   identifyFilter ();
@@ -408,7 +411,37 @@ std::string CLI::dump (const std::string& title) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Scan all arguments and identify instances of 'dom.'
+void CLI::identifyDOM ()
+{
+  for (auto& a : _args)
+  {
+    auto raw = a.attribute ("raw");
+
+    if (raw.length () > 4 &&
+        raw.substr (0, 4) == "dom.")
+    {
+      a.tag ("DOM");
+
+      auto sep = raw.find ('=', 4);
+      if (sep == std::string::npos)
+      {
+        a.attribute ("name", raw);
+        a.tag ("READ");
+      }
+      if (sep != std::string::npos)
+      {
+        a.attribute ("name",  raw.substr (0, sep - 4));
+        a.attribute ("value", raw.substr (sep + 1));
+        a.tag ("WRITE");
+      }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Scan all arguments and identify instances of 'rc.<name>[:=]<value>'.
+/*
 void CLI::identifyOverrides ()
 {
   for (auto& a : _args)
@@ -430,6 +463,7 @@ void CLI::identifyOverrides ()
     }
   }
 }
+*/
 
 ////////////////////////////////////////////////////////////////////////////////
 // Scan all arguments and identify instances of:
@@ -530,6 +564,9 @@ void CLI::identifyFilter ()
     else if (a.hasTag ("ID"))
       a.tag ("FILTER");
 
+    else if (a.hasTag ("ID"))
+      a.tag ("FILTER");
+
     else if (a._lextype == Lexer::Type::date ||
              a._lextype == Lexer::Type::duration)
       a.tag ("FILTER");
@@ -548,14 +585,13 @@ void CLI::identifyFilter ()
       a.tag ("KEYWORD");
     }
 
-    else if (raw.rfind ("dom.",0) == 0)
+    else if (raw.rfind ("dom.", 0) == 0)
     {
       a.tag ("DOM");
     }
     else
     {
       a.tag ("FILTER");
-      a.tag ("TAG");
     }
   }
 }
@@ -612,19 +648,6 @@ std::string CLI::getAnnotation () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-Duration CLI::getDuration () const
-{
-  std::string delta;
-  for (auto& arg : _args)
-    if (arg.hasTag ("FILTER") &&
-        arg._lextype == Lexer::Type::duration)
-      delta = arg.attribute ("raw");
-
-  Duration dur (delta);
-  return dur;
-}
-
-////////////////////////////////////////////////////////////////////////////////
 
 std::vector <std::string> CLI::getDomReferences () const
 {
@@ -632,7 +655,7 @@ std::vector <std::string> CLI::getDomReferences () const
 
   for (auto& arg : _args)
     if (arg.hasTag ("DOM"))
-      references.emplace_back (arg.attribute ("raw"));
+      references.emplace_back (arg.attribute ("name"));
 
   return references;
 }
@@ -646,17 +669,6 @@ bool CLI::findHint (const std::string& hint) const
       return true;
 
   return false;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-bool CLI::getComplementaryHint (const std::string& base, const bool default_value) const
-{
-  if (findHint (base))
-    return true;
-  else if (findHint ("no-" + base))
-    return false;
-
-  return default_value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
