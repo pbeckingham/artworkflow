@@ -60,7 +60,8 @@ const std::vector <Painting> Datafile::allPaintings ()
 {
   std::vector <Painting> all;
   for (auto& line : allLines ())
-    all.push_back (Painting (line));
+    if (Painting::is_painting (line))
+      all.push_back (Painting (line));
 
   return all;
 }
