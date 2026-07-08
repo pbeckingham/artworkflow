@@ -274,18 +274,18 @@ std::string Exhibition::dump (const std::string& title) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// EID: ^\d{4}\.\d{2}\s
+// EID: ^\d{4}\.\d{2}
 bool Exhibition::is_exhibition (const std::string& line)
 {
-  RX eid ("^\d{4}\.\d{2}\s");
+  RX eid ("^\\d{4}\\.\\d{2}");
   return eid.match (line);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ID:  ^\s{4}#S?\d{3}[a-d]?\s
+// ID:  ^\s{4}#S?\d{3}[a-d]?
 bool Exhibition::is_submission (const std::string& line)
 {
-  RX id ("^\s{4}#S?\d{3}[a-d]?\s");
+  RX id ("^\\s{4}#S?\\d{3}[a-d]?");
   return id.match (line);
 }
 
