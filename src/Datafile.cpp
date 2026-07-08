@@ -249,8 +249,7 @@ void Datafile::load_lines ()
 
     // Append the lines that were read.
     for (auto& line : read_lines)
-      if (line[0] == '#')
-        _lines.push_back (line);
+      _lines.push_back (line);
 
     _lines_loaded = true;
     debug (format ("{1}: {2} lines", file.name (), read_lines.size ()));
