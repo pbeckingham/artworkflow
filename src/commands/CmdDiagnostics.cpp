@@ -149,8 +149,10 @@ int CmdDiagnostics (
   File cfg (getConfigFile ());
   out << "            Cfg: " << describeFile (cfg) << '\n';
 
-  Directory db (getDataLocation ());
-  out << "       Database: " << describeFile (db) << '\n';
+  File p (getDataDirectory () + "/paintings.txt");
+  File e (getDataDirectory () + "/exhibitions.txt");
+  out << "       Database: " << describeFile (p) << '\n';
+  out << "       Database: " << describeFile (e) << '\n';
 
   // Determine rc.editor/$EDITOR/$VISUAL.
   char* peditor;
