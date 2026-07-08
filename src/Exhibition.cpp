@@ -29,12 +29,16 @@
 #include <string>
 #include <shared.h>
 #include <format.h>
+#include <RX.h>
 #include <Exhibition.h>
+#include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 Exhibition::Exhibition (const std::string& line)
 {
   parse (line);
+  debug (line);
+  debug (dump ());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -270,6 +274,22 @@ std::string Exhibition::dump (const std::string& title) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// EID: ^\d{4}\.\d{2}\s
+bool Exhibition::is_exhibition (const std::string& line)
+{
+  RX eid ("^\d{4}\.\d{2}\s");
+  return eid.match (line);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ID:  ^\s{4}#S?\d{3}[a-d]?\s
+bool Exhibition::is_submission (const std::string& line)
+{
+  RX id ("^\s{4}#S?\d{3}[a-d]?\s");
+  return id.match (line);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 /*
                                                                                                     1         1
           1         2         3         4         5         6         7         8         9         0         1
@@ -286,7 +306,7 @@ std::string Exhibition::dump (const std::string& title) const
 void Exhibition::parse (const std::string& line)
 {
   if (line.length () > 0)
-    _id         = rtrim (line.substr (0, 7));
+    _id = rtrim (line.substr (0, 7));
   else
     throw format("Missing id to parse.");
 

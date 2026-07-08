@@ -55,6 +55,9 @@ public:
   bool validate (std::vector <std::string>&) const;
   std::string dump (const std::string& title = "Exhibition") const;
 
+  static bool is_exhibition (const std::string&);
+  static bool is_submission (const std::string&);
+
 private:
   void parse (const std::string&);
 
