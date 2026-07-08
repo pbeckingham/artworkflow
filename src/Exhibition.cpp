@@ -30,6 +30,7 @@
 #include <shared.h>
 #include <format.h>
 #include <RX.h>
+#include <Lexer.h>
 #include <Exhibition.h>
 #include <artworkflow.h>
 
@@ -306,33 +307,33 @@ bool Exhibition::is_submission (const std::string& line)
 void Exhibition::parse (const std::string& line)
 {
   if (line.length () > 0)
-    _id = rtrim (line.substr (0, 7));
+    _id = Lexer::trimRight (line.substr (0, 7));
   else
     throw format("Missing id to parse.");
 
   if (line.length () > 17)
-    _submission = rtrim (line.substr (8, 10));
+    _submission = Lexer::trimRight (line.substr (8, 10));
 
   if (line.length () > 28)
-    _notification = rtrim (line.substr (19, 10));
+    _notification = Lexer::trimRight (line.substr (19, 10));
 
   if (line.length () > 39)
-    _delivery = rtrim (line.substr (30, 10));
+    _delivery = Lexer::trimRight (line.substr (30, 10));
 
   if (line.length () > 50)
-    _opening = rtrim (line.substr (41, 10));
+    _opening = Lexer::trimRight (line.substr (41, 10));
 
   if (line.length () > 61)
-    _reception = rtrim (line.substr (52, 10));
+    _reception = Lexer::trimRight (line.substr (52, 10));
 
   if (line.length () > 72)
-    _closing = rtrim (line.substr (63, 10));
+    _closing = Lexer::trimRight (line.substr (63, 10));
 
   if (line.length () > 83)
-    _pickup = rtrim (line.substr (74, 10));
+    _pickup = Lexer::trimRight (line.substr (74, 10));
 
   if (line.length () > 85)
-    _title      = rtrim (line.substr (85, std::string::npos));
+    _title      = Lexer::trimRight (line.substr (85, std::string::npos));
   else
     throw format("Missing title to parse.");
 

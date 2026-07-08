@@ -30,7 +30,6 @@
 #include <shared.h>
 #include <format.h>
 #include <RX.h>
-#include <Lexer.h>
 #include <Painting.h>
 #include <artworkflow.h>
 
@@ -187,7 +186,7 @@ bool Painting::is_varnished () const
 ////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id)
 {
-  return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
+  return ltrim (_id, "#") == ltrim (id, "#");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
