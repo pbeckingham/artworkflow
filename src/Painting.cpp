@@ -386,7 +386,7 @@ void Painting::parse (const std::string& line)
     _complexity = Lexer::trimRight (line.substr (107, 2));
 
   if (line.length () > 110)
-    _notes      = Lexer::trimRight (line.substr (110));
+    _notes      = Lexer::trimRight (line.substr (110), " \n");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
