@@ -199,8 +199,8 @@ const std::string Painting::compose () const
 ////////////////////////////////////////////////////////////////////////////////
 // Note that incomplete data should validate.
 //
-// TODO Ensure all dates are in logical sequence
-// TODO Ensure completion hours are tracked
+// TODO: Ensure all dates are in logical sequence
+// TODO: Ensure completion hours are tracked
 bool Painting::validate (std::vector <std::string>& errors) const
 {
   if (_id == "")

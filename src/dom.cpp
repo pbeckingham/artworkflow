@@ -130,16 +130,13 @@ bool domGet (
         }
       }
 
-      // TODO dom.<id>.<meta>
-      // TODO dom.<id>.[start|end|varnish|action].[year|month|day|age]
-
       // dom.comfig.<name>
       else if (pig.skipLiteral ("config."))
       {
         std::string name;
         if (pig.getRemainder (name))
         {
-          // TODO Need type coercion. If it's a boolean, render it as a string, etc.
+          // TODO: Need type coercion. If it's a boolean, render it as a string, etc.
           value = config.get (name);
           return true;
         }

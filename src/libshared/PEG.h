@@ -51,7 +51,7 @@ public:
     std::set <std::string> _tags               {};
     Quantifier  _quantifier                    {Quantifier::one};
     Lookahead   _lookahead                     {Lookahead::none};
-    // TODO Added Lexer::Type support, which allows the PEG to specify
+    // TODO: Added Lexer::Type support, which allows the PEG to specify
     //      "<Lexer::Type>" as a built-in type.
   };
 

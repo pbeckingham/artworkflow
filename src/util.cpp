@@ -132,7 +132,7 @@ int getTerminalWidth ()
 Palette createPalette (const Config& config)
 {
   Palette p;
-  // TODO Provide a config value iterator.
+  // TODO: Provide a config value iterator.
 /*
   auto colors = config.all ("theme.palette.color");
 

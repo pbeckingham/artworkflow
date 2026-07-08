@@ -259,8 +259,8 @@ std::string Table::render ()
     auto oddness = _oddness[row];
     Color row_color = oddness ? _odd : _even;
 
-    // TODO row_color.blend (provided color);
-    // TODO Problem: colors for columns are specified, not rows,
+    // TODO: row_color.blend (provided color);
+    // TODO: Problem: colors for columns are specified, not rows,
     //      therefore there are only cell colors, not intra colors.
 
     Color cell_color;

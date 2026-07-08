@@ -42,7 +42,7 @@ bool unicodeWhitespace (unsigned int c)
 // Updated 2015-09-13
 // Static
 //
-// TODO This list should be derived from the Unicode database.
+// TODO: This list should be derived from the Unicode database.
 bool unicodeHorizontalWhitespace (unsigned int c)
 {
   return (c == 0x0020 ||   // space Common  Separator, space
@@ -77,7 +77,7 @@ bool unicodeHorizontalWhitespace (unsigned int c)
 // Updated 2015-09-13
 // Static
 //
-// TODO This list should be derived from the Unicode database.
+// TODO: This list should be derived from the Unicode database.
 bool unicodeVerticalWhitespace (unsigned int c)
 {
   return (c == 0x000A ||   // Common  Other, control  LF, Line feed
@@ -104,7 +104,7 @@ bool unicodeAlpha (unsigned int c)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// TODO Needs better definition.
+// TODO: Needs better definition.
 bool unicodeLatinAlpha (unsigned int c)
 {
   return (c >= 'A' && c <= 'Z') ||
@@ -114,7 +114,7 @@ bool unicodeLatinAlpha (unsigned int c)
 ////////////////////////////////////////////////////////////////////////////////
 // Digits 0-9.
 //
-// TODO This list should be derived from the Unicode database.
+// TODO: This list should be derived from the Unicode database.
 bool unicodeLatinDigit (unsigned int c)
 {
   return c >= 0x30 && c <= 0x39;

@@ -393,7 +393,7 @@ bool extractLine (
 }
 /*
 
-TODO Resolve above against below, which is from Taskwarrior 2.6.0, and known to
+TODO: Resolve above against below, which is from Taskwarrior 2.6.0, and known to
      be wrong.
 ////////////////////////////////////////////////////////////////////////////////
 // Break UTF8 text into chunks no more than width characters.

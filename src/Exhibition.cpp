@@ -110,7 +110,7 @@ const std::string Exhibition::compose () const
 ////////////////////////////////////////////////////////////////////////////////
 // Note that incomplete data should validate.
 //
-// TODO Ensure all dates are in logical sequence
+// TODO: Ensure all dates are in logical sequence
 bool Exhibition::validate (std::vector <std::string>& errors) const
 {
   if (_id == "")
@@ -336,7 +336,7 @@ void Exhibition::parse (const std::string& line)
   else
     throw format("Missing title to parse.");
 
-  // TODO Parse submissions
+  // TODO: Parse submissions
 }
 
 ////////////////////////////////////////////////////////////////////////////////

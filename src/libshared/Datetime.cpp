@@ -3058,11 +3058,11 @@ bool Datetime::initializeNthDayInMonth (const std::vector <std::string>& tokens)
           {
             std::cout << "# ordinal=" << ordinal << " day=" << day << " in month=" << month << '\n';
 
-            // TODO Assume 1st of the month
-            // TODO Assume current year
-            // TODO Determine the day
-            // TODO Project forwards/backwards, to the desired day
-            // TODO Add ((ordinal - 1) * 7) days
+            // TODO: Assume 1st of the month
+            // TODO: Assume current year
+            // TODO: Determine the day
+            // TODO: Project forwards/backwards, to the desired day
+            // TODO: Add ((ordinal - 1) * 7) days
 
             return true;
           }
