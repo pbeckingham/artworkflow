@@ -42,12 +42,16 @@ public:
   std::string name () const;
 
   const std::vector <std::string>& allLines ();
+
+  // These are two sets of interface, for one set of lines, used accordingly.
   const std::vector <Painting> allPaintings ();
   void addPainting (const Painting&);
   void deletePainting (const Painting&);
+
   const std::vector <Exhibition> allExhibitions ();
   void addExhibition (const Exhibition&);
   void deleteExhibition (const Exhibition&);
+
   void commit ();
 
   std::string dump () const;
