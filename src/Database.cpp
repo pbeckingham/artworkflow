@@ -39,10 +39,6 @@ void Database::initialize (const std::string& location)
   _location = location;
   _paintings.initialize (location + "/paintings.txt");
   _exhibitions.initialize (location + "/exhibitions.txt");
-
-  debug (format ("Location: {1}", _location));
-  debug (format ("Paintings: {1}", _paintings.name ()));
-  debug (format ("Exhibitions: {1}", _exhibitions.name ()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +97,7 @@ void Database::modifyPainting (const Painting& from, const Painting& to, bool ve
 ////////////////////////////////////////////////////////////////////////////////
 std::vector<Exhibition> Database::allExhibitions ()
 {
-  return _paintings.allExhibitions ();
+  return _exhibitions.allExhibitions ();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
