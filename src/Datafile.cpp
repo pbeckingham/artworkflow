@@ -129,7 +129,8 @@ const std::vector <Exhibition> Datafile::allExhibitions ()
 {
   std::vector <Exhibition> all;
   for (auto& line : allLines ())
-    all.push_back (Exhibition (line));
+    if (Exhibition::is_exhibition (line) || Exhibition::is_submission (line))
+      all.push_back (Exhibition (line));
 
   return all;
 }
