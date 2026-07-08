@@ -37,7 +37,7 @@
 #include <cassert>
 
 ////////////////////////////////////////////////////////////////////////////////
-// dom.newid
+// dom.painting.next
 // dom.<id>.<meta>
 bool domGet (
   Database& database,
@@ -46,7 +46,7 @@ bool domGet (
   std::string& value)
 {
   // Find the lowest ID that is not currently used.
-  if (reference == "dom.newid")
+  if (reference == "dom.painting.next")
   {
     // Load all objects, extract the integer form or ID.
     std::vector <int> ids;
@@ -58,11 +58,11 @@ bool domGet (
     while (std::find (ids.begin (), ids.end (), id) != ids.end ())
       ++id;
 
-    // Use whichever number id contains. This is safe and free of wrapping
-    // below INT_MAX, which is a lot.
     debug (format ("{1} paintings loaded", ids.size ()));
     debug (format ("{1} is free", id));
 
+    // Use whichever number id contains. This is safe and free of wrapping
+    // below INT_MAX, which is a lot.
     value = "#" + rightJustifyZero (id, 3);
     return true;
   }
