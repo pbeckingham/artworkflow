@@ -63,6 +63,7 @@ const std::vector <Painting> Datafile::allPaintings ()
     if (Painting::is_painting (line))
       all.push_back (Painting (line));
 
+  debug (format ("{1}: {2} paintings", _file.name (), all.size ()));
   return all;
 }
 
@@ -133,6 +134,8 @@ const std::vector <Exhibition> Datafile::allExhibitions ()
       all.push_back (Exhibition (line));
 
   // TODO: What about submissions?
+
+  debug (format ("{1}: {2} exhibitions", _file.name (), all.size ()));
   return all;
 }
 
