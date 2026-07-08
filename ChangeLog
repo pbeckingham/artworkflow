@@ -11,8 +11,10 @@
 
 - Implemented Exhibition object
 - Extended info command to show exhibitions
-- Implemented dom.newid
+- Implemented dom.painting.next
+- Implemented dom.<id>.<meta>
 - Added stub 'new' command
+- Added stub extension and event definitions
 
 ------ stable ------------------------------------
 ------ current release ---------------------------
