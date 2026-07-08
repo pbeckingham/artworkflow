@@ -75,9 +75,7 @@ std::string describeFile (File& file)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int CmdDiagnostics (
-  Config& config,
-  Database& database)
+int CmdDiagnostics (Config& config)
 {
   std::stringstream out;
   out << '\n'

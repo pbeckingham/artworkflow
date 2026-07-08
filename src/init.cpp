@@ -220,7 +220,7 @@ int dispatchCommand (
   if (! command.empty ())
   {
     // These signatures are expected to be all different, therefore no command to fn mapping.
-         if (command == "diagnostics") status = CmdDiagnostics   (     config, database);
+         if (command == "diagnostics") status = CmdDiagnostics   (     config          );
     else if (command == "get")         status = CmdGet           (cli, config, database);
     else if (command == "help"    ||
              command == "--help"  ||

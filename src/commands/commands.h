@@ -32,7 +32,7 @@
 #include <Config.h>
 
 //  CmdXxx           (CLI&, Config&, Database&);
-int CmdDiagnostics   (      Config&, Database&);
+int CmdDiagnostics   (      Config&           );
 int CmdGet           (CLI&, Config&, Database&);
 int CmdHelp          (CLI&                    );
 int CmdInfo          (CLI&,          Database&);
