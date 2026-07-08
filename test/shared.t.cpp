@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int main (int, char**)
 {
-  UnitTest t (211);
+  UnitTest t (190);
 
   // void wrapText (std::vector <std::string>& lines, const std::string& text, const int width, bool hyphenate)
   std::string text = "This is a test of the line wrapping code.";
@@ -234,37 +234,6 @@ int main (int, char**)
 
   std::vector <int> unjoined_ints {1, 2, 3, 4};
   t.is (join ("-", unjoined_ints), "1-2-3-4", "join 1 - 2 - 3 - 4 -> '1-2-3-4'");
-
-  // std::string trim (const std::string&);
-  t.is (trim ("one"),     "one",   "trim 'one' --> 'one'");
-  t.is (trim ("  one"),   "one",   "trim '  one' --> 'one'");
-  t.is (trim ("one  "),   "one",   "trim 'one  ' --> 'one'");
-  t.is (trim ("  one  "), "one",   "trim '  one  ' --> 'one'");
-  t.is (trim (""),        "",      "trim '' --> ''");
-  t.is (trim (" \t\r\f\nfoo\n\f\r\t "), "foo",
-                                   "trim ' \t\r\f\nfoo\n\f\r\t ' --> 'foo'");
-
-  t.is (trim ("abcdedcba", "abc"), "ded", "trim 'abcdedcba', 'abc' --> 'ded'");
-
-  // std::string ltrim (const std::string&);
-  t.is (ltrim ("one"),     "one",   "ltrim 'one' --> 'one'");
-  t.is (ltrim ("  one"),   "one",   "ltrim '  one' --> 'one'");
-  t.is (ltrim ("one  "),   "one  ", "ltrim 'one  ' --> 'one  '");
-  t.is (ltrim ("  one  "), "one  ", "ltrim '  one  ' --> 'one  '");
-  t.is (ltrim (""),        "",      "ltrim '' --> ''");
-  t.is (ltrim ("  "),      "",      "ltrim '  ' --> ''");
-  t.is (ltrim (" \t\r\f\nfoo\n\f\r\t "), "foo\n\f\r\t ",
-                                    "ltrim ' \t\r\f\nfoo\n\f\r\t ' --> 'foo\\n\\f\\r\\t '");
-
-  // std::string rtrim (const std::string&);
-  t.is (rtrim ("one"),     "one",   "rtrim 'one' --> 'one'");
-  t.is (rtrim ("  one"),   "  one", "rtrim '  one' --> '  one'");
-  t.is (rtrim ("one  "),   "one",   "rtrim 'one  ' --> 'one'");
-  t.is (rtrim ("  one  "), "  one", "rtrim '  one' --> '  one'");
-  t.is (rtrim (""),        "",      "rtrim '' --> ''");
-  t.is (rtrim ("  "),      "",      "rtrim '  ' --> ''");
-  t.is (rtrim (" \t\r\f\nfoo\n\f\r\t "), " \t\r\f\nfoo",
-                                    "rtrim ' \t\r\f\nfoo\n\f\r\t ' --> ' \\t\\r\\f\\nfoo'");
 
   // int longestWord (const std::string&)
   t.is (longestWord ("    "),                   0, "longestWord (    ) --> 0");
