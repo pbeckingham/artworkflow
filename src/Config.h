@@ -50,6 +50,8 @@ public:
   void set (const std::string&, double);
   void set (const std::string&, bool);
 
+  sol::state* lua ();
+
 private:
   std::string _original_file {};
   sol::state* _lua {NULL};
