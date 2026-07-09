@@ -43,6 +43,9 @@ void warn (const std::string&);
 // dom.cpp
 bool domGet (Database&, const Config&, const std::string&, std::string&);
 
+// extensions.cpp
+void extensionOnEntry (Config&);
+
 // init.cpp
 void initializeEntities (CLI&);
 void initializeDataAndConfig (const CLI&, Database&, Config&);

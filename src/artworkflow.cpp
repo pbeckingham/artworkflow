@@ -82,6 +82,9 @@ int main (int argc, const char** argv)
     initializeDataAndConfig (cli, database, config);
     debug ("initializeDataAndConfig"); // After initializeDataAndConfig because of default values
 
+    // First chance to do anything meaningful.
+    extensionOnEntry (config);
+
     // Dispatch to commands.
     debug ("dispatchCommand");
     status = dispatchCommand (cli, database, config);
