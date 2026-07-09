@@ -69,3 +69,14 @@ void extensionOnExit (Config& config)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void extensionCmdVersion (Config& config)
+{
+  debug ("extensionCmdVersion");
+
+  // Determine if 'extensionOnEntry' is a lua function, before calling it.
+  sol::protected_function function_object = (*config.lua ())["extensionCmdVersion"];
+  if (function_object)
+    function_object ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
