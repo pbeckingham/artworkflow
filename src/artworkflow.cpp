@@ -56,6 +56,7 @@ int main (int argc, const char** argv)
     sol::state lua;
     lua.open_libraries (sol::lib::base, sol::lib::io, sol::lib::math, sol::lib::table);
     Config config (lua);
+    extensionAPI (config);
 
     // Add entities so that command line tokens such as 'help' are recognized as
     // commands.

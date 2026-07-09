@@ -44,6 +44,7 @@ void warn (const std::string&);
 bool domGet (Database&, const Config&, const std::string&, std::string&);
 
 // extensions.cpp
+void extensionAPI (Config&);
 void extensionOnEntry (Config&);
 void extensionOnExit (Config&);
 void extensionCmdVersion (Config&);
