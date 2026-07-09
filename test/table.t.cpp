@@ -67,8 +67,8 @@ int main (int, char**)
     t1.set (row, 0, "bottom left", single_cell);
     t1.set (row, 1, "bottom center, containing sufficient text that "
                              "wrapping will occur because it exceeds all "
-                             "reasonable values for default width.  Even in a "
-                             "very wide terminal window.  Just look at the "
+                             "reasonable values for default width. Even in a "
+                             "very wide terminal window. Just look at the "
                              "lengths we must go to, to get passing unit tests "
                              "and not flaky tests.");
     t1.set (row, 2, "bottom right");
