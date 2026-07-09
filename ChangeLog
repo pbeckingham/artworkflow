@@ -15,6 +15,8 @@
 - Implemented dom.<id>.<meta>
 - Added stub 'new' command
 - Added stub extension and event definitions
+- Implemented extensionOnEntry
+- Implemented extensionOnExit
 
 ------ stable ------------------------------------
 ------ current release ---------------------------

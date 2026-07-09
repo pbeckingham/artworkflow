@@ -43,22 +43,29 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#define SOL_ALL_SAFETIES_ON 1
+#include <sol/sol.hpp>
+
 ////////////////////////////////////////////////////////////////////////////////
 void extensionOnEntry (Config& config)
 {
-  // TODO: Determine if 'extensionOnEntry' is a lua function, before calling it.
   debug ("extensionOnEntry");
 
-  (*config.lua ())["extensionOnEntry"]();
+  // Determine if 'extensionOnEntry' is a lua function, before calling it.
+  sol::protected_function function_object = (*config.lua ())["extensionOnEntry"];
+  if (function_object)
+    function_object ();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void extensionOnExit (Config& config)
 {
-  // TODO: Determine if 'extensionOnExit' is a lua function, before calling it.
   debug ("extensionOnExit");
 
-  (*config.lua ())["extensionOnExit"]();
+  // Determine if 'extensionOnExit' is a lua function, before calling it.
+  sol::protected_function function_object = (*config.lua ())["extensionOnExit"];
+  if (function_object)
+    function_object ();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
