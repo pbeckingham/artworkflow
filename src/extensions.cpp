@@ -54,7 +54,18 @@ void extensionOnEntry (Config& config)
   // Determine if 'extensionOnEntry' is a lua function, before calling it.
   sol::protected_function function_object = (*config.lua ())["extensionOnEntry"];
   if (function_object)
-    function_object ();
+  {
+    auto result = function_object ();
+    if (result.valid ())
+    {
+      debug ("extensionOnEntry success");
+    }
+    else
+    {
+      sol::error e = result;
+      debug (format ("extensionOnEntry: {1}", e.what ()));
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +76,18 @@ void extensionOnExit (Config& config)
   // Determine if 'extensionOnExit' is a lua function, before calling it.
   sol::protected_function function_object = (*config.lua ())["extensionOnExit"];
   if (function_object)
-    function_object ();
+  {
+    auto result = function_object ();
+    if (result.valid ())
+    {
+      debug ("extensionOnExit success");
+    }
+    else
+    {
+      sol::error e = result;
+      debug (format ("extensionOnExit: {1}", e.what ()));
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +98,18 @@ void extensionCmdVersion (Config& config)
   // Determine if 'extensionCmdVersion' is a lua function, before calling it.
   sol::protected_function function_object = (*config.lua ())["extensionCmdVersion"];
   if (function_object)
-    function_object ();
+  {
+    auto result = function_object ();
+    if (result.valid ())
+    {
+      debug ("extensionCmdVersion success");
+    }
+    else
+    {
+      sol::error e = result;
+      debug (format ("extensionCmdVersion: {1}", e.what ()));
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -87,7 +120,18 @@ void extensionCmdHelp (Config& config)
   // Determine if 'extensionCmdHelp' is a lua function, before calling it.
   sol::protected_function function_object = (*config.lua ())["extensionCmdHelp"];
   if (function_object)
-    function_object ();
+  {
+    auto result = function_object ();
+    if (result.valid ())
+    {
+      debug ("extensionCmdHelp success");
+    }
+    else
+    {
+      sol::error e = result;
+      debug (format ("extensionCmdHelp: {1}", e.what ()));
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
