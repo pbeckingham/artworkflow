@@ -228,7 +228,7 @@ int dispatchCommand (
     else if (command == "information") status = CmdInfo          (cli,         database);
     else if (command == "new")         status = CmdNew           (cli, config, database);
     else if (command == "version" ||
-             command == "-v")          status = CmdVersion       (                     );
+             command == "-v")          status = CmdVersion       (     config           );
 //    else                               status = CmdReport        (cli, config, database);
   }
   else

@@ -28,13 +28,15 @@
 #include <commands.h>
 #include <iostream>
 #include <shared.h>
+#include <artworkflow.h>
 #include <cmake.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int CmdVersion ()
+int CmdVersion (Config& config)
 {
   std::cout << VERSION
             << '\n';
+  extensionCmdVersion (config);
   return 0;
 }
 

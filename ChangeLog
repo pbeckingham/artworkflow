@@ -17,6 +17,7 @@
 - Added stub extension and event definitions
 - Implemented extensionOnEntry
 - Implemented extensionOnExit
+- Implemented extensionCmdVersion
 
 ------ stable ------------------------------------
 ------ current release ---------------------------
