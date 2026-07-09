@@ -53,3 +53,12 @@ void extensionOnEntry (Config& config)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void extensionOnExit (Config& config)
+{
+  // TODO: Determine if 'extensionOnExit' is a lua function, before calling it.
+  debug ("extensionOnExit");
+
+  (*config.lua ())["extensionOnExit"]();
+}
+
+////////////////////////////////////////////////////////////////////////////////
