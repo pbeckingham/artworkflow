@@ -47,6 +47,7 @@ bool domGet (Database&, const Config&, const std::string&, std::string&);
 void extensionOnEntry (Config&);
 void extensionOnExit (Config&);
 void extensionCmdVersion (Config&);
+void extensionCmdHelp (Config&);
 
 // init.cpp
 void initializeEntities (CLI&);

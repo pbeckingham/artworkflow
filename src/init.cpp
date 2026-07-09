@@ -224,7 +224,7 @@ int dispatchCommand (
     else if (command == "get")         status = CmdGet           (cli, config, database);
     else if (command == "help"    ||
              command == "--help"  ||
-             command == "-h")          status = CmdHelp          (cli                  );
+             command == "-h")          status = CmdHelp          (cli, config          );
     else if (command == "information") status = CmdInfo          (cli,         database);
     else if (command == "new")         status = CmdNew           (cli, config, database);
     else if (command == "version" ||

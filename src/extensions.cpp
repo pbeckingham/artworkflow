@@ -73,8 +73,19 @@ void extensionCmdVersion (Config& config)
 {
   debug ("extensionCmdVersion");
 
-  // Determine if 'extensionOnEntry' is a lua function, before calling it.
+  // Determine if 'extensionCmdVersion' is a lua function, before calling it.
   sol::protected_function function_object = (*config.lua ())["extensionCmdVersion"];
+  if (function_object)
+    function_object ();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void extensionCmdHelp (Config& config)
+{
+  debug ("extensionCmdHelp");
+
+  // Determine if 'extensionCmdHelp' is a lua function, before calling it.
+  sol::protected_function function_object = (*config.lua ())["extensionCmdHelp"];
   if (function_object)
     function_object ();
 }
