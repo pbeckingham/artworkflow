@@ -7,7 +7,7 @@
 
 ------ development -------------------------------
 
-0.0.7 () Exhibition object I/O
+0.0.7 (2026-07-13) Exhibition object I/O
 
 - Implemented Exhibition object
 - Extended info command to show exhibitions
@@ -23,18 +23,18 @@
 ------ stable ------------------------------------
 ------ current release ---------------------------
 
-0.0.6 () Lua configuration support
+0.0.6 (2026-06-28) Lua configuration support
 
 - #11 Convert artworkflow.cfg to config.lua
 - #8 Config command
 - Removed 'show' command
 
-0.0.5 () Painting object I/O
+0.0.5 (2026-06-22) Painting object I/O
 
 - Implemented painting objects load/parse
 - CLI now properly tags painting IDs
 
-0.0.4 () DOM
+0.0.4 (2026-06-20) DOM
 
 - #10 Initial Get Command
 
