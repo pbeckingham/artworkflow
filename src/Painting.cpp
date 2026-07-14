@@ -314,7 +314,7 @@ std::string Painting::dump (const std::string& title) const
 // A painting ID is: ^#S?\d\d\d[a-d]?
 bool Painting::is_painting (const std::string& line)
 {
-  RX id ("^#S?\\d\\d\\d[a-d]?");
+  RX id ("^#?S?\\d\\d\\d[a-d]?");
   return id.match (line);
 }
 
