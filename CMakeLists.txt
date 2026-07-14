@@ -10,7 +10,7 @@ project (artworkflow)
 include (CXXSniffer)
 include (CheckFunctionExists)
 
-set (PROJECT_VERSION "0.0.7-dev")
+set (PROJECT_VERSION "0.0.8-dev")
 
 string(TOUPPER "${CMAKE_BUILD_TYPE}" uppercase_CMAKE_BUILD_TYPE)
 
