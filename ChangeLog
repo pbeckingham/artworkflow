@@ -3,9 +3,12 @@
 
 0.1.0 (2026-) Minimal Functionality
 0.0.9 ()
-0.0.8 () Report
 
 ------ development -------------------------------
+
+0.0.8 () Report
+
+------ stable ------------------------------------
 
 0.0.7 (2026-07-13) Exhibition object I/O
 
@@ -20,7 +23,6 @@
 - Implemented extensionCmdVersion
 - Implemented extensionCmdHelp
 
------- stable ------------------------------------
 ------ current release ---------------------------
 
 0.0.6 (2026-06-28) Lua configuration support
