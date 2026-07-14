@@ -49,9 +49,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 void extensionAPI (Config& config)
 {
-  (*config.lua())["apiGetVersion"] = []()
+  (*config.lua ())["apiGetVersion"] = []()
     {
       return VERSION;
+    };
+
+  (*config.lua ())["apiGet"] = []()
+    {
+      // TODO: Perform a domGetcall.
     };
 }
 

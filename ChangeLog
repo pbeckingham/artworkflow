@@ -18,6 +18,7 @@
 - Implemented extensionOnEntry
 - Implemented extensionOnExit
 - Implemented extensionCmdVersion
+- Implemented extensionCmdHelp
 
 ------ stable ------------------------------------
 ------ current release ---------------------------

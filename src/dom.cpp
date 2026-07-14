@@ -169,7 +169,8 @@ bool domGet (
         }
       }
 
-      // TODO: dom.<eid>.?
+      // TODO: dom.exhibition.next
+      // TODO: dom.<eid>.<meta>
       // TODO: dom.<id>.[start|end|varnish|action].[year|month|day|age]
 
       // dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]
