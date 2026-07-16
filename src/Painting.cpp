@@ -339,53 +339,53 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
 
 void Painting::parse (const std::string& line)
 {
-  if (line.length () > 0)
+  if (line.length () > 1)
     _id         = Lexer::trimRight (line.substr (1, 4));
   else
     throw format("Missing id to parse.");
 
-  if (line.length () > 32)
+  if (line.length () >  7)
     _title      = Lexer::trimRight (line.substr (6, 28));
   else
     throw format("Missing title to parse.");
 
-  if (line.length () > 36)
+  if (line.length () > 35)
     _series     = Lexer::trimRight (line.substr (34, 3));
 
-  if (line.length () > 48)
+  if (line.length () > 39)
     _start      = Lexer::trimRight (line.substr (38, 11));
 
-  if (line.length () > 60)
+  if (line.length () > 51)
     _end        = Lexer::trimRight (line.substr (50, 11));
 
-  if (line.length () > 72)
+  if (line.length () > 63)
     _varnish    = Lexer::trimRight (line.substr (62, 11));
 
-  if (line.length () > 84)
+  if (line.length () > 75)
     _action     = Lexer::trimRight (line.substr (74, 11));
 
-  if (line.length () > 90)
+  if (line.length () > 87)
     _size       = Lexer::trimRight (line.substr (86, 5));
 
-  if (line.length () > 94)
+  if (line.length () > 93)
     _substrate  = Lexer::trimRight (line.substr (92, 3));
 
-  if (line.length () > 96)
+  if (line.length () > 97)
     _tagged     = Lexer::trimRight (line.substr (96, 1));
 
-  if (line.length () > 98)
+  if (line.length () > 99)
     _varnished  = Lexer::trimRight (line.substr (98, 1));
 
-  if (line.length () > 100)
+  if (line.length () > 101)
     _archived   = Lexer::trimRight (line.substr (100, 1));
 
-  if (line.length () > 105)
+  if (line.length () > 106)
     _www        = Lexer::trimRight (line.substr (105, 1));
 
   if (line.length () > 108)
     _complexity = Lexer::trimRight (line.substr (107, 2));
 
-  if (line.length () > 110)
+  if (line.length () > 111)
     _notes      = Lexer::trimRight (line.substr (110), " \n");
 }
 
