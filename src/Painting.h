@@ -95,6 +95,9 @@ private:
   std::string _www;
   std::string _complexity;
   std::string _notes;
+
+  // TODO: groups
+  // TODO: time
 };
 
 #endif
