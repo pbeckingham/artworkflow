@@ -38,6 +38,7 @@ int CmdHelpUsage (Config& config)
             << "       artworkflow diagnostics\n"
             << "       artworkflow get <DOM> [<DOM> ...]\n"
             << "       artworkflow help [<command>]\n"
+            << "       artworkflow kanban\n"
             << "       artworkflow new\n"
             << "       artworkflow info <id>\n"
             << '\n'

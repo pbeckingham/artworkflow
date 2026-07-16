@@ -44,6 +44,7 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "--help");
   cli.entity ("command", "-h");
   cli.entity ("command", "information");
+  cli.entity ("command", "kanban");
   cli.entity ("command", "new");
   cli.entity ("command", "version");
   cli.entity ("command", "--version"); // Note: this only appears to overlap with
@@ -225,6 +226,7 @@ int dispatchCommand (
              command == "--help"  ||
              command == "-h")          status = CmdHelp          (cli, config          );
     else if (command == "information") status = CmdInfo          (cli,         database);
+    else if (command == "kanban")      status = CmdKanban        (cli, config, database);
     else if (command == "new")         status = CmdNew           (cli, config, database);
     else if (command == "version" ||
              command == "-v")          status = CmdVersion       (     config          );

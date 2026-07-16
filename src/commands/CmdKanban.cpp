@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2016 - 2018, 2022 - 2025, Gothenburg Bit Factory.
+// Copyright 2026, Paul Beckingham.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,18 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_COMMANDS
-#define INCLUDED_COMMANDS
+#include <commands.h>
+#include <iostream>
+#include <artworkflow.h>
 
-#include <CLI.h>
-#include <Database.h>
-#include <Config.h>
+////////////////////////////////////////////////////////////////////////////////
+// Returns 0 if tracking is active, 1 if not.
+int CmdKanban (CLI& cli, Config& config, Database& database)
+{
+  const bool verbose = config.getBoolean ("verbose");
 
-//  CmdXxx           (CLI&, Config&, Database&);
-int CmdDiagnostics   (      Config&           );
-int CmdGet           (CLI&, Config&, Database&);
-int CmdHelp          (CLI&, Config&           );
-int CmdInfo          (CLI&,          Database&);
-int CmdKanban        (CLI&, Config&, Database&);
-int CmdNew           (CLI&, Config&, Database&);
-int CmdVersion       (      Config&           );
-int CmdDefault       (CLI&, Config&, Database&);
+  debug ("CmdKanban");
+  return 0;
+}
 
-#endif
+////////////////////////////////////////////////////////////////////////////////
