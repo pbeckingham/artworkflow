@@ -150,6 +150,14 @@ bool Painting::is_drying () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// return self.start_date and \
+//   self.end_date and \
+//   self.varnish_date and \
+//   'Abandoned' not in self.notes and \
+//   'NFS' not in self.notes and \
+//   '13Forest' not in self.groups and \
+//   'Bowersock' not in self.groups and \
+//   not self.action
 bool Painting::is_inventory () const
 {
   return _varnish != "" && _action == "";
