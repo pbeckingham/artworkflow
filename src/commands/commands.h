@@ -38,6 +38,6 @@ int CmdHelp          (CLI&, Config&           );
 int CmdInfo          (CLI&,          Database&);
 int CmdNew           (CLI&, Config&, Database&);
 int CmdVersion       (      Config&           );
-int CmdDefault       (      Config&           );
+int CmdDefault       (CLI&, Config&, Database&);
 
 #endif

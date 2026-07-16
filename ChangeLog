@@ -6,7 +6,7 @@
 
 ------ development -------------------------------
 
-0.0.8 () Report
+0.0.8 () Reporting
 
 ------ stable ------------------------------------
 
@@ -16,7 +16,7 @@
 - Extended info command to show exhibitions
 - Implemented dom.painting.next
 - Implemented dom.<id>.<meta>
-- Added stub 'new' command
+- Added stub new command
 - Added stub extension and event definitions
 - Implemented extensionOnEntry
 - Implemented extensionOnExit

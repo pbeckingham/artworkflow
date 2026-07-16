@@ -30,7 +30,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
-int CmdDefault (Config& config)
+int CmdDefault (CLI& cli, Config& config, Database& database)
 {
   const bool verbose = config.getBoolean ("verbose");
 
@@ -48,7 +48,7 @@ int CmdDefault (Config& config)
               << '\n';
 
   if (verbose)
-    warn ("What should the default command be?");
+    std::cout << "Running default command...\n";
 
   return 0;
 }

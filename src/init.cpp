@@ -216,7 +216,6 @@ int dispatchCommand (
 
   // Dispatch to the right command function.
   std::string command = cli.getCommand ();
-
   if (! command.empty ())
   {
     // These signatures are expected to be all different, therefore no command to fn mapping.
@@ -228,8 +227,7 @@ int dispatchCommand (
     else if (command == "information") status = CmdInfo          (cli,         database);
     else if (command == "new")         status = CmdNew           (cli, config, database);
     else if (command == "version" ||
-             command == "-v")          status = CmdVersion       (     config           );
-//    else                               status = CmdReport        (cli, config, database);
+             command == "-v")          status = CmdVersion       (     config          );
   }
   else
   {
@@ -241,7 +239,7 @@ int dispatchCommand (
     }
     else
     {
-      status = CmdDefault (config);
+      status = CmdDefault (cli, config, database);
     }
   }
 
