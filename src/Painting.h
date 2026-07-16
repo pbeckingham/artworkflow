@@ -70,6 +70,7 @@ public:
 
   bool validate (std::vector <std::string>&) const;
   std::string dump (const std::string& title = "Painting") const;
+  std::string card () const;
 
   static bool is_painting (const std::string&);
 

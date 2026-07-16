@@ -311,6 +311,61 @@ std::string Painting::dump (const std::string& title) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+/*
+  def card(self):
+    fg = '\033[38;5;244m'
+    bg = '\033[48;5;234m'  # On gray 3:  ESC [ 48;5;234 m
+
+    if self.groups:
+      bg = get_bg(self.groups[0])
+
+    lines = []
+    line = f'#{self.serial:4} {self.size:5}'
+    if self.complexity:
+      line += f' {self.complexity}'
+    if self.substrate:
+      line += f' {self.substrate}'
+    lines.append(f'{fg}{bg}{line[:20]:20}{code_off}')
+    lines.append(f'{code_white}{bg}{self.title[:20]:20}{code_off}')
+
+    if self.series:
+      lines.append(f'{fg}{bg}{series_names[self.series][:20]:20}{code_off}')
+
+    line = ''
+    if self.varnish:
+      lines.append(f'{fg}{bg}{varnish_names[self.varnish][:20]:20}{code_off}')
+
+    if self.is_wip():
+      line = f'{ISODate(self.start_date).elapsed()}d progress'
+      lines.append(f'{fg}{bg}{line[:20]:20}{code_off}')
+    elif self.is_abandoned():
+      lines.append(f'{fg}{bg}Abandoned           {code_off}')
+    elif self.is_destroyed():
+      lines.append(f'{fg}{bg}Destroyed           {code_off}')
+    elif self.is_gifted():
+      lines.append(f'{fg}{bg}Gifted              {code_off}')
+    elif self.is_sold():
+      lines.append(f'{fg}{bg}Sold                {code_off}')
+    elif self.is_inventory():
+      ...
+    elif self.is_drying():
+      line = f'{ISODate(self.end_date).elapsed()}d drying'
+      lines.append(f'{fg}{bg}{line[:20]:20}{code_off}')
+
+    if self.time:
+      line = f'{self.time}h effort'
+      lines.append(f'{fg}{bg}{line[:20]:20}{code_off}')
+    if self.groups:
+      for group in self.groups:
+        lines.append(f'{fg}{bg}Group: {group[:13]:13}{code_off}')
+
+    return lines
+*/
+std::string Painting::card () const
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // A painting ID is: ^#S?\d\d\d[a-d]?
 bool Painting::is_painting (const std::string& line)
 {
