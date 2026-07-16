@@ -60,6 +60,8 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   for (auto& d : drying)
     debug (format ("  {1} {2}", d.id (), d.title ()));
 
+  // TODO: iterate line by line, populating columns for concepts, wip, and drying.
+  //
   return 0;
 }
 
