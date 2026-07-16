@@ -139,7 +139,7 @@ bool Painting::is_concept () const
 ////////////////////////////////////////////////////////////////////////////////
 bool Painting::is_wip () const
 {
-  return _start != "" && _end == "";
+  return _start != "" && _end == "" && _action == "" && _notes.find ("Abandoned") == std::string::npos;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
