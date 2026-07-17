@@ -65,7 +65,20 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   //   ["columns"] = {"Concept", "WIP", "Drying"}
   // }
 
-  // TODO: iterate line by line, populating columns for concepts, wip, and drying.
+  // There may be settings overrides.
+  std::optional <sol::table> reportKanban = (*config.lua ())["reportKanban"];
+  if (reportKanban)
+  {
+    debug ("CmdKanban found Lua/reportKanban settings");
+    for (const auto& entry : reportKanban.value ())
+    {
+      sol::object key = entry.first;
+      sol::object value = entry.second;
+      debug (key.as<std::string> ());
+    }
+  }
+
+  // TODO: Compose output line by line for the columns.
 
   return 0;
 }
