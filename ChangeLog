@@ -31,6 +31,7 @@
 
 - #11 Convert artworkflow.cfg to config.lua
 - #8 Config command
+- #12 Replace Rules.{h,cpp}, Configuration.{h,cpp}
 - Removed 'show' command
 
 0.0.5 (2026-06-22) Painting object I/O
