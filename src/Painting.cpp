@@ -376,6 +376,7 @@ std::string Painting::dump (const std::string& title) const
 */
 std::string Painting::card () const
 {
+  return "[Card]";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
