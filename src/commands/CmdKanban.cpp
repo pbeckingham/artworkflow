@@ -61,6 +61,10 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
     debug (format ("  {1} {2}", d.id (), d.title ()));
 
   // TODO: load configuration that determines Kanban columns.
+  // reportKanban = {
+  //   ["columns"] = {"Concept", "WIP", "Drying"}
+  // }
+
   // TODO: iterate line by line, populating columns for concepts, wip, and drying.
 
   return 0;
