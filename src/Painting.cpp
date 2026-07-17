@@ -146,7 +146,7 @@ bool Painting::is_wip () const
 // return self.start_date and self.end_date and not self.varnish_date and 'Abandoned' not in self.notes and not self.action
 bool Painting::is_drying () const
 {
-  return _end != "" && _varnish == "";
+  return _start != "" && _end != "" && _varnish == "" && _notes.find ("Abandoned") == std::string::npos && _action == "";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
