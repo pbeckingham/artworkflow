@@ -27,11 +27,28 @@
 #include <cmake.h>
 #include <CLI.h>
 #include <Painting.h>
+#include <format.h>
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 bool filterByCLI (const CLI& cli, const Painting& painting)
 {
+  for (auto& arg : cli._args)
+  {
+    if (arg.hasTag ("FILTER"))
+    {
+      auto value = arg.attribute ("canonical");
+      if (value == "")
+        value = arg.attribute ("raw");
+
+      if (arg.hasTag ("ID"))
+        if (! painting.matches (arg.attribute ("raw")))
+          return false;
+
+      // TODO: Implement other filtering metadata: title, regex, size...
+    }
+  }
+
   return true;
 }
 
