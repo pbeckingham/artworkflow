@@ -70,11 +70,6 @@ void initializeDataAndConfig (
   config.set ("color", isatty (STDOUT_FILENO) ? "on" : "off");
 
   // Make common hints available via config:
-  //   :debug   --> debug=on
-  //   :quiet   --> verbose=off
-  //   :color   --> color=on
-  //   :nocolor --> color=off
-  //   :yes     --> confirmation=off
   for (auto& arg : cli._args)
   {
     if (arg.hasTag ("HINT"))
@@ -89,6 +84,7 @@ void initializeDataAndConfig (
 
   enableDebugMode (config.getBoolean ("debug"));
 //  paths::initializeDirs (config);
+// WARN: Kept only because it provides one solution to config/data initial condition.
 /*
 void initializeConfigAndDatabase (Config& config)
 {
@@ -172,25 +168,16 @@ void initializeConfigAndDatabase (Config& config)
 }
 */
 
-  for (auto& arg : cli._args)
-  {
-    if (arg.hasTag ("HINT"))
-    {
-      if (arg.attribute ("canonical") == ":debug")   config.set ("debug",        "on");
-      if (arg.attribute ("canonical") == ":quiet")   config.set ("verbose",      "off");
-      if (arg.attribute ("canonical") == ":color")   config.set ("color",        "on");
-      if (arg.attribute ("canonical") == ":nocolor") config.set ("color",        "off");
-      if (arg.attribute ("canonical") == ":yes")     config.set ("confirmation", "off");
-    }
-  }
-
-  if (config.has ("debug.indicator"))
+  // TODO: Is this working?
+  if (config.has ("debug_indicator"))
     setDebugIndicator (config.get ("debug.indicator"));
 
+  // TODO: This is not working.
   if (config.has ("theme.colors.debug"))
     setDebugColor (Color (config.get ("theme.colors.debug")));
 
   // Apply command line overrides.
+  // TODO: This is not working.
   for (auto& arg : cli._args)
   {
     if (arg.hasTag ("CONFIG"))
