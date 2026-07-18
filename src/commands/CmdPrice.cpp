@@ -178,6 +178,12 @@ double frame_cost (const Config& config, const int height, const int width)
 int CmdPrice (CLI& cli, Config& config, Database& database)
 {
   debug ("CmdPrice start");
+
+  // TODO: Filter data to find one painting.
+  // TODO: Add up costs.
+  // TODO: Calculate linear cost.
+  // TODO: Calculate Ani cost.
+
   debug ("CmdPrice end");
   return 0;
 }
