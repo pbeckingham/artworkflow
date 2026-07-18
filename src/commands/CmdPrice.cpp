@@ -150,6 +150,7 @@ double paint_cost (const Config& config, const int height, const int width)
 // Estimate 2026-07-17
 double varnish_cost (const Config& config, const std::string& varnish)
 {
+  // TODO: Vary by area and type of varnish.
   return config.getReal ("cost_estimate_varnish", 0.73);
 }
 
