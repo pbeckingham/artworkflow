@@ -129,6 +129,17 @@ double brush_cost (const Config& config)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Using Geneva paint as the example, with 8 years of data: = $0.32/d
+// Assume 350 days painting a year: $0.32/d * 350d = $112/yr
+// Average 33 paintings completed per year: $112 / 33 = $3.39
+//
+// 2026-07-17
+double paint_cost (const Config& config, const int height, const int width)
+{
+  return config.getReal ("cost_estimate_paint", 3.39);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
 int CmdPrice (CLI& cli, Config& config, Database& database)
 {
