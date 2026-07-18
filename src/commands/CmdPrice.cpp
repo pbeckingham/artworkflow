@@ -26,6 +26,7 @@
 
 #include <commands.h>
 #include <iostream>
+#include <format.h>
 #include <artworkflow.h>
 
 static std::map <std::string, std::string> series_map
@@ -179,10 +180,21 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
 {
   debug ("CmdPrice start");
 
-  // TODO: Filter data to find one painting.
-  // TODO: Add up costs.
-  // TODO: Calculate linear cost.
-  // TODO: Calculate Ani cost.
+  // TODO: Apply filtering to CmdInfo, CmdKanban
+  for (auto& painting : database.allPaintings ())
+  {
+    if (filterByCLI (cli, painting))
+    {
+      // TODO: Add up all costs.
+      auto total_cost = varnish_cost (config, painting.varnished ()) +
+                        brush_cost (config);
+      debug (format ("  total_cost {1}", total_cost));
+
+      // TODO: Calculate linear price.
+      // TODO: Calculate Ani price.
+
+    }
+  }
 
   debug ("CmdPrice end");
   return 0;
