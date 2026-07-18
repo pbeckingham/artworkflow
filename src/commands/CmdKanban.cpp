@@ -39,23 +39,24 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   std::vector <Painting> wip;
   std::vector <Painting> drying;
   for (auto& painting : database.allPaintings ())
+  for (auto& painting : database.allPaintings ())
   {
-    if (painting.is_concept ())
-      concepts.push_back (painting);
-
-    else if (painting.is_wip ())
-      wip.push_back (painting);
-
-    else if (painting.is_drying ())
-      drying.push_back (painting);
+    if (filterByCLI (cli, painting))
+    {
+           if (painting.is_concept ()) concepts.push_back (painting);
+      else if (painting.is_wip ())     wip.push_back (painting);
+      else if (painting.is_drying ())  drying.push_back (painting);
+    }
   }
 
   debug (format ("{1} concepts", concepts.size ()));
   for (auto& c : concepts)
     debug (format ("  {1} {2}", c.id (), c.title ()));
+
   debug (format ("{1} wip", wip.size ()));
   for (auto& w : wip)
     debug (format ("  {1} {2}", w.id (), w.title ()));
+
   debug (format ("{1} drying", drying.size ()));
   for (auto& d : drying)
     debug (format ("  {1} {2}", d.id (), d.title ()));

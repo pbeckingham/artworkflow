@@ -1,4 +1,3 @@
-
 ------ planned -----------------------------------
 
 0.1.0 (2026-) Minimal Functionality
@@ -11,6 +10,7 @@
 - Implemented Kanban report
 - Implemented filtering by ID
 - Implemented filtering by /regex/
+- Added new filtering to Kanban report
 
 ------ stable ------------------------------------
 
