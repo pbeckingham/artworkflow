@@ -11,6 +11,7 @@
 - Implemented filtering by ID
 - Implemented filtering by /regex/
 - Added new filtering to Kanban report
+- Added new filtering to info command
 
 ------ stable ------------------------------------
 

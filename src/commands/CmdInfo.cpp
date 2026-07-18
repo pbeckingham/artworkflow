@@ -36,41 +36,39 @@ int CmdInfo (
   CLI& cli,
   Database& database)
 {
+  for (auto& painting : database.allPaintings ())
+  {
+    if (filterByCLI (cli, painting))
+    {
+      std::cout << painting.id () << " " << painting.title () << '\n';
+      if (painting.start () != "")
+        std::cout << "  Started      " << painting.start ().substr (1, std::string::npos) << '\n';
+      if (painting.end () != "")
+        std::cout << "  Ended        " << painting.end ().substr (1, std::string::npos) << '\n';
+      if (painting.varnish () != "")
+        std::cout << "  Varnished    " << painting.varnish ().substr (1, std::string::npos) << '\n';
+      if (painting.series () != "")
+        std::cout << "  Series       " << painting.series () << '\n';
+      if (painting.size () != "")
+        std::cout << "  Size         " << painting.size () << '\n';
+      if (painting.substrate () != "")
+        std::cout << "  Substrate    " << painting.substrate () << '\n';
+      if (painting.tagged () != "")
+        std::cout << "  Tagged       " << painting.tagged () << '\n';
+      if (painting.varnished () != "")
+        std::cout << "  Varnished    " << painting.varnished () << '\n';
+      if (painting.archived () != "")
+        std::cout << "  Archived     " << painting.archived () << '\n';
+      if (painting.www () != "")
+        std::cout << "  WWW          " << painting.www () << '\n';
+      if (painting.complexity () != "")
+         std::cout << "  Complexity   " << painting.complexity () << '\n';
+    }
+  }
+
+  // TODO: Upgrade to new filtering mechanism.
   for (auto& id : cli.getIds ())
   {
-    if (Painting::is_painting (id))
-    {
-      for (auto& painting : database.allPaintings ())
-      {
-        if (painting.matches (id))
-        {
-          std::cout << painting.id () << " " << painting.title () << '\n';
-          if (painting.start () != "")
-            std::cout << "  Started      " << painting.start ().substr (1, std::string::npos) << '\n';
-          if (painting.end () != "")
-            std::cout << "  Ended        " << painting.end ().substr (1, std::string::npos) << '\n';
-          if (painting.varnish () != "")
-            std::cout << "  Varnished    " << painting.varnish ().substr (1, std::string::npos) << '\n';
-          if (painting.series () != "")
-            std::cout << "  Series       " << painting.series () << '\n';
-          if (painting.size () != "")
-            std::cout << "  Size         " << painting.size () << '\n';
-          if (painting.substrate () != "")
-            std::cout << "  Substrate    " << painting.substrate () << '\n';
-          if (painting.tagged () != "")
-            std::cout << "  Tagged       " << painting.tagged () << '\n';
-          if (painting.varnished () != "")
-            std::cout << "  Varnished    " << painting.varnished () << '\n';
-          if (painting.archived () != "")
-            std::cout << "  Archived     " << painting.archived () << '\n';
-          if (painting.www () != "")
-            std::cout << "  WWW          " << painting.www () << '\n';
-          if (painting.complexity () != "")
-            std::cout << "  Complexity   " << painting.complexity () << '\n';
-        }
-      }
-    }
-
     if (Exhibition::is_exhibition (id))
     {
       for (auto& exhibition : database.allExhibitions ())
