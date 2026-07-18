@@ -26,10 +26,11 @@
 
 #include <commands.h>
 #include <iostream>
+#include <inttypes.h>
 #include <format.h>
 #include <artworkflow.h>
 
-static std::map <std::string, std::string> series_map
+static std::map <std::string, std::string> series_names
 {
   {"STL", "Still Life"},
   {"LAN", "Landscape"},
@@ -176,27 +177,76 @@ double frame_cost (const Config& config, const int height, const int width)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Returns 0 if tracking is active, 1 if not.
+// Given the 2024 12"x12" price of $1100, and the 24"x48" price of $5000,
+// assume a straight line proportinal to painting area.
+//
+// Linear price = mx + c
+double area_price (
+  const int height,
+  const int width)
+{
+  auto slope = (5000 - 1250) / (1152 - 144);
+  auto area = height * width;
+
+  return ((area - 144) * slope) + 1250;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+double ani_price (
+  const int height,
+  const int width,
+  const double cost,
+  const int complexity)
+{
+  return ((height * width * 2) + cost) * complexity;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// #379 'Central Line Surfer'
+//   Still Life Series
+//   12"x18", Aluminum Composite Material
+//   Created 2026-02-23 - 2026-04-06 (42d)
+//   Varnished 2026-04-17, dried for 11d, Conservar
+//   Complexity 2
+//   Materials cost $   59.65
+//   Area Price     $ 1400.00
+//   Ani Price      $ 1000.00
+//
 int CmdPrice (CLI& cli, Config& config, Database& database)
 {
-  debug ("CmdPrice start");
+  int count = 0;
 
   for (auto& painting : database.allPaintings ())
   {
     if (filterByCLI (cli, painting))
     {
-      // TODO: Add up all costs.
-      auto total_cost = varnish_cost (config, painting.varnished ()) +
-                        brush_cost (config);
-      debug (format ("  total_cost {1}", total_cost));
+      ++count;
 
-      // TODO: Calculate linear price.
-      // TODO: Calculate Ani price.
+      int height = painting.height ();
+      int width = painting.width ();
+
+      std::cout << '#' << painting.id () << ' ' << painting.title () << '\n'
+                << "  " << series_names [painting.series ()] << '\n'
+                << "  " << height << "\"x" << width << "\", " << substrate_names [painting.substrate ()] << '\n';
+
+      auto s = substrate_cost (config, painting.substrate (), height, width);
+      auto g = ground_cost (config, height, width);
+      auto v = varnish_cost (config, painting.varnished ());
+      auto b = brush_cost (config);
+      auto p = paint_cost (config, height, width);
+      auto f = frame_cost (config, height, width);
+      auto total_cost = s + g + v + b + p + f;
+      std::cout << "  Materials cost $" << format (total_cost, 8, 4) << '\n';
+
+      std::cout << "  Area price     $" << format (area_price (height, width), 5, 4) << '\n';
+
+      auto complexity = strtoimax (painting.complexity ().substr (1).c_str (), nullptr, 10);
+      std::cout << "  Ani price      $" << format (ani_price (height, width, total_cost, complexity), 5, 4) << '\n';
+      std::cout << '\n';
     }
   }
 
-  debug ("CmdPrice end");
-  return 0;
+  return count > 0 ? 0 : 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
