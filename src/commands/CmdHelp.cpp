@@ -40,6 +40,7 @@ int CmdHelpUsage (Config& config)
             << "       artworkflow help [<command>]\n"
             << "       artworkflow kanban\n"
             << "       artworkflow new\n"
+            << "       artworkflow price\n"
             << "       artworkflow info <id>\n"
             << '\n'
             << "Hints:\n"

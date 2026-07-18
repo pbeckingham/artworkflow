@@ -46,6 +46,7 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "information");
   cli.entity ("command", "kanban");
   cli.entity ("command", "new");
+  cli.entity ("command", "price");
   cli.entity ("command", "version");
   cli.entity ("command", "--version"); // Note: this only appears to overlap with
                                        // the lightweight version checking.
@@ -228,6 +229,7 @@ int dispatchCommand (
     else if (command == "information") status = CmdInfo          (cli,         database);
     else if (command == "kanban")      status = CmdKanban        (cli, config, database);
     else if (command == "new")         status = CmdNew           (cli, config, database);
+    else if (command == "price")       status = CmdPrice         (cli, config, database);
     else if (command == "version" ||
              command == "-v")          status = CmdVersion       (     config          );
   }

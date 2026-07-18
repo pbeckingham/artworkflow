@@ -12,5 +12,6 @@ set (commands_SRCS CmdDefault.cpp
                    CmdInfo.cpp
                    CmdKanban.cpp
                    CmdNew.cpp
+                   CmdPrice.cpp
                    CmdVersion.cpp)
 add_library (commands STATIC ${commands_SRCS})
