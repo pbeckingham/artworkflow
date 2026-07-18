@@ -102,6 +102,19 @@ double substrate_cost (
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// 1 can, 32oz Gamblin White Oil Ground = $48.00 on Amazon
+// 1 can lasts approximately 18 months
+// $48.00 * 12 / 18 = $32.00 per year
+// 35 paintings per year average
+// $32.00 / 35 = $0.92 per painting
+//
+// 2026-07-17
+double ground_cost (const Config& config, const int height, const int width)
+{
+  return config.getReal ("cost_estimate_ground", 0.92);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
 int CmdPrice (CLI& cli, Config& config, Database& database)
 {
