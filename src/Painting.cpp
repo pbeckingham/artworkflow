@@ -394,10 +394,10 @@ std::string Painting::card () const
 
 ////////////////////////////////////////////////////////////////////////////////
 // A painting ID is: ^#S?\d\d\d[a-d]?
-bool Painting::is_painting (const std::string& line)
+bool Painting::is_painting (const std::string& sample)
 {
   RX id ("^#?S?\\d\\d\\d[a-d]?");
-  return id.match (line);
+  return id.match (sample);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
