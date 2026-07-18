@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int main (int, char**)
 {
-  UnitTest t (17);
+  UnitTest t (19);
 
   try
   {
@@ -74,6 +74,8 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
   t.is (p3.www (),        "",                           "Painting: www");
   t.is (p3.complexity (), "C2",                         "Painting: complexity");
   t.is (p3.notes (),      "24h G:Study",                "Painting: notes");
+  t.is (p3.height (),     7,                            "Painting: height");
+  t.is (p3.width (),      5,                            "Painting: width");
 
   return 0;
 }
