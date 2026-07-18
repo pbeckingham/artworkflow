@@ -2,13 +2,15 @@
 ------ planned -----------------------------------
 
 0.1.0 (2026-) Minimal Functionality
-0.0.9 () Filtering
+0.0.9 () -
 
 ------ development -------------------------------
 
 0.0.8 () Reporting
 
 - Implemented Kanban report
+- Implemented filtering by ID
+- Implemented filtering by /regex/
 
 ------ stable ------------------------------------
 

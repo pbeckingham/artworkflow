@@ -26,6 +26,7 @@
 
 #include <cmake.h>
 #include <CLI.h>
+#include <RX.h>
 #include <Painting.h>
 #include <format.h>
 #include <artworkflow.h>
@@ -37,18 +38,33 @@ bool filterByCLI (const CLI& cli, const Painting& painting)
   {
     if (arg.hasTag ("FILTER"))
     {
+      // Use canonical form if available, otherwise raw input.
       auto value = arg.attribute ("canonical");
       if (value == "")
         value = arg.attribute ("raw");
 
-      if (arg.hasTag ("ID"))
-        if (! painting.matches (arg.attribute ("raw")))
+      if (arg._lextype == Lexer::Type::word)
+      {
+        if (arg.hasTag ("ID"))
+          if (! painting.matches (arg.attribute ("raw")))
+            return false;
+      }
+      else if (arg._lextype == Lexer::Type::pattern)
+      {
+        RX rx (value.substr (1, value.length () - 2));
+        if (! rx.match (painting.title ()))
           return false;
+      }
+      else
+      {
+        throw format ("Unrecognized filter type '{1}'", value);
+      }
 
-      // TODO: Implement other filtering metadata: title, regex, size...
+      // TODO: Implement other filtering metadata: size...
     }
   }
 
+  debug (format ("#{1} '{2}' matches", painting.id (), painting.title ()));
   return true;
 }
 
