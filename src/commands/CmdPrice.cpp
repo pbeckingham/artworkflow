@@ -153,6 +153,27 @@ double varnish_cost (const Config& config, const std::string& varnish)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// FrankenFrame ECO profile:
+//   8"x8"   = 32" linear = $21.65 + $5 shipping = $26.65 / 32" = $0.83 per linear inch
+//   12"x12" = 48" linear = $33.60 + $5 shipping = $38.75 / 48" = $0.81 per linear inch
+//   12"x24" = 72" linear = $50.54 + $5 shipping = $55.54 / 72" = $0.77 per linear inch
+//   24"x24' = 96" linear = $75.00 + $5 shipping = $80.00 / 96" = $0.83 per linear inch
+//
+// AmericanFrame
+//   12"x12" = 48" linear =  $60 + $15 shipping =  $75 / 48" = $1.56 per linear inch
+//   12"x24" = 72" linear =  $96 + $15 shipping = $111 / 72" = $1.54 per linear inch
+//   18"x18" = 72" linear = $112 + $15 shipping = $127 / 72" = $1.76 per linear inch
+//   24"x24" = 96" linear = $140 + $15 shipping = $155 / 96" = $1.62 per linear inch
+//
+// Assume FrankenFrame, highest cost.
+//
+// 2026-07-17
+double frame_cost (const Config& config, const int height, const int width)
+{
+  return config.getReal ("cost_estimate_frame", 0.83) * (height + height + width + width);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
 int CmdPrice (CLI& cli, Config& config, Database& database)
 {
