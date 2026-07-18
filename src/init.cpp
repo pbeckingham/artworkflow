@@ -168,6 +168,19 @@ void initializeConfigAndDatabase (Config& config)
 }
 */
 
+  // TODO: Determine why the following is needed for debug output to appear.
+  for (auto& arg : cli._args)
+  {
+    if (arg.hasTag ("HINT"))
+    {
+      if (arg.attribute ("canonical") == ":debug")   config.set ("debug",        true);
+      if (arg.attribute ("canonical") == ":quiet")   config.set ("verbose",      false);
+      if (arg.attribute ("canonical") == ":color")   config.set ("color",        true);
+      if (arg.attribute ("canonical") == ":nocolor") config.set ("color",        false);
+      if (arg.attribute ("canonical") == ":yes")     config.set ("confirmation", false);
+    }
+  }
+
   // TODO: Is this working?
   if (config.has ("debug_indicator"))
     setDebugIndicator (config.get ("debug.indicator"));
