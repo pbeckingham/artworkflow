@@ -115,6 +115,20 @@ double ground_cost (const Config& config, const int height, const int width)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// 35 paintings per year average
+// Estimated 5 brushes consumed per year
+// Average brush price: $12.00
+//
+// Total Brushes = 5 x $12.00 = $60.00
+// Therefore $60.00 / 35 = $1.72 per painting.
+//
+// 2026-07-17
+double brush_cost (const Config& config)
+{
+  return config.getReal ("cost_estimate_brush", 1.72);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
 int CmdPrice (CLI& cli, Config& config, Database& database)
 {
