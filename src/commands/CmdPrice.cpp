@@ -139,6 +139,19 @@ double paint_cost (const Config& config, const int height, const int width)
   return config.getReal ("cost_estimate_paint", 3.39);
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+// Natural Pigments Conservar 118ml bottle is $12.10
+// One bottle lasts 6 months
+// $12.10 * 2 = $24.20 per year
+// Average 33 paintings completed per year: $24.20 / 33 = $0.73
+//
+// Estimate 2026-07-17
+double varnish_cost (const Config& config, const std::string& varnish)
+{
+  return config.getReal ("cost_estimate_varnish", 0.73);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
 int CmdPrice (CLI& cli, Config& config, Database& database)
