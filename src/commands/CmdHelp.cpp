@@ -38,10 +38,10 @@ int CmdHelpUsage (Config& config)
             << "       artworkflow diagnostics\n"
             << "       artworkflow get <DOM> [<DOM> ...]\n"
             << "       artworkflow help [<command>]\n"
-            << "       artworkflow kanban\n"
+            << "       artworkflow kanban [<filter>]\n"
             << "       artworkflow new\n"
-            << "       artworkflow price\n"
-            << "       artworkflow info <id>\n"
+            << "       artworkflow price <filter>\n"
+            << "       artworkflow info <filter>\n"
             << '\n'
             << "Hints:\n"
             << "       :debug       Debug mode, showing all processing\n"
@@ -49,6 +49,11 @@ int CmdHelpUsage (Config& config)
             << "       :color       Use color always\n"
             << "       :nocolor     Do not use color\n"
             << "       :yes         Override confirmation requests\n"
+            << '\n'
+            << "Filter is a set of terms, implicitly combined with 'AND':\n"
+            << "       [0-9]+       Is a painting ID\n"
+            << "       #[0-9]+      Is a painting ID\n"
+            << "       /<regex>/    Is a regular expression compared to the title\n"
             << '\n'
             << "DOM References:\n"
             << "       dom.newid\n"
