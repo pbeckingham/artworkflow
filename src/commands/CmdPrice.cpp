@@ -181,7 +181,6 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
 {
   debug ("CmdPrice start");
 
-  // TODO: Apply filtering to CmdInfo, CmdKanban
   for (auto& painting : database.allPaintings ())
   {
     if (filterByCLI (cli, painting))
@@ -193,7 +192,6 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
 
       // TODO: Calculate linear price.
       // TODO: Calculate Ani price.
-
     }
   }
 

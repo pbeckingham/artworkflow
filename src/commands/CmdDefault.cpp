@@ -29,7 +29,6 @@
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-// Returns 0 if tracking is active, 1 if not.
 int CmdDefault (CLI& cli, Config& config, Database& database)
 {
   const bool verbose = config.getBoolean ("verbose");
