@@ -401,24 +401,21 @@ bool Painting::is_painting (const std::string& sample)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-/*
-                                                                                                    1         1
-          1         2         3         4         5         6         7         8         9         0         1
-012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
------ --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
-ID    TITLE                       SER START       END         VARNISH     ACTION      SIZE  SUB T V AA WWW CX NOTES
------ --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
-#378  [Pumpkins]                  STL s2025-08-09                         d2025-11-11 6x8   ACM            C2 Abandoned
-#379  Central Line Surfer         STL s2026-02-23 e2026-04-06 v2026-04-17             12x18 ACM Y C        C2 43h G:Still_Life
-#380  [Crafts]                    STL s2026-05-07 e2026-05-23                         12x18 ACM            C4 34h G:Still_Life
-#381  [Herring 2]                 WIL s2026-05-23 e2026-05-27                         7x17  S              C1 2h
-#382  [Herring 3]                 WIL s2026-05-23 e2026-05-27                         4x10  S              C1 2h
-#383  Coleoptera IV               WIL                                                                      C4
-
-#S001 Juan de Pareja (Velasquez)  POR s2025-04-04 e2025-04-05 v2025-05-24             7x5   ACM Y C        C2 G:Study
-#S002 Mike Derby                  POR s2025-05-24 e2025-06-25 v2025-07-19 g2025-07-23 10x10 WP  Y W        C2 12h G:Study
-*/
-
+//                                                                                                     1         1
+//           1         2         3         4         5         6         7         8         9         0         1
+// 012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+// ----- --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
+// ID    TITLE                       SER START       END         VARNISH     ACTION      SIZE  SUB T V AA WWW CX NOTES
+// ----- --------------------------- --- ----------- ----------- ----------- ----------- ----- --- - - -- --- -- -----
+// #378  [Pumpkins]                  STL s2025-08-09                         d2025-11-11 6x8   ACM            C2 Abandoned
+// #379  Central Line Surfer         STL s2026-02-23 e2026-04-06 v2026-04-17             12x18 ACM Y C        C2 43h G:Still_Life
+// #380  [Crafts]                    STL s2026-05-07 e2026-05-23                         12x18 ACM            C4 34h G:Still_Life
+// #381  [Herring 2]                 WIL s2026-05-23 e2026-05-27                         7x17  S              C1 2h
+// #382  [Herring 3]                 WIL s2026-05-23 e2026-05-27                         4x10  S              C1 2h
+// #383  Coleoptera IV               WIL                                                                      C4
+//
+// #S001 Juan de Pareja (Velasquez)  POR s2025-04-04 e2025-04-05 v2025-05-24             7x5   ACM Y C        C2 G:Study
+// #S002 Mike Derby                  POR s2025-05-24 e2025-06-25 v2025-07-19 g2025-07-23 10x10 WP  Y W        C2 12h G:Study
 void Painting::parse (const std::string& line)
 {
   if (line.length () > 1)
@@ -479,7 +476,7 @@ void Painting::parse (const std::string& line)
         pig.getDigits (_width)     &&
         pig.eos ()))
     {
-      warn (format ("Unparseable Painting size '{1}'", _size));
+      warn (format ("Unparseable Painting size '{1}', input '{2}'", _size, line));
     }
   }
 }
