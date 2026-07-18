@@ -28,11 +28,43 @@
 #include <iostream>
 #include <artworkflow.h>
 
+static std::map <std::string, std::string> series_map
+{
+  {"STL", "Still Life"},
+  {"LAN", "Landscape"},
+  {"BOA", "Boat"},
+  {"POR", "Portrait"},
+  {"DFL", "Dead Flower"},
+  {"FLO", "Floral"},
+  {"MCP", "Master Copy"},
+  {"ABS", "Abstract"},
+  {"WRK", "Workshop"},
+  {"WIL", "Wildlife"},
+};
+
+static std::map <std::string, std::string> varnish_names
+{
+  {"D",     "Dammar"},
+  {"G",     "Gamvar"},
+  {"C",     "Conservar"},
+  {"W",     "Winsor & Newton"},
+  {"Other", "Other"},
+};
+
+static std::map <std::string, std::string> substrate_names
+{
+  {"ACM", "Aluminum Composite Material"},
+  {"CB",  "Canvas Board"},
+  {"WP",  "Wood Panel"},
+  {"C",   "Canvas"},
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
 int CmdPrice (CLI& cli, Config& config, Database& database)
 {
-  debug ("CmdPrice");
+  debug ("CmdPrice start");
+  debug ("CmdPrice end");
   return 0;
 }
 
