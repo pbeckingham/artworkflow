@@ -211,7 +211,7 @@ bool Painting::is_varnished () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-bool Painting::matches (const std::string& id)
+bool Painting::matches (const std::string& id) const
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");
 }

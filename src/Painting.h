@@ -67,7 +67,7 @@ public:
   bool is_destroyed () const;
   bool is_varnished () const;
 
-  bool matches (const std::string&);
+  bool matches (const std::string&) const;
 
   const std::string compose () const;
 
