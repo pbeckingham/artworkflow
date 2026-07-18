@@ -17,6 +17,7 @@ set (artworkflow_SRCS AtomicFile.cpp     AtomicFile.h
                       debug.cpp
                       dom.cpp
                       extensions.cpp
+                      filter.cpp
                       init.cpp
                       util.cpp)
 

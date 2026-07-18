@@ -50,6 +50,9 @@ void extensionOnExit (Config&);
 void extensionCmdVersion (Config&);
 void extensionCmdHelp (Config&);
 
+// filter.cpp
+bool filterByCLI (const CLI&, const Painting&);
+
 // init.cpp
 void initializeEntities (CLI&);
 void initializeDataAndConfig (const CLI&, Database&, Config&);
