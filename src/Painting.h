@@ -54,6 +54,9 @@ public:
   std::string complexity () const;
   std::string notes () const;
 
+  int height () const;
+  int width () const;
+
   bool is_concept () const;
   bool is_wip () const;
   bool is_drying () const;
@@ -95,6 +98,9 @@ private:
   std::string _www;
   std::string _complexity;
   std::string _notes;
+
+  int _height;
+  int _width;
 
   // TODO: groups
   // TODO: time

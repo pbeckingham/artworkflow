@@ -30,6 +30,7 @@
 #include <shared.h>
 #include <format.h>
 #include <RX.h>
+#include <Pig.h>
 #include <Lexer.h>
 #include <Painting.h>
 #include <artworkflow.h>
@@ -128,6 +129,18 @@ std::string Painting::complexity () const
 std::string Painting::notes () const
 {
   return _notes;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int Painting::height () const
+{
+  return _height;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int Painting::width () const
+{
+  return _width;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -456,6 +469,19 @@ void Painting::parse (const std::string& line)
 
   if (line.length () > 111)
     _notes      = Lexer::trimRight (line.substr (110), " \n");
+
+  _height = _width = 0;
+  if (_size != "")
+  {
+    Pig pig (_size);
+    if (! (pig.getDigits (_height) &&
+        pig.skipLiteral ("x")      &&
+        pig.getDigits (_width)     &&
+        pig.eos ()))
+    {
+      warn (format ("Unparseable Painting size '{1}'", _size));
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
