@@ -60,6 +60,48 @@ static std::map <std::string, std::string> substrate_names
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+// Piedmont Plastics 8 sheets 3mm AluPoly = $480.25
+// 8 sheets (4'x8'): 8 * 32 sq ft = 256 sqft
+// $480.25 / 256 = $1.88 per sq ft
+// $480.25 / (256 * 144) = $0.013 per sq in
+// Assume 10% wasted by cuts
+//
+// Gessobord: 9"x12", pack of 4 = $66.99 on Amazon
+// $66.99 / (4 * 9 * 12) = $0.155 per square inch
+//
+// Baltic Birch: 1@"x12", pack of 3 = $17.99 on Amazon
+// $17.99 / (3 * 12 * 12) = $0.042 per square inch
+//
+// Canvas Board: 8"x10", pack of 12 = $12.99 on Amazon
+// $12.99 / (12 * 8 * 10) = $0.014 per square inch
+//
+// Centurion Stretched Canvas: 16"x20", pack of 5 = $155.09
+// $155.09 / (6 * 16 * 20) = $0.05 per square inch
+//
+// 2025-02-13
+double substrate_cost (
+  const Config& config,
+  const std::string& substrate,
+  const int height,
+  const int width)
+{
+  // Assume 10% waste.
+  if (substrate == "ACM")
+    return config.getReal ("cost_estimate_substrate_acm", 0.013) * height * width * 1.1;
+
+  if (substrate == "WP")
+    return config.getReal ("cost_estimate_substrate_wp", 0.155) * height * width;
+
+  if (substrate == "CB")
+    return config.getReal ("cost_estimate_substrate_cb", 0.014) * height * width;
+
+  if (substrate == "C")
+    return config.getReal ("cost_estimate_substrate_c", 0.05) * height * width;
+
+  return config.getReal ("cost_estimate_substrate_default", 50.0);
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Returns 0 if tracking is active, 1 if not.
 int CmdPrice (CLI& cli, Config& config, Database& database)
 {
