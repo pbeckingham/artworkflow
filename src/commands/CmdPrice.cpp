@@ -279,6 +279,8 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
           Datetime de (end.substr (1));
           Duration elapsed (de - ds);
           std::cout << " (" << elapsed.days () << " days)";
+
+          // TODO: Display effort in hours, if recorded.
         }
         std::cout << '\n';
 
