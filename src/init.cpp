@@ -55,6 +55,7 @@ void initializeEntities (CLI& cli)
   // Hint entities.
   cli.entity ("hint", ":debug");
   cli.entity ("hint", ":quiet");
+  cli.entity ("hint", ":verbose");
   cli.entity ("hint", ":color");
   cli.entity ("hint", ":nocolor");
   cli.entity ("hint", ":yes");
@@ -76,6 +77,7 @@ void initializeDataAndConfig (
     {
       if (arg.attribute ("canonical") == ":debug")   config.set ("debug",        true);
       if (arg.attribute ("canonical") == ":quiet")   config.set ("verbose",      false);
+      if (arg.attribute ("canonical") == ":verbose") config.set ("verbose",      true);
       if (arg.attribute ("canonical") == ":color")   config.set ("color",        true);
       if (arg.attribute ("canonical") == ":nocolor") config.set ("color",        false);
       if (arg.attribute ("canonical") == ":yes")     config.set ("confirmation", false);
@@ -175,6 +177,7 @@ void initializeConfigAndDatabase (Config& config)
     {
       if (arg.attribute ("canonical") == ":debug")   config.set ("debug",        true);
       if (arg.attribute ("canonical") == ":quiet")   config.set ("verbose",      false);
+      if (arg.attribute ("canonical") == ":verbose") config.set ("verbose",      true);
       if (arg.attribute ("canonical") == ":color")   config.set ("color",        true);
       if (arg.attribute ("canonical") == ":nocolor") config.set ("color",        false);
       if (arg.attribute ("canonical") == ":yes")     config.set ("confirmation", false);
