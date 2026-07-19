@@ -254,36 +254,68 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
 
       int height = painting.height ();
       int width = painting.width ();
+      int complexity = strtoimax (painting.complexity ().substr (1).c_str (), nullptr, 10);
+      auto start = painting.start ();
+      auto end = painting.end ();
+      auto varnish = painting.varnish ();
 
       std::cout << std::fixed << std::setprecision (2);
-      std::cout << '#' << painting.id () << ' ' << painting.title () << '\n'
-                << "  " << series_names [painting.series ()] << '\n'
-                << "  " << height << "\"x" << width << "\", " << substrate_names [painting.substrate ()] << '\n'
-                << '\n';
-
-      auto s = substrate_cost (config, painting.substrate (), height, width);
-      auto g = ground_cost (config, height, width);
-      auto v = varnish_cost (config, painting.varnished ());
-      auto b = brush_cost (config);
-      auto p = paint_cost (config, height, width);
-      auto f = frame_cost (config, height, width);
-      auto total_cost = s + g + v + b + p + f;
-      std::cout << "  Materials cost $" << std::setw (8) << total_cost << '\n';
-      if (config.getBoolean ("verbose", false))
+      std::cout << '#' << painting.id () << " '" << painting.title () << "'\n";
+      if (painting.is_concept ())
       {
-        std::cout << "    Substrate      $" << std::setw (8) << s << '\n'
-                  << "    Ground         $" << std::setw (8) << g << '\n'
-                  << "    Varnish        $" << std::setw (8) << v << '\n'
-                  << "    Brush          $" << std::setw (8) << b << '\n'
-                  << "    Paint          $" << std::setw (8) << p << '\n'
-                  << "    Frame          $" << std::setw (8) << f << '\n'
-                  << '\n';
+        std::cout << "  Only exists as a concept\n";
+      }
+      else
+      {
+        std::cout << "  " << series_names [painting.series ()] << " Series\n"
+                  << "  " << height << "\"x" << width << "\", " << substrate_names [painting.substrate ()] << '\n';
+
+        std::cout << "  Created " << start.substr (1);
+        if (end != "")
+        {
+          std::cout << " to " << end;
+
+          Datetime ds (start.substr (1));
+          Datetime de (end.substr (1));
+          Duration elapsed (de - ds);
+          std::cout << " (" << elapsed.days () << " days)";
+        }
+        std::cout << '\n';
+
+        if (varnish != "")
+        {
+          Datetime de (end.substr (1));
+          Datetime dv (varnish.substr (1));
+          Duration drying (dv - de);
+          std::cout << "  Varnished " << varnish.substr (1) << ", dried for " << drying.days () << " days, " << varnish_names [painting.varnished ()] << '\n';
+        }
+
+        std::cout << "  Complexity " << complexity << '\n';
+        std::cout << '\n';
+
+        auto s = substrate_cost (config, painting.substrate (), height, width);
+        auto g = ground_cost (config, height, width);
+        auto v = varnish_cost (config, painting.varnished ());
+        auto b = brush_cost (config);
+        auto p = paint_cost (config, height, width);
+        auto f = frame_cost (config, height, width);
+        auto total_cost = s + g + v + b + p + f;
+        std::cout << "  Materials cost $" << std::setw (8) << total_cost << '\n';
+        if (config.getBoolean ("verbose", false))
+        {
+          std::cout << "    Substrate      $" << std::setw (8) << s << '\n'
+                    << "    Ground         $" << std::setw (8) << g << '\n'
+                    << "    Varnish        $" << std::setw (8) << v << '\n'
+                    << "    Brush          $" << std::setw (8) << b << '\n'
+                    << "    Paint          $" << std::setw (8) << p << '\n'
+                    << "    Frame          $" << std::setw (8) << f << '\n'
+                    << '\n';
+        }
+
+        area_price (config, height, width);
+        ani_price (config, height, width, total_cost, complexity);
       }
 
-      area_price (config, height, width);
-
-      auto complexity = strtoimax (painting.complexity ().substr (1).c_str (), nullptr, 10);
-      ani_price (config, height, width, total_cost, complexity);
       std::cout << '\n';
     }
   }
