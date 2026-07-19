@@ -289,10 +289,37 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
           Datetime de (end.substr (1));
           Datetime dv (varnish.substr (1));
           Duration drying (dv - de);
-          std::cout << "  Varnished " << varnish.substr (1) << ", dried for " << drying.days () << " days, " << varnish_names [painting.varnished ()] << '\n';
+          std::cout << "  Varnished " << varnish.substr (1) << " with " << varnish_names [painting.varnished ()] << ", dried for " << drying.days () << " days" << '\n';
         }
 
         std::cout << "  Complexity " << complexity << '\n';
+
+        if (painting.is_abandoned ())
+        {
+          Datetime ds (start.substr (1));
+          Datetime now;
+          Duration age (now - ds);
+          std::cout << "  Abandoned for " << age.days () << " days\n";
+        }
+
+        if (painting.is_destroyed ())
+        {
+          auto action = painting.action ();
+          std::cout << "  Destroyed on " << painting.action ().substr (1) << '\n';
+        }
+
+        if (painting.is_gifted ())
+        {
+          auto action = painting.action ();
+          std::cout << "  Gifted on " << painting.action ().substr (1) << '\n';
+        }
+
+        if (painting.is_sold ())
+        {
+          auto action = painting.action ();
+          std::cout << "  Sold on " << painting.action ().substr (1) << '\n';
+        }
+
         std::cout << '\n';
 
         auto s = substrate_cost (config, painting.substrate (), height, width);
