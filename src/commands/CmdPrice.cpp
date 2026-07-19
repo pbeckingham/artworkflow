@@ -32,6 +32,7 @@
 #include <format.h>
 #include <artworkflow.h>
 
+// TODO: Relocate this to a public space.
 static std::map <std::string, std::string> series_names
 {
   {"STL", "Still Life"},
@@ -46,6 +47,7 @@ static std::map <std::string, std::string> series_names
   {"WIL", "Wildlife"},
 };
 
+// TODO: Relocate this to a public space.
 static std::map <std::string, std::string> varnish_names
 {
   {"D",     "Dammar"},
@@ -55,6 +57,7 @@ static std::map <std::string, std::string> varnish_names
   {"Other", "Other"},
 };
 
+// TODO: Relocate this to a public space.
 static std::map <std::string, std::string> substrate_names
 {
   {"ACM", "Aluminum Composite Material"},
