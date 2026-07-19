@@ -26,6 +26,8 @@
 
 #include <commands.h>
 #include <iostream>
+#include <iomanip>
+#include <cmath>
 #include <inttypes.h>
 #include <format.h>
 #include <artworkflow.h>
@@ -104,30 +106,30 @@ double substrate_cost (
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// 1 can, 32oz Gamblin White Oil Ground = $48.00 on Amazon
+// 1 can, 32oz Gamblin White Oil Ground = $49.18 on Amazon
 // 1 can lasts approximately 18 months
-// $48.00 * 12 / 18 = $32.00 per year
-// 35 paintings per year average
-// $32.00 / 35 = $0.92 per painting
+// $49.18 * 12 / 18 = $32.78 per year
+// 32 paintings per year average
+// $32.78 / 32 = $1.03 per painting
 //
 // 2026-07-17
 double ground_cost (const Config& config, const int height, const int width)
 {
-  return config.getReal ("cost_estimate_ground", 0.92);
+  return config.getReal ("cost_estimate_ground", 1.03);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// 35 paintings per year average
+// 32 paintings per year average
 // Estimated 5 brushes consumed per year
-// Average brush price: $12.00
+// Average brush price: $11.75 Trekell Golden Taklon #8 Bright
 //
-// Total Brushes = 5 x $12.00 = $60.00
-// Therefore $60.00 / 35 = $1.72 per painting.
+// Total Brushes = 5 x $11.75 = $58.75
+// Therefore $58.75 / 32 = $1.84 per painting.
 //
 // 2026-07-17
 double brush_cost (const Config& config)
 {
-  return config.getReal ("cost_estimate_brush", 1.72);
+  return config.getReal ("cost_estimate_brush", 1.84);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -168,12 +170,19 @@ double varnish_cost (const Config& config, const std::string& varnish)
 //   18"x18" = 72" linear = $112 + $15 shipping = $127 / 72" = $1.76 per linear inch
 //   24"x24" = 96" linear = $140 + $15 shipping = $155 / 96" = $1.62 per linear inch
 //
-// Assume FrankenFrame, highest cost.
+// Assume AmericanFrame, highest cost.
 //
 // 2026-07-17
 double frame_cost (const Config& config, const int height, const int width)
 {
-  return config.getReal ("cost_estimate_frame", 0.83) * (height + height + width + width);
+  return config.getReal ("cost_estimate_frame", 1.76) * (height + height + width + width);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Round up to the nearest hundred.
+double round_hundred (const double value)
+{
+  return std::ceil (value / 100.0) * 100;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -181,24 +190,45 @@ double frame_cost (const Config& config, const int height, const int width)
 // assume a straight line proportinal to painting area.
 //
 // Linear price = mx + c
-double area_price (
+void area_price (
+  const Config& config,
   const int height,
   const int width)
 {
-  auto slope = (5000 - 1250) / (1152 - 144);
-  auto area = height * width;
+  // TODO: Allow configuration overrides for these.
+  double slope = (5000 - 1250) / (1152 - 144);
+  double area = height * width;
+  double constant = 1250;
+  double price = ((area - 144) * slope) + constant;
+  double rounded_price = round_hundred (price);
 
-  return ((area - 144) * slope) + 1250;
+  std::cout << "  Area price     $" << std::setw (8) << rounded_price << '\n';
+  if (config.getBoolean ("verbose", false))
+    std::cout << "    Area            " << std::setw (8) << area << " sq inch\n"
+              << "    Slope           " << std::setw (8) << slope << '\n'
+              << "    Constant        " << std::setw (8) << constant << '\n'
+              << "    Price          $" << std::setw (8) << price << '\n'
+              << '\n';
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-double ani_price (
+void ani_price (
+  const Config& config,
   const int height,
   const int width,
   const double cost,
   const int complexity)
 {
-  return ((height * width * 2) + cost) * complexity;
+  double area = height * width;
+  double price = ((area * 2) + cost) * complexity;
+  double rounded_price = round_hundred (price);
+
+  std::cout << "  Ani price      $" << std::setw (8) << rounded_price << '\n';
+  if (config.getBoolean ("verbose", false))
+    std::cout << "    Area            " << std::setw (8) << area << " sq inch\n"
+              << "    Complexity      " << std::setw (8) << complexity << '\n'
+              << "    Cost           $" << std::setw (8) << cost << '\n'
+              << "    Price          $" << std::setw (8) << price << '\n';
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -225,9 +255,11 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
       int height = painting.height ();
       int width = painting.width ();
 
+      std::cout << std::fixed << std::setprecision (2);
       std::cout << '#' << painting.id () << ' ' << painting.title () << '\n'
                 << "  " << series_names [painting.series ()] << '\n'
-                << "  " << height << "\"x" << width << "\", " << substrate_names [painting.substrate ()] << '\n';
+                << "  " << height << "\"x" << width << "\", " << substrate_names [painting.substrate ()] << '\n'
+                << '\n';
 
       auto s = substrate_cost (config, painting.substrate (), height, width);
       auto g = ground_cost (config, height, width);
@@ -236,12 +268,22 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
       auto p = paint_cost (config, height, width);
       auto f = frame_cost (config, height, width);
       auto total_cost = s + g + v + b + p + f;
-      std::cout << "  Materials cost $" << format (total_cost, 8, 4) << '\n';
+      std::cout << "  Materials cost $" << std::setw (8) << total_cost << '\n';
+      if (config.getBoolean ("verbose", false))
+      {
+        std::cout << "    Substrate      $" << std::setw (8) << s << '\n'
+                  << "    Ground         $" << std::setw (8) << g << '\n'
+                  << "    Varnish        $" << std::setw (8) << v << '\n'
+                  << "    Brush          $" << std::setw (8) << b << '\n'
+                  << "    Paint          $" << std::setw (8) << p << '\n'
+                  << "    Frame          $" << std::setw (8) << f << '\n'
+                  << '\n';
+      }
 
-      std::cout << "  Area price     $" << format (area_price (height, width), 5, 4) << '\n';
+      area_price (config, height, width);
 
       auto complexity = strtoimax (painting.complexity ().substr (1).c_str (), nullptr, 10);
-      std::cout << "  Ani price      $" << format (ani_price (height, width, total_cost, complexity), 5, 4) << '\n';
+      ani_price (config, height, width, total_cost, complexity);
       std::cout << '\n';
     }
   }
