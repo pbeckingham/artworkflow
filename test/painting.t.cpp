@@ -30,7 +30,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 int main (int, char**)
 {
-  UnitTest t (21);
+  UnitTest t (22);
 
   try
   {
@@ -81,6 +81,7 @@ ID    TITLE                       SER START       END         VARNISH     ACTION
   t.is (groups.size (),   std::size_t (1),              "Painting: groups size 1");
   t.is (groups[0],        "Study",                      "Painting: groups 1 is 'Study'");
 
+  t.is (p3.effort (),     "24h",                        "Painting: effort");
   return 0;
 }
 
