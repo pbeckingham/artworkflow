@@ -147,6 +147,17 @@ std::vector <std::string> Painting::groups () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+std::string Painting::effort () const
+{
+  RX effort_pattern ("\\d+h");
+  std::vector <std::string> all;
+  if (effort_pattern.match (all, _notes))
+    return all[0];
+
+  return "";
+}
+
+////////////////////////////////////////////////////////////////////////////////
 int Painting::height () const
 {
   return _height;

@@ -54,6 +54,7 @@ public:
   std::string complexity () const;
   std::string notes () const;
   std::vector <std::string> groups () const;
+  std::string effort () const;
 
   int height () const;
   int width () const;
@@ -104,7 +105,7 @@ private:
   int _width;
 
   std::vector <std::string> _groups;
-  // TODO: time
+  std::string _effort;
 };
 
 #endif
