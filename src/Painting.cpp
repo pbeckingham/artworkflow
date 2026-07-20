@@ -132,6 +132,21 @@ std::string Painting::notes () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Notes may contain: 34h G:Still_Life G:13Forest
+std::vector <std::string> Painting::groups () const
+{
+  RX group_pattern ("G:\\S+");
+  std::vector <std::string> all;
+  group_pattern.match (all, _notes);
+
+  std::vector <std::string> results;
+  for (auto& group : all)
+    results.push_back (group.substr (2, std::string::npos));
+
+  return results;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 int Painting::height () const
 {
   return _height;

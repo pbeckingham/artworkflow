@@ -53,6 +53,7 @@ public:
   std::string www () const;
   std::string complexity () const;
   std::string notes () const;
+  std::vector <std::string> groups () const;
 
   int height () const;
   int width () const;
@@ -102,7 +103,7 @@ private:
   int _height;
   int _width;
 
-  // TODO: groups
+  std::vector <std::string> _groups;
   // TODO: time
 };
 
