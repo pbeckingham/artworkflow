@@ -102,11 +102,10 @@ bool RX::match (
 
   auto matches_begin = std::sregex_iterator(in.begin(), in.end(), _regex);
   auto matches_end = std::sregex_iterator();
-  for (std::sregex_iterator it = matches_begin; it != matches_end; ++it) {
-      matches.push_back(it->str());
-  }
+  for (std::sregex_iterator it = matches_begin; it != matches_end; ++it)
+    matches.push_back(it->str());
 
-  return !matches.empty();
+  return ! matches.empty();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,12 +119,13 @@ bool RX::match (
 
   auto matches_begin = std::sregex_iterator(in.begin(), in.end(), _regex);
   auto matches_end = std::sregex_iterator();
-  for (std::sregex_iterator it = matches_begin; it != matches_end; ++it) {
+  for (std::sregex_iterator it = matches_begin; it != matches_end; ++it)
+  {
     start.push_back(it->position());
     end.push_back(it->position() + it->length());
   }
 
-  return !start.empty ();
+  return ! start.empty ();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
