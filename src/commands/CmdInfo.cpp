@@ -63,6 +63,7 @@ int CmdInfo (
         std::cout << "  WWW          " << painting.www () << '\n';
       if (painting.complexity () != "")
          std::cout << "  Complexity   " << painting.complexity () << '\n';
+       std::cout << '\n';
     }
   }
 
@@ -90,6 +91,8 @@ int CmdInfo (
             std::cout << "  Closing      " << exhibition.closing () << '\n';
           if (exhibition.pickup () != "")
             std::cout << "  Pickup       " << exhibition.pickup () << '\n';
+
+          std::cout << '\n';
         }
       }
     }
