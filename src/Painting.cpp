@@ -387,9 +387,11 @@ std::string Painting::dump (const std::string& title) const
 
     return lines
 */
-std::string Painting::card () const
+std::vector <std::string> Painting::card () const
 {
-  return "[Card]";
+  std::vector <std::string> lines;
+  lines.push_back ("[Card]");
+  return lines;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
