@@ -414,7 +414,7 @@ std::string Painting::dump (const std::string& title) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::vector <std::string> Painting::card (int width /* = 20 */) const
+std::vector <std::string> Painting::card (int width /* = 40 */) const
 {
   Color card ("gray12 on gray3");
 
@@ -606,6 +606,18 @@ std::vector <std::string> Painting::card (int width /* = 20 */) const
     cline.add (join (" ", groups ()), 12, card);
     lines.push_back (cline.str ());
   }
+
+  return lines;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// A mini card is used for the Kanban report, being only three lines long, and
+// about 20 characterswide, using color-coded backgrounds.
+std::vector <std::string> Painting::mini_card (int width /* = 20 */) const
+{
+  // Backgrounds: Concept, WIP, Inventory, Sold/Gifted, Destroyed, Abandoned
+
+  std::vector <std::string> lines;
 
   return lines;
 }

@@ -78,7 +78,8 @@ public:
 
   bool validate (std::vector <std::string>&) const;
   std::string dump (const std::string& title = "Painting") const;
-  std::vector <std::string> card (int width = 20) const;
+  std::vector <std::string> card (int width = 40) const;
+  std::vector <std::string> mini_card (int width = 20) const;
 
   static bool is_painting (const std::string&);
 
