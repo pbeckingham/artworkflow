@@ -47,7 +47,7 @@ int CmdInfo (
     }
   }
 
-  // TODO: Upgrade to new filtering mechanism.
+  // TODO: Upgrade to the new filtering mechanism.
   for (auto& id : cli.getIds ())
   {
     if (Exhibition::is_exhibition (id))
