@@ -32,40 +32,6 @@
 #include <format.h>
 #include <artworkflow.h>
 
-// TODO: Relocate this to a public space.
-static std::map <std::string, std::string> series_names
-{
-  {"STL", "Still Life"},
-  {"LAN", "Landscape"},
-  {"BOA", "Boat"},
-  {"POR", "Portrait"},
-  {"DFL", "Dead Flower"},
-  {"FLO", "Floral"},
-  {"MCP", "Master Copy"},
-  {"ABS", "Abstract"},
-  {"WRK", "Workshop"},
-  {"WIL", "Wildlife"},
-};
-
-// TODO: Relocate this to a public space.
-static std::map <std::string, std::string> varnish_names
-{
-  {"D",     "Dammar"},
-  {"G",     "Gamvar"},
-  {"C",     "Conservar"},
-  {"W",     "Winsor & Newton"},
-  {"Other", "Other"},
-};
-
-// TODO: Relocate this to a public space.
-static std::map <std::string, std::string> substrate_names
-{
-  {"ACM", "Aluminum Composite Material"},
-  {"CB",  "Canvas Board"},
-  {"WP",  "Wood Panel"},
-  {"C",   "Canvas"},
-};
-
 ////////////////////////////////////////////////////////////////////////////////
 // Piedmont Plastics 8 sheets 3mm AluPoly = $480.25
 // 8 sheets (4'x8'): 8 * 32 sq ft = 256 sqft
@@ -270,8 +236,8 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
       }
       else
       {
-        std::cout << "  " << series_names [painting.series ()] << " Series\n"
-                  << "  " << height << "\"x" << width << "\", " << substrate_names [painting.substrate ()] << '\n';
+        std::cout << "  " << painting.series_name () << " Series\n"
+                  << "  " << height << "\"x" << width << "\", " << painting.substrate_name () << '\n';
 
         std::cout << "  Created " << start.substr (1);
         if (end != "")
@@ -292,7 +258,7 @@ int CmdPrice (CLI& cli, Config& config, Database& database)
           Datetime de (end.substr (1));
           Datetime dv (varnish.substr (1));
           Duration drying (dv - de);
-          std::cout << "  Varnished " << varnish.substr (1) << " with " << varnish_names [painting.varnished ()] << ", dried for " << drying.days () << " days" << '\n';
+          std::cout << "  Varnished " << varnish.substr (1) << " with " << painting.varnish_name () << ", dried for " << drying.days () << " days" << '\n';
         }
 
         std::cout << "  Complexity " << complexity << '\n';
