@@ -49,6 +49,23 @@ static std::map <std::string, std::string> series_names
   {"WIL", "Wildlife"},
 };
 
+static std::map <std::string, std::string> varnish_names
+{
+  {"D",     "Dammar"},
+  {"G",     "Gamvar"},
+  {"C",     "Conservar"},
+  {"W",     "Winsor & Newton"},
+  {"Other", "Other"},
+};
+
+static std::map <std::string, std::string> substrate_names
+{
+  {"ACM", "Aluminum Composite Material"},
+  {"CB",  "Canvas Board"},
+  {"WP",  "Wood Panel"},
+  {"C",   "Canvas"},
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 Painting::Painting (const std::string& line)
 {

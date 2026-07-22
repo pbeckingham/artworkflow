@@ -45,6 +45,7 @@ public:
   std::string start () const;
   std::string end () const;
   std::string varnish () const;
+  std::string varnish_name () const;
   std::string action () const;
   std::string size () const;
   std::string substrate () const;
