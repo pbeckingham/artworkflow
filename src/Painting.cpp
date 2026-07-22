@@ -462,9 +462,10 @@ std::string Painting::dump (const std::string& title) const
 
     return lines
 */
-std::vector <std::string> Painting::card () const
+std::vector <std::string> Painting::card (int width /* = 20 */) const
 {
   std::vector <std::string> lines;
+
   lines.push_back ("[Card]");
   return lines;
 }
