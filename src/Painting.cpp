@@ -613,11 +613,34 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
 ////////////////////////////////////////////////////////////////////////////////
 // A mini card is used for the Kanban report, being only three lines long, and
 // about 20 characterswide, using color-coded backgrounds.
-std::vector <std::string> Painting::mini_card (int width /* = 20 */) const
+std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
 {
   // Backgrounds: Concept, WIP, Inventory, Sold/Gifted, Destroyed, Abandoned
+  std::string background = "on gray3";
+  if (is_sold () || is_gifted ())
+    background = "on 0x004000";
+  else if (is_concept ())
+    background = "on gray2";
+  else if (is_inventory ())
+    background = "on gray4";
+  else if (is_abandoned ())
+    background = "on rgb001";
+  else if (is_destroyed ())
+    background = "on rgb100";
 
   std::vector <std::string> lines;
+
+  Composite cid;
+  Color color_id ("gray12 " + background);
+  cid.add (std::string (width, ' '), 0, color_id);
+  cid.add (_id, 0, color_id);
+  lines.push_back (cid.str ());
+
+  Composite ctitle;
+  Color color_title ("gray18 " + background);
+  ctitle.add (std::string (width, ' '), 0, color_title);
+  ctitle.add (_title.substr (0, width), 0, color_title);
+  lines.push_back (ctitle.str ());
 
   return lines;
 }
