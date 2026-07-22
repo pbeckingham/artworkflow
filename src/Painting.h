@@ -41,6 +41,7 @@ public:
   std::string id () const;
   std::string title () const;
   std::string series () const;
+  std::string series_name () const;
   std::string start () const;
   std::string end () const;
   std::string varnish () const;

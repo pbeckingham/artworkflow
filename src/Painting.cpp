@@ -35,6 +35,20 @@
 #include <Painting.h>
 #include <artworkflow.h>
 
+static std::map <std::string, std::string> series_names
+{
+  {"STL", "Still Life"},
+  {"LAN", "Landscape"},
+  {"BOA", "Boat"},
+  {"POR", "Portrait"},
+  {"DFL", "Dead Flower"},
+  {"FLO", "Floral"},
+  {"MCP", "Master Copy"},
+  {"ABS", "Abstract"},
+  {"WRK", "Workshop"},
+  {"WIL", "Wildlife"},
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 Painting::Painting (const std::string& line)
 {
@@ -57,6 +71,12 @@ std::string Painting::title () const
 std::string Painting::series () const
 {
   return _series;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string Painting::series_name () const
+{
+  return series_names[_series];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
