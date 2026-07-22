@@ -49,6 +49,7 @@ public:
   std::string action () const;
   std::string size () const;
   std::string substrate () const;
+  std::string substrate_name () const;
   std::string tagged () const;
   std::string varnished () const;
   std::string archived () const;
