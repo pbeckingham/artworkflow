@@ -333,7 +333,7 @@ void Exhibition::parse (const std::string& line)
     _pickup = Lexer::trimRight (line.substr (74, 10));
 
   if (line.length () > 85)
-    _title      = Lexer::trimRight (line.substr (85, std::string::npos), " \n");
+    _title      = Lexer::trimRight (line.substr (85), " \n");
   else
     throw format("Missing title to parse.");
 

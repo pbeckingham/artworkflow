@@ -139,7 +139,7 @@ std::string Path::name () const
   {
     auto slash = _data.rfind ('/');
     if (slash != std::string::npos)
-      return _data.substr (slash + 1, std::string::npos);
+      return _data.substr (slash + 1);
   }
 
  return _data;
@@ -166,7 +166,7 @@ std::string Path::extension () const
   {
     auto dot = _data.rfind ('.');
     if (dot != std::string::npos)
-      return _data.substr (dot + 1, std::string::npos);
+      return _data.substr (dot + 1);
   }
 
   return "";
