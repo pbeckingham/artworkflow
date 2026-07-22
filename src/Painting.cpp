@@ -32,6 +32,8 @@
 #include <RX.h>
 #include <Pig.h>
 #include <Lexer.h>
+#include <Color.h>
+#include <Composite.h>
 #include <Painting.h>
 #include <artworkflow.h>
 
@@ -190,7 +192,7 @@ std::vector <std::string> Painting::groups () const
 
   std::vector <std::string> results;
   for (auto& group : all)
-    results.push_back (group.substr (2, std::string::npos));
+    results.push_back (group.substr (2));
 
   return results;
 }
@@ -412,61 +414,199 @@ std::string Painting::dump (const std::string& title) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-/*
-  def card(self):
-    fg = '\033[38;5;244m'
-    bg = '\033[48;5;234m'  # On gray 3:  ESC [ 48;5;234 m
-
-    if self.groups:
-      bg = get_bg(self.groups[0])
-
-    lines = []
-    line = f'#{self.serial:4} {self.size:5}'
-    if self.complexity:
-      line += f' {self.complexity}'
-    if self.substrate:
-      line += f' {self.substrate}'
-    lines.append(f'{fg}{bg}{line[:20]:20}{code_off}')
-    lines.append(f'{code_white}{bg}{self.title[:20]:20}{code_off}')
-
-    if self.series:
-      lines.append(f'{fg}{bg}{series_names[self.series][:20]:20}{code_off}')
-
-    line = ''
-    if self.varnish:
-      lines.append(f'{fg}{bg}{varnish_names[self.varnish][:20]:20}{code_off}')
-
-    if self.is_wip():
-      line = f'{ISODate(self.start_date).elapsed()}d progress'
-      lines.append(f'{fg}{bg}{line[:20]:20}{code_off}')
-    elif self.is_abandoned():
-      lines.append(f'{fg}{bg}Abandoned           {code_off}')
-    elif self.is_destroyed():
-      lines.append(f'{fg}{bg}Destroyed           {code_off}')
-    elif self.is_gifted():
-      lines.append(f'{fg}{bg}Gifted              {code_off}')
-    elif self.is_sold():
-      lines.append(f'{fg}{bg}Sold                {code_off}')
-    elif self.is_inventory():
-      ...
-    elif self.is_drying():
-      line = f'{ISODate(self.end_date).elapsed()}d drying'
-      lines.append(f'{fg}{bg}{line[:20]:20}{code_off}')
-
-    if self.time:
-      line = f'{self.time}h effort'
-      lines.append(f'{fg}{bg}{line[:20]:20}{code_off}')
-    if self.groups:
-      for group in self.groups:
-        lines.append(f'{fg}{bg}Group: {group[:13]:13}{code_off}')
-
-    return lines
-*/
 std::vector <std::string> Painting::card (int width /* = 20 */) const
 {
+  Color card ("gray12 on gray3");
+
+  if (groups ().size ())
+  {
+    // TODO: Override bg with a rota color.
+  }
+
   std::vector <std::string> lines;
 
-  lines.push_back ("[Card]");
+  Composite line1;
+  line1.add (std::string (width, ' '), 0, card);
+  line1.add ('#' + _id, 0, card);
+  lines.push_back (line1.str ());
+
+  Color title ("white on gray3");
+  Composite line2;
+  line2.add (std::string (width, ' '), 0, title);
+  line2.add (_title.substr (0, width), 0, title);
+  lines.push_back (line2.str ());
+
+  if (_start != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    std::string line ("Start      " + _start.substr (1));
+    if (_end == "")
+    {
+      Datetime ds (_start.substr (1));
+      Datetime now;
+      Duration age = now - ds;
+      line += format (" ({1} days)", age.days ());
+    }
+    cline.add (line.substr (0, width), 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_end != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    std::string line ("End        " + _end.substr (1));
+    if (_varnish == "")
+    {
+      Datetime de (_end.substr (1));
+      Datetime now;
+      Duration age = now - de;
+      line += format (" (Drying {1} days)", age.days ());
+    }
+    else
+    {
+      Datetime ds (_start.substr (1));
+      Datetime de (_end.substr (1));
+      Duration age = de - ds;
+      line += format (" ({1} days elapsed)", age.days ());
+    }
+    cline.add (line.substr (0, width), 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (is_wip ())
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("WIP", 12, Color ("bold yellow on gray3"));
+    lines.push_back (cline.str ());
+  }
+
+  if (is_abandoned ())
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Abandoned", 12, Color ("cyan on gray3"));
+    lines.push_back (cline.str ());
+  }
+
+  if (_varnish != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+
+    std::string line (" Varnish    " + _varnish.substr (1));
+    if (_varnished != "")
+      line += ' ' + varnish_names[_varnished];
+
+    Datetime de (_end.substr (1));
+    Datetime dv (_varnish.substr (1));
+    Duration age = dv - de;
+    line += format (" (Dried for {1} days)", age.days ());
+
+    cline.add (line.substr (0, width), 0, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (is_inventory ())
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Location   Inventory", 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_action != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add (_action.substr (1), 12, card);
+
+    if (_action[0] == '$')
+      cline.add ("Sold", 1, Color ("bold green on gray3"));
+    else if (_action[0] == 'g')
+      cline.add ("Gifted", 1, Color ("green on gray3"));
+    else if (_action[0] == 'd')
+      cline.add ("Destroyed", 1, Color ("red on gray3"));
+
+    lines.push_back (cline.str ());
+  }
+
+  if (_series != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    std::string line ("Series     " + series_name ());
+    cline.add (line.substr (0, width), 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_size != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Size       " + _size, 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_complexity != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Complexity " + _complexity, 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_substrate != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add (std::string ("Substrate  " + substrate_name ()).substr (0, width), 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (effort () != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Effort     " + effort (), 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_tagged != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Tagged     " + _tagged, 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_archived != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Archived  " + _archived, 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_www != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("WWW        " + _tagged, 1, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (groups ().size ())
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Groups", 1, card);
+    cline.add (join (" ", groups ()), 12, card);
+    lines.push_back (cline.str ());
+  }
+
   return lines;
 }
 

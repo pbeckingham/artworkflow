@@ -107,8 +107,6 @@ private:
   int _height;
   int _width;
 
-  std::vector <std::string> _groups;
-  std::string _effort;
 };
 
 #endif
