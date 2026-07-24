@@ -75,11 +75,11 @@ public:
   bool matches (const std::string&) const;
 
   const std::string compose () const;
+  std::vector <std::string> card (int width = 40) const;
+  std::vector <std::string> mini_card (int width = 24) const;
 
   bool validate (std::vector <std::string>&) const;
   std::string dump (const std::string& title = "Painting") const;
-  std::vector <std::string> card (int width = 40) const;
-  std::vector <std::string> mini_card (int width = 24) const;
 
   static bool is_painting (const std::string&);
 
