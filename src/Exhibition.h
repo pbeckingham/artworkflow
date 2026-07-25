@@ -51,6 +51,7 @@ public:
   bool matches (const std::string&) const;
 
   const std::string compose () const;
+  std::vector <std::string> card (int width = 40) const;
 
   bool validate (std::vector <std::string>&) const;
   std::string dump (const std::string& title = "Exhibition") const;

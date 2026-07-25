@@ -29,6 +29,8 @@
 #include <string>
 #include <shared.h>
 #include <format.h>
+#include <Color.h>
+#include <Composite.h>
 #include <RX.h>
 #include <Lexer.h>
 #include <Exhibition.h>
@@ -38,8 +40,6 @@
 Exhibition::Exhibition (const std::string& line)
 {
   parse (line);
-  debug (line);
-  debug (dump ());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -106,6 +106,92 @@ bool Exhibition::matches (const std::string& id) const
 const std::string Exhibition::compose () const
 {
   return "composed";
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::vector <std::string> Exhibition::card (int width /* = 40 */) const
+{
+  Color card ("gray12 on gray3");
+  std::vector <std::string> lines;
+
+  Composite line1;
+  line1.add (std::string (width, ' '), 0, card);
+  line1.add (_id, 0, card);
+  lines.push_back (line1.str ());
+
+  Color title ("white on gray3");
+  Composite line2;
+  line2.add (std::string (width, ' '), 0, title);
+  line2.add (_title.substr (0, width), 0, title);
+  lines.push_back (line2.str ());
+
+  if (_submission != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Submission", 1, card);
+    cline.add (_submission, 12, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_notification != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Notification", 1, card);
+    cline.add (_notification, 12, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_delivery != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Delivery", 1, card);
+    cline.add (_delivery, 12, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_opening != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Opening", 1, card);
+    cline.add (_opening, 12, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_reception != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Reception", 1, card);
+    cline.add (_reception, 12, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_closing != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Closing", 1, card);
+    cline.add (_closing, 12, card);
+    lines.push_back (cline.str ());
+  }
+
+  if (_pickup != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add ("Pickup", 1, card);
+    cline.add (_pickup, 12, card);
+    lines.push_back (cline.str ());
+  }
+
+  // TODO: All dates
+  // TODO: All submissions and status
+
+  return lines;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
