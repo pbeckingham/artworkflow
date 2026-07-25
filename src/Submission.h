@@ -36,6 +36,8 @@ public:
   Submission () = default;
   Submission (const std::string&);
 
+  std::string id () const;
+
   static bool is_submission (const std::string&);
 
   std::string dump (const std::string&) const;
