@@ -423,14 +423,6 @@ bool Exhibition::is_exhibition (const std::string& line)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ID:  ^\s{4}#S?\d{3}[a-d]?
-bool Exhibition::is_submission (const std::string& line)
-{
-  RX id ("^\\s{4}#S?\\d{3}[a-d]?");
-  return id.match (line);
-}
-
-////////////////////////////////////////////////////////////////////////////////
 /*
                                                                                                     1         1
           1         2         3         4         5         6         7         8         9         0         1
