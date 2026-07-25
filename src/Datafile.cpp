@@ -129,11 +129,14 @@ void Datafile::deletePainting (const Painting& painting)
 const std::vector <Exhibition> Datafile::allExhibitions ()
 {
   std::vector <Exhibition> all;
-  for (auto& line : allLines ())
-    if (Exhibition::is_exhibition (line))
-      all.push_back (Exhibition (line));
-
-  // TODO: What about submissions?
+  auto lines = allLines ();
+  for (int i = 0; i < lines.size (); ++i)
+  {
+    if (Exhibition::is_exhibition (lines[i]))
+      all.push_back (Exhibition (lines[i]));
+    else if (Submission::is_submission (lines[i]))
+      all[all.size () - 1].add (Submission (lines[i]));
+  }
 
   debug (format ("{1}: {2} exhibitions", _file.name (), all.size ()));
   return all;

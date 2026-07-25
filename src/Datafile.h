@@ -31,6 +31,7 @@
 #include <Datetime.h>
 #include <Painting.h>
 #include <Exhibition.h>
+#include <Submission.h>
 #include <string>
 #include <vector>
 
