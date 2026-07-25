@@ -97,7 +97,7 @@ std::string Exhibition::title () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-bool Exhibition::matches (const std::string& id)
+bool Exhibition::matches (const std::string& id) const
 {
   return id == _id;
 }

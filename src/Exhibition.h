@@ -48,7 +48,7 @@ public:
   std::string pickup () const;
   std::string title () const;
 
-  bool matches (const std::string&);
+  bool matches (const std::string&) const;
 
   const std::string compose () const;
 
