@@ -74,7 +74,40 @@ bool filterByCLI (const CLI& cli, const Painting& painting)
 ////////////////////////////////////////////////////////////////////////////////
 bool filterByCLI (const CLI& cli, const Exhibition& exhibition)
 {
+  bool trivial = true;
+  for (auto& arg : cli._args)
+  {
+    if (arg.hasTag ("FILTER") && ! arg.hasTag ("ID"))
+    {
+      // Use canonical form if available, otherwise raw input.
+      auto value = arg.attribute ("canonical");
+      if (value == "")
+        value = arg.attribute ("raw");
 
-  return true;
+      if (arg._lextype == Lexer::Type::number)
+      {
+        if (arg.hasTag ("EID"))
+        {
+          trivial = false;
+          if (! exhibition.matches (arg.attribute ("raw")))
+            return false;
+        }
+      }
+      else if (arg._lextype == Lexer::Type::pattern)
+      {
+        trivial = false;
+        RX rx (value.substr (1, value.length () - 2));
+        if (! rx.match (exhibition.title ()))
+          return false;
+      }
+
+      // TODO: Implement other filtering.
+    }
+  }
+
+  if (! trivial)
+    debug (format ("{1} '{2}' matches", exhibition.id (), exhibition.title ()));
+
+  return ! trivial;
 }
 ////////////////////////////////////////////////////////////////////////////////
