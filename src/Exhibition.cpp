@@ -194,8 +194,18 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     lines.push_back (cline.str ());
   }
 
-  // TODO: All dates
-  // TODO: All submissions and status
+  // All submissions and status
+  if (_submissions.size ())
+  {
+    Composite cline;
+    for (auto& submission : _submissions)
+    {
+      cline.add (std::string (width, ' '), 0, card);
+      cline.add (" " + submission.id () + " " + submission.title () + " " + submission.status (), 2, card);
+    }
+
+    lines.push_back (cline.str ());
+  }
 
   return lines;
 }
