@@ -34,9 +34,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 bool filterByCLI (const CLI& cli, const Painting& painting)
 {
+  bool trivial = true;
   for (auto& arg : cli._args)
   {
-    if (arg.hasTag ("FILTER"))
+    if (arg.hasTag ("FILTER") && ! arg.hasTag ("EID"))
     {
       // Use canonical form if available, otherwise raw input.
       auto value = arg.attribute ("canonical");
@@ -46,26 +47,28 @@ bool filterByCLI (const CLI& cli, const Painting& painting)
       if (arg._lextype == Lexer::Type::word)
       {
         if (arg.hasTag ("ID"))
+        {
+          trivial = false;
           if (! painting.matches (arg.attribute ("raw")))
             return false;
+        }
       }
       else if (arg._lextype == Lexer::Type::pattern)
       {
+        trivial = false;
         RX rx (value.substr (1, value.length () - 2));
         if (! rx.match (painting.title ()))
           return false;
-      }
-      else
-      {
-        throw format ("Unrecognized filter type '{1}'", value);
       }
 
       // TODO: Implement other filtering metadata: size...
     }
   }
 
-  debug (format ("#{1} '{2}' matches", painting.id (), painting.title ()));
-  return true;
+  if (! trivial)
+    debug (format ("#{1} '{2}' matches", painting.id (), painting.title ()));
+
+  return ! trivial;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
