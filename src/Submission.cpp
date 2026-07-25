@@ -91,11 +91,12 @@ bool Submission::is_submission (const std::string& line)
 void Submission::parse (const std::string& line)
 {
   if (line.length () > 4)
-    _id = Lexer::trimRight (line.substr (4, 6));
+    _id = Lexer::trimRight (line.substr (4, 5));
   else
     throw format("Missing id to parse.");
 
-  // NOTE: Ignoring submission title.
+  if (line.length () > 9)
+    _title = Lexer::trimRight (line.substr (9, 27));
 
   if (line.length () > 37)
     _status = Lexer::trimRight (line.substr (37));
