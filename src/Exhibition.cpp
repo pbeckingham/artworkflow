@@ -195,6 +195,60 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Color scheme:
+//   future - on gray3
+//   active - on gray5
+//   open - on rgb010
+//   past - on gray2
+std::vector <std::string> Exhibition::mini_card (int width /* = 24 */) const
+{
+  Color card ("gray12 on gray3");
+  Color title ("white on gray3");
+  Datetime now;
+  if (_closing != "" && Datetime (_closing) <= now)
+  {
+    card  = Color ("gray12 on rgb100");
+    title = Color ("white on rgb100");
+  }
+  else if (_opening != "" && Datetime (_opening) <= now)
+  {
+    card  = Color ("gray14 on rgb010");
+    title = Color ("white on rgb010");
+  }
+  else if ((_submission   != "" && Datetime (_submission)   <= now) ||
+           (_notification != "" && Datetime (_notification) <= now))
+  {
+    card  = Color ("gray14 on gray5");
+    title = Color ("white on gray5");
+  }
+
+  std::vector <std::string> lines;
+
+  Composite line1;
+  line1.add (std::string (width, ' '), 0, card);
+  line1.add (_id, 0, card);
+  lines.push_back (line1.str ());
+
+  Composite line2;
+  line2.add (std::string (width, ' '), 0, title);
+  line2.add (_title.substr (0, width), 0, title);
+  lines.push_back (line2.str ());
+
+  if (_opening != "")
+  {
+    Composite cline;
+    cline.add (std::string (width, ' '), 0, card);
+    cline.add (_opening, 1, card);
+    if (_closing != "")
+      cline.add (" - " + _closing, 11, card);
+
+    lines.push_back (cline.str ());
+  }
+
+  return lines;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // Note that incomplete data should validate.
 //
 // TODO: Ensure all dates are in logical sequence
