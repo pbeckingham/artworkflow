@@ -37,6 +37,7 @@ public:
   Submission (const std::string&);
 
   std::string id () const;
+  std::string title () const;
 
   static bool is_submission (const std::string&);
 
@@ -47,6 +48,7 @@ private:
 
 private:
   std::string _id;
+  std::string _title;
   std::string _status;
 };
 
