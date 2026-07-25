@@ -13,6 +13,7 @@
 - Added new filtering to Kanban report
 - Added new filtering to info command
 - Implemented price command
+- Implemented info command for patinings and exhibitions
 
 ------ stable ------------------------------------
 

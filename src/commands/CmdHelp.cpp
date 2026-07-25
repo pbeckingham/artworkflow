@@ -51,9 +51,10 @@ int CmdHelpUsage (Config& config)
             << "       :yes         Override confirmation requests\n"
             << '\n'
             << "Filter is a set of terms, implicitly combined with 'AND':\n"
-            << "       [0-9]+       Is a painting ID\n"
-            << "       #[0-9]+      Is a painting ID\n"
-            << "       /<regex>/    Is a regular expression compared to the title\n"
+            << "       [0-9]+                  Is a painting ID\n"
+            << "       #[0-9]+                 Is a painting ID\n"
+            << "       [0-9]{4}(.[0-9]{1,2})?  Is an exhibition ID\n"
+            << "       /<regex>/               Is a regular expression to search the title\n"
             << '\n'
             << "DOM References:\n"
             << "       dom.newid\n"
