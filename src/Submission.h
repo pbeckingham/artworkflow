@@ -38,6 +38,7 @@ public:
 
   std::string id () const;
   std::string title () const;
+  std::string status () const;
 
   static bool is_submission (const std::string&);
 
