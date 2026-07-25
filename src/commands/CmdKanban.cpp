@@ -32,12 +32,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 int CmdKanban (CLI& cli, Config& config, Database& database)
 {
-  const bool verbose = config.getBoolean ("verbose");
+  auto verbose = config.getBoolean ("verbose");
 
   std::vector <Painting> concepts;
   std::vector <Painting> wip;
   std::vector <Painting> drying;
-  for (auto& painting : database.allPaintings ())
   for (auto& painting : database.allPaintings ())
   {
     if (filterByCLI (cli, painting))

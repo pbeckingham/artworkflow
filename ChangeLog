@@ -15,6 +15,7 @@
 - Implemented price command
 - Implemented info command for patinings and exhibitions
 - Added parsing for exhibition submissions
+- #5 Info Command
 
 ------ stable ------------------------------------
 
@@ -30,7 +31,6 @@
 - Implemented extensionOnExit
 - Implemented extensionCmdVersion
 - Implemented extensionCmdHelp
-- #5 Info Command
 
 ------ current release ---------------------------
 
