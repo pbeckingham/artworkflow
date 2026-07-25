@@ -36,10 +36,13 @@ int CmdInfo (
   CLI& cli,
   Database& database)
 {
+  bool found = false;
+
   for (auto& painting : database.allPaintings ())
   {
     if (filterByCLI (cli, painting))
     {
+      found = true;
       for (auto& line : painting.card (60))
         std::cout << line << '\n';
 
@@ -47,38 +50,19 @@ int CmdInfo (
     }
   }
 
-  // TODO: Upgrade to the new filtering mechanism.
-  for (auto& id : cli.getIds ())
+  for (auto& exhibition : database.allExhibitions ())
   {
-    if (Exhibition::is_exhibition (id))
+    if (filterByCLI (cli, exhibition))
     {
-      for (auto& exhibition : database.allExhibitions ())
-      {
-        if (exhibition.matches (id))
-        {
-          std::cout << exhibition.id () << " " << exhibition.title () << '\n';
-          if (exhibition.submission () != "")
-            std::cout << "  Submission   " << exhibition.submission () << '\n';
-          if (exhibition.notification () != "")
-            std::cout << "  Notification " << exhibition.notification () << '\n';
-          if (exhibition.delivery () != "")
-            std::cout << "  Delivery     " << exhibition.delivery () << '\n';
-          if (exhibition.opening () != "")
-            std::cout << "  Opening      " << exhibition.opening () << '\n';
-          if (exhibition.reception () != "")
-            std::cout << "  Reception    " << exhibition.reception () << '\n';
-          if (exhibition.closing () != "")
-            std::cout << "  Closing      " << exhibition.closing () << '\n';
-          if (exhibition.pickup () != "")
-            std::cout << "  Pickup       " << exhibition.pickup () << '\n';
+      found = true;
+      for (auto& line : exhibition.card (60))
+        std::cout << line << '\n';
 
-          std::cout << '\n';
-        }
-      }
+      std::cout << '\n';
     }
   }
 
-  return 0;
+  return found ? 0 : 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
