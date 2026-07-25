@@ -52,6 +52,12 @@ bool filterByCLI (const CLI& cli, const Painting& painting)
           if (! painting.matches (arg.attribute ("raw")))
             return false;
         }
+        else
+        {
+          trivial = false;
+          if (painting.title ().find (value) == std::string::npos)
+            return false;
+        }
       }
       else if (arg._lextype == Lexer::Type::pattern)
       {
@@ -93,6 +99,12 @@ bool filterByCLI (const CLI& cli, const Exhibition& exhibition)
             return false;
         }
       }
+      else if (arg._lextype == Lexer::Type::word)
+      {
+        trivial = false;
+        if (exhibition.title ().find (value) == std::string::npos)
+          return false;
+      }
       else if (arg._lextype == Lexer::Type::pattern)
       {
         trivial = false;
@@ -100,8 +112,6 @@ bool filterByCLI (const CLI& cli, const Exhibition& exhibition)
         if (! rx.match (exhibition.title ()))
           return false;
       }
-
-      // TODO: Implement other filtering.
     }
   }
 

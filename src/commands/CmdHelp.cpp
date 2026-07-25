@@ -55,6 +55,7 @@ int CmdHelpUsage (Config& config)
             << "       #[0-9]+                 Is a painting ID\n"
             << "       [0-9]{4}(.[0-9]{1,2})?  Is an exhibition ID\n"
             << "       /<regex>/               Is a regular expression to search the title\n"
+            << "       <word>                  Is a word in the title\n"
             << '\n'
             << "DOM References:\n"
             << "       dom.newid\n"
