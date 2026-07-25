@@ -30,6 +30,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <Submission.h>
 
 // Represents a physical painting.
 class Exhibition
@@ -37,6 +38,8 @@ class Exhibition
 public:
   Exhibition () = default;
   Exhibition (const std::string&);
+
+  void add (const Submission&);
 
   std::string id () const;
   std::string submission () const;
@@ -74,6 +77,8 @@ private:
   std::string _closing;
   std::string _pickup;
   std::string _title;
+
+  std::vector <Submission> _submissions;
 };
 
 #endif
