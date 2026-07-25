@@ -14,6 +14,7 @@ set (artworkflow_SRCS AtomicFile.cpp     AtomicFile.h
                       Datafile.cpp       Datafile.h
                       Exhibition.cpp     Exhibition.h
                       Painting.cpp       Painting.h
+                      Submission.cpp     Submission.h
                       debug.cpp
                       dom.cpp
                       extensions.cpp
