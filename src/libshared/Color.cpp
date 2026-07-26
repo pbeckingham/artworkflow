@@ -257,7 +257,8 @@ Color::Color (const std::string& spec)
 
       upgrade24b ();
 
-      if (bg) {
+      if (bg)
+      {
         bg_value |= _COLOR_HASBG;
         bg_value |= color << 32;
         bg_value |= _COLOR_24BIT;
@@ -269,7 +270,7 @@ Color::Color (const std::string& spec)
         fg_value |= _COLOR_24BIT;
       }
     }
-    else if (!word.empty ())
+    else if (! word.empty ())
       throw format ("The color '{1}' is not recognized.", word);
   }
 
@@ -456,7 +457,8 @@ void Color::upgrade ()
 ////////////////////////////////////////////////////////////////////////////////
 void Color::upgrade24b ()
 {
-  if (_value & _COLOR_24BIT) return;
+  if (_value & _COLOR_24BIT)
+    return;
 
   upgrade ();
 
@@ -466,21 +468,22 @@ void Color::upgrade24b ()
   {
     unsigned int fg = _value & _COLOR_FG;
     _value &= ~_COLOR_FG;
-    _value |= index2truecolor(fg);
+    _value |= index2truecolor (fg);
   }
 
   if (_value & _COLOR_HASBG)
   {
     unsigned int bg = (_value & _COLOR_BG) >> 8;
     _value &= ~_COLOR_FG;
-    _value |= ((unsigned long int)(index2truecolor(bg)) << 32);
+    _value |= ((unsigned long int)(index2truecolor (bg)) << 32);
   }
 
   _value |= _COLOR_24BIT;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-unsigned int Color::index2truecolor(unsigned int index) {
+unsigned int Color::index2truecolor(unsigned int index)
+{
   unsigned int color = 0x0;
 
   if (index <= 8)
