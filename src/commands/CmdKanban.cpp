@@ -27,6 +27,7 @@
 #include <commands.h>
 #include <iostream>
 #include <format.h>
+#include <util.h>
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -106,6 +107,8 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
       debug (key.as<std::string> ());
     }
   }
+
+  debug (format ("Terminal is {1}x{2}", get_terminal_width (), get_terminal_height ()));
 
   // TODO: Compose output line by line for each of the columns.
 
