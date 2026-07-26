@@ -26,6 +26,7 @@
 
 #include <commands.h>
 #include <iostream>
+#include <Composite.h>
 #include <format.h>
 #include <util.h>
 #include <artworkflow.h>
@@ -110,7 +111,23 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
 
   debug (format ("Terminal is {1}x{2}", get_terminal_width (), get_terminal_height ()));
 
+  Color frame ("0x808080 on 0x300030");
+  int left_column_width = 12;
+  std::vector <std::string> left_column;
+
+  Composite left;
+  left.add (std::string (left_column_width, ' '), 0, frame);
+  left.add (format ("Concepts {1}", concepts.size ()), 1, frame);
+  left_column.push_back (left.str ());
+
+  left.clear ();
+  left.add (std::string (left_column_width, ' '), 0, frame);
+  left.add (format ("WIP      {1}", wip.size ()), 1, frame);
+  left_column.push_back (left.str ());
+
   // TODO: Compose output line by line for each of the columns.
+  for (auto& line : left_column)
+    std::cout << line << '\n';
 
   return 0;
 }
