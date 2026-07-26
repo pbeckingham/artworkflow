@@ -200,8 +200,10 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     Composite cline;
     for (auto& submission : _submissions)
     {
+      cline.clear ();
       cline.add (std::string (width, ' '), 0, card);
       cline.add (" " + submission.id () + " " + submission.title () + " " + submission.status (), 2, card);
+      lines.push_back (cline.str ());
     }
 
     lines.push_back (cline.str ());
@@ -484,8 +486,6 @@ void Exhibition::parse (const std::string& line)
     _title      = Lexer::trimRight (line.substr (85), " \n");
   else
     throw format("Missing title to parse.");
-
-  // TODO: Parse submissions
 }
 
 ////////////////////////////////////////////////////////////////////////////////
