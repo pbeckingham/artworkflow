@@ -37,27 +37,57 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   std::vector <Painting> concepts;
   std::vector <Painting> wip;
   std::vector <Painting> drying;
+  std::vector <Painting> inventory;
+  std::vector <Painting> abandoned;
+  std::vector <Painting> destroyed;
+  std::vector <Painting> sold;
+  std::vector <Painting> gifted;
   for (auto& painting : database.allPaintings ())
   {
-    if (filterByCLI (cli, painting))
+    if (filterByCLI (cli, painting, true))
     {
-           if (painting.is_concept ()) concepts.push_back (painting);
-      else if (painting.is_wip ())     wip.push_back (painting);
-      else if (painting.is_drying ())  drying.push_back (painting);
+           if (painting.is_concept ())   concepts.push_back (painting);
+      else if (painting.is_wip ())       wip.push_back (painting);
+      else if (painting.is_drying ())    drying.push_back (painting);
+      else if (painting.is_inventory ()) inventory.push_back (painting);
+      else if (painting.is_abandoned ()) abandoned.push_back (painting);
+      else if (painting.is_destroyed ()) destroyed.push_back (painting);
+      else if (painting.is_sold ())      sold.push_back (painting);
+      else if (painting.is_gifted ())    gifted.push_back (painting);
     }
   }
 
   debug (format ("{1} concepts", concepts.size ()));
-  for (auto& c : concepts)
-    debug (format ("  {1} {2}", c.id (), c.title ()));
+  for (auto& p : concepts)
+    debug (format ("  {1} {2}", p.id (), p.title ()));
 
   debug (format ("{1} wip", wip.size ()));
-  for (auto& w : wip)
-    debug (format ("  {1} {2}", w.id (), w.title ()));
+  for (auto& p : wip)
+    debug (format ("  {1} {2}", p.id (), p.title ()));
 
   debug (format ("{1} drying", drying.size ()));
-  for (auto& d : drying)
-    debug (format ("  {1} {2}", d.id (), d.title ()));
+  for (auto& p : drying)
+    debug (format ("  {1} {2}", p.id (), p.title ()));
+
+  debug (format ("{1} inventory", inventory.size ()));
+//  for (auto& p : inventory)
+//    debug (format ("  {1} {2}", p.id (), p.title ()));
+
+  debug (format ("{1} abandoned", abandoned.size ()));
+//  for (auto& p : abandoned)
+//    debug (format ("  {1} {2}", p.id (), p.title ()));
+
+  debug (format ("{1} destroyed", destroyed.size ()));
+//  for (auto& p : destroyed)
+//    debug (format ("  {1} {2}", p.id (), p.title ()));
+
+  debug (format ("{1} sold", sold.size ()));
+//  for (auto& p : sold)
+//    debug (format ("  {1} {2}", p.id (), p.title ()));
+
+  debug (format ("{1} gifted", gifted.size ()));
+//  for (auto& p : gifted)
+//    debug (format ("  {1} {2}", p.id (), p.title ()));
 
   // TODO: load configuration that determines Kanban columns.
   // reportKanban = {
@@ -77,7 +107,7 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
     }
   }
 
-  // TODO: Compose output line by line for the columns.
+  // TODO: Compose output line by line for each of the columns.
 
   return 0;
 }
