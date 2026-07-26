@@ -68,7 +68,8 @@ std::string escape (const std::string&, int);
 std::string quoteIfNeeded (const std::string&);
 std::string join(const std::string& glue, const std::set <std::string>& array);
 template <typename Container> std::string joinQuotedIfNeeded (const std::string&, const Container&);
-int getTerminalWidth ();
+int get_terminal_width ();
+int get_terminal_height ();
 Palette createPalette (const Config&);
 
 #endif

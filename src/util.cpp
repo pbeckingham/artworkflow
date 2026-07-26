@@ -28,6 +28,10 @@
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
+static int terminal_width {0};
+static int terminal_height {0};
+
+////////////////////////////////////////////////////////////////////////////////
 // Escape all 'c' --> '\c'.
 std::string escape (const std::string& input, int c)
 {
@@ -105,27 +109,35 @@ template std::string joinQuotedIfNeeded(const std::string&, const std::set <std:
 template std::string joinQuotedIfNeeded(const std::string&, const std::vector <std::string>&);
 
 ////////////////////////////////////////////////////////////////////////////////
-int getTerminalWidth ()
+int get_terminal_width ()
 {
-  int terminalWidth {0};
-#ifdef TIOCGSIZE
-  struct ttysize ts{};
-  ioctl (STDIN_FILENO, TIOCGSIZE, &ts);
-  terminalWidth = ts.ts_cols;
-#elif defined(TIOCGWINSZ)
-  struct winsize ts {};
-  ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
-  terminalWidth = ts.ws_col;
-#endif
-
-  if (terminalWidth == 0)
+  if (terminal_width == 0 &&
+      terminal_height == 0)
   {
-    char *columns = getenv ("COLUMNS");
-    if (columns != NULL)
-      terminalWidth = atoi (columns);
+    terminal_width = 80;
+    terminal_height = 24;
+
+#ifdef TIOCGSIZE
+    struct ttysize ts{};
+    ioctl (STDIN_FILENO, TIOCGSIZE, &ts);
+    terminal_width = ts.ts_cols;
+    terminalHeight = ts.ts_lines;
+#elif defined(TIOCGWINSZ)
+    struct winsize ts {};
+    ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
+    terminal_width = ts.ws_col;
+    terminalHeight = ts.ws_row;
+#endif
   }
 
-  return terminalWidth > 0 ? terminalWidth : 80;
+  return terminal_width;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+int get_terminal_height()
+{
+  (void) get_terminal_width ();
+  return terminal_height;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
