@@ -24,6 +24,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include <unistd.h>
+#include <sys/ioctl.h>
 #include <string>
 #include <artworkflow.h>
 
@@ -120,13 +122,13 @@ int get_terminal_width ()
 #ifdef TIOCGSIZE
     struct ttysize ts{};
     ioctl (STDIN_FILENO, TIOCGSIZE, &ts);
-    terminal_width = ts.ts_cols;
-    terminalHeight = ts.ts_lines;
+    terminal_width  = ts.ts_cols;
+    terminal_height = ts.ts_lines;
 #elif defined(TIOCGWINSZ)
     struct winsize ts {};
     ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
-    terminal_width = ts.ws_col;
-    terminalHeight = ts.ws_row;
+    terminal_width  = ts.ws_col;
+    terminal_height = ts.ws_row;
 #endif
   }
 
