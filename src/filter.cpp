@@ -32,12 +32,15 @@
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-bool filterByCLI (const CLI& cli, const Painting& painting)
+bool filterByCLI (
+  const CLI& cli,
+  const Painting& painting,
+  bool inclusive /* = false */)
 {
   bool trivial = true;
   for (auto& arg : cli._args)
   {
-    if (arg.hasTag ("FILTER") && ! arg.hasTag ("EID"))
+    if (arg.hasTag ("FILTER") && ! arg.hasTag ("EID") && ! arg.hasTag ("HINT"))
     {
       // Use canonical form if available, otherwise raw input.
       auto value = arg.attribute ("canonical");
@@ -71,19 +74,22 @@ bool filterByCLI (const CLI& cli, const Painting& painting)
     }
   }
 
-  if (! trivial)
-    debug (format ("#{1} '{2}' matches", painting.id (), painting.title ()));
+//  if (inclusive || ! trivial)
+//    debug (format ("#{1} '{2}' matches", painting.id (), painting.title ()));
 
-  return ! trivial;
+  return inclusive || ! trivial;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-bool filterByCLI (const CLI& cli, const Exhibition& exhibition)
+bool filterByCLI (
+  const CLI& cli,
+  const Exhibition& exhibition,
+  bool inclusive /* = false */)
 {
   bool trivial = true;
   for (auto& arg : cli._args)
   {
-    if (arg.hasTag ("FILTER") && ! arg.hasTag ("ID"))
+    if (arg.hasTag ("FILTER") && ! arg.hasTag ("ID") && ! arg.hasTag ("HINT"))
     {
       // Use canonical form if available, otherwise raw input.
       auto value = arg.attribute ("canonical");
@@ -115,9 +121,9 @@ bool filterByCLI (const CLI& cli, const Exhibition& exhibition)
     }
   }
 
-  if (! trivial)
-    debug (format ("{1} '{2}' matches", exhibition.id (), exhibition.title ()));
+//  if (inclusive || ! trivial)
+//    debug (format ("{1} '{2}' matches", exhibition.id (), exhibition.title ()));
 
-  return ! trivial;
+  return inclusive || ! trivial;
 }
 ////////////////////////////////////////////////////////////////////////////////

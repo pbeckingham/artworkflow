@@ -51,8 +51,8 @@ void extensionCmdVersion (Config&);
 void extensionCmdHelp (Config&);
 
 // filter.cpp
-bool filterByCLI (const CLI&, const Painting&);
-bool filterByCLI (const CLI&, const Exhibition&);
+bool filterByCLI (const CLI&, const Painting&, bool inclusive = false);
+bool filterByCLI (const CLI&, const Exhibition&, bool inclusive = false);
 
 // init.cpp
 void initializeEntities (CLI&);
