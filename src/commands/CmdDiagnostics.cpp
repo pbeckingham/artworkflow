@@ -159,6 +159,9 @@ int CmdDiagnostics (Config& config)
   else if ((peditor = getenv ("EDITOR")) != nullptr)
     out << "        $EDITOR: " << peditor << '\n';
 
+  // Determine terminal size.
+  out << "       Terminal: " << get_terminal_width () << "x" << get_terminal_height () << '\n';
+
   // Theme description, if present.
   if (config.has ("theme.description"))
     out << "    Color theme: " << config.get ("theme.description") << '\n';
