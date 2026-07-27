@@ -29,7 +29,7 @@
 #include <Pig.h>
 #include <RX.h>
 #include <Lexer.h>
-#include <format.h>
+#include <format>
 #include <shared.h>
 #include <iostream>
 #include <artworkflow.h>
@@ -58,12 +58,12 @@ bool domGet (
     while (std::find (ids.begin (), ids.end (), id) != ids.end ())
       ++id;
 
-    debug (format ("{1} paintings loaded", ids.size ()));
-    debug (format ("{1} is free", id));
+    debug (std::format ("{} paintings loaded", ids.size ()));
+    debug (std::format ("{} is free", id));
 
     // Use whichever number id contains. This is safe and free of wrapping
     // below INT_MAX, which is a lot.
-    value = "#" + rightJustifyZero (id, 3);
+    value = std::format ("#{:03d}", id);
     return true;
   }
   else
