@@ -25,7 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <cmake.h>
-#include <format.h>
+#include <format>
 #include <iostream>
 #include <shared.h>
 #include <artworkflow.h>
@@ -176,7 +176,7 @@ int CmdDiagnostics (Config& config)
     {
       if (color && color % 16 == 0)
         out << "\n                ";
-      out << ' ' << palette.next ().colorize (rightJustifyZero (color, 2));
+      out << ' ' << palette.next ().colorize (std::format ("{:02d}", color));
     }
     out << '\n';
   }
