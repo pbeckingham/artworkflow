@@ -58,7 +58,7 @@ int CmdHelpUsage (Config& config)
             << "       <word>                  Is a word in the title\n"
             << '\n'
             << "DOM References:\n"
-            << "       dom.newid\n"
+            << "       dom.painting.next\n"
             << "       dom.<id>.<meta>\n"
             << "       dom.<id>.[start|end|varnish|action].[year|month|day|age]\n"
             << "       dom.[all|inventory|sold|gifted|abandoned|destroyed|wip].[ids|count]\n"
