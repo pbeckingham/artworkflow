@@ -60,38 +60,6 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
     }
   }
 
-  debug (std::format ("{} concepts", concepts.size ()));
-  for (auto& p : concepts)
-    debug (std::format ("  {} {}", p.id (), p.title ()));
-
-  debug (std::format ("{} wip", wip.size ()));
-  for (auto& p : wip)
-    debug (std::format ("  {} {}", p.id (), p.title ()));
-
-  debug (std::format ("{} drying", drying.size ()));
-  for (auto& p : drying)
-    debug (std::format ("  {} {}", p.id (), p.title ()));
-
-  debug (std::format ("{} inventory", inventory.size ()));
-//  for (auto& p : inventory)
-//    debug (std::format ("  {} {}", p.id (), p.title ()));
-
-  debug (std::format ("{} abandoned", abandoned.size ()));
-//  for (auto& p : abandoned)
-//    debug (std::format ("  {} {}", p.id (), p.title ()));
-
-  debug (std::format ("{} destroyed", destroyed.size ()));
-//  for (auto& p : destroyed)
-//    debug (std::format ("  {} {}", p.id (), p.title ()));
-
-  debug (std::format ("{} sold", sold.size ()));
-//  for (auto& p : sold)
-//    debug (std::format ("  {} {}", p.id (), p.title ()));
-
-  debug (std::format ("{} gifted", gifted.size ()));
-//  for (auto& p : gifted)
-//    debug (std::format ("  {} {}", p.id (), p.title ()));
-
   // TODO: load configuration that determines Kanban columns.
   // reportKanban = {
   //   ["columns"] = {"Concept", "WIP", "Drying"}
@@ -118,42 +86,42 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
 
   Composite left;
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (std::format ("Concepts   {}", concepts.size ()), 1, frame);
+  left.add (std::format ("Concepts  {: >3d}", concepts.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (std::format ("WIP        {}", wip.size ()), 1, frame);
+  left.add (std::format ("WIP       {: >3d}", wip.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (std::format ("Drying     {}", drying.size ()), 1, frame);
+  left.add (std::format ("Drying    {: >3d}", drying.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (std::format ("Abandoned  {}", abandoned.size ()), 1, frame);
+  left.add (std::format ("Abandoned {: >3d}", abandoned.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (std::format ("Destroyed  {}", destroyed.size ()), 1, frame);
+  left.add (std::format ("Destroyed {: >3d}", destroyed.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (std::format ("Inventory  {}", inventory.size ()), 1, frame);
+  left.add (std::format ("Inventory {: >3d}", inventory.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (std::format ("Gifted     {}", gifted.size ()), 1, frame);
+  left.add (std::format ("Gifted    {: >3d}", gifted.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (std::format ("Sold       {}", sold.size ()), 1, frame);
+  left.add (std::format ("Sold      {: >3d}", sold.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   // TODO: Compose output line by line for each of the columns.
