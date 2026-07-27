@@ -135,14 +135,6 @@ std::string leftJustify (const std::string& input, const int width)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-std::string rightJustifyZero (const int input, const int width)
-{
-  std::stringstream s;
-  s << std::setw (width) << std::setfill ('0') << input;
-  return s.str ();
-}
-
-////////////////////////////////////////////////////////////////////////////////
 std::string rightJustify (const int input, const int width)
 {
   std::stringstream s;
