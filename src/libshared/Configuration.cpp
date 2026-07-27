@@ -31,6 +31,7 @@
 #include <cinttypes>
 #include <cstdlib>
 #include <format.h>
+#include <format>
 #include <shared.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -234,19 +235,19 @@ void Configuration::parse (
               }
             }
             if (!included.exists ())
-              throw format (
-                  "Could not find file in CWD, directory of config file or search paths '{1}'.",
+              throw std::format (
+                  "Could not find file in CWD, directory of config file or search paths '{}'.",
                   included._data);
           }
           while (0);
 
           if (!included.readable ())
-            throw format ("Could not read include file '{1}'.", included._data);
+            throw std::format ("Could not read include file '{}'.", included._data);
 
           load (included, nest + 1, search_paths);
         }
         else
-          throw format ("Malformed entry '{1}' in config file.", line);
+          throw std::format ("Malformed entry '{}' in config file.", line);
       }
     }
   }

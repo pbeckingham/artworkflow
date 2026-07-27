@@ -29,7 +29,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstdlib>
-#include <format.h>
+#include <format>
 #include <sstream>
 #include <artworkflow.h>
 
@@ -37,7 +37,7 @@
 void Datafile::initialize (const std::string& name)
 {
   _file = Path (name);
-  debug (format ("Datafile::initialize {1}", name));
+  debug (std::format ("Datafile::initialize {}", name));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ const std::vector <Painting> Datafile::allPaintings ()
     if (Painting::is_painting (line))
       all.push_back (Painting (line));
 
-  debug (format ("{1}: {2} paintings", _file.name (), all.size ()));
+  debug (std::format ("{}: {} paintings", _file.name (), all.size ()));
   return all;
 }
 
@@ -78,7 +78,7 @@ void Datafile::addPainting (const Painting& painting)
     load_lines ();
 
   auto composed = painting.compose ();
-  debug (format ("Painting {1}: {2}", painting.id(), composed));
+  debug (std::format ("Painting {}: {}", painting.id(), composed));
 
 /*
   const std::string serialization = interval.serialize ();
@@ -90,16 +90,16 @@ void Datafile::addPainting (const Painting& painting)
     Interval test = IntervalFactory::fromSerialization (serialization);
     test.id = interval.id;
     if (interval != test)
-      throw (format ("Encode / decode check failed:\n  {1}\nis not equal to:\n  {2}",
+      throw (std::format ("Encode / decode check failed:\n  {}\nis not equal to:\n  {}",
                      interval.dump (), test.dump ()));
 
     _lines.push_back (serialization);
-    debug (format ("{1}: Added {2}", _file.name (), _lines.back ()));
+    debug (std::format ("{}: Added {}", _file.name (), _lines.back ()));
     _dirty = true;
   }
   catch (const std::string& error)
   {
-    debug (format ("Datafile::addInterval() failed.\n{1}", error));
+    debug (std::format ("Datafile::addInterval() failed.\n{}", error));
     throw std::string ("Internal error. Failed encode / decode check.");
   }
 */
@@ -117,11 +117,11 @@ void Datafile::deletePainting (const Painting& painting)
   auto serialized = interval.serialize ();
   auto i = std::find (_lines.begin (), _lines.end (), serialized);
   if (i == _lines.end ())
-    throw format ("Datafile::deleteInterval failed to find '{1}'", serialized);
+    throw std::format ("Datafile::deleteInterval failed to find '{}'", serialized);
 
   _lines.erase (i);
   _dirty = true;
-  debug (format ("{1}: Deleted {2}", _file.name (), serialized));
+  debug (std::format ("{}: Deleted {}", _file.name (), serialized));
 */
 }
 
@@ -130,7 +130,7 @@ const std::vector <Exhibition> Datafile::allExhibitions ()
 {
   std::vector <Exhibition> all;
   auto lines = allLines ();
-  for (int i = 0; i < lines.size (); ++i)
+  for (unsigned int i = 0; i < lines.size (); ++i)
   {
     if (Exhibition::is_exhibition (lines[i]))
       all.push_back (Exhibition (lines[i]));
@@ -138,7 +138,7 @@ const std::vector <Exhibition> Datafile::allExhibitions ()
       all[all.size () - 1].add (Submission (lines[i]));
   }
 
-  debug (format ("{1}: {2} exhibitions", _file.name (), all.size ()));
+  debug (std::format ("{}: {} exhibitions", _file.name (), all.size ()));
   return all;
 }
 
@@ -153,7 +153,7 @@ void Datafile::addExhibition (const Exhibition& exhibition)
     load_lines ();
 
   auto composed = exhibition.compose ();
-  debug (format ("Exhibition {1}: {2}", exhibition.id(), composed));
+  debug (std::format ("Exhibition {}: {}", exhibition.id(), composed));
 
 /*
   const std::string serialization = interval.serialize ();
@@ -165,16 +165,16 @@ void Datafile::addExhibition (const Exhibition& exhibition)
     Interval test = IntervalFactory::fromSerialization (serialization);
     test.id = interval.id;
     if (interval != test)
-      throw (format ("Encode / decode check failed:\n  {1}\nis not equal to:\n  {2}",
+      throw (std::format ("Encode / decode check failed:\n  {}\nis not equal to:\n  {}",
                      interval.dump (), test.dump ()));
 
     _lines.push_back (serialization);
-    debug (format ("{1}: Added {2}", _file.name (), _lines.back ()));
+    debug (std::format ("{}: Added {}", _file.name (), _lines.back ()));
     _dirty = true;
   }
   catch (const std::string& error)
   {
-    debug (format ("Datafile::addInterval() failed.\n{1}", error));
+    debug (std::format ("Datafile::addInterval() failed.\n{}", error));
     throw std::string ("Internal error. Failed encode / decode check.");
   }
 */
@@ -192,11 +192,11 @@ void Datafile::deleteExhibition (const Exhibition& exhibition)
   auto serialized = interval.serialize ();
   auto i = std::find (_lines.begin (), _lines.end (), serialized);
   if (i == _lines.end ())
-    throw format ("Datafile::deleteInterval failed to find '{1}'", serialized);
+    throw std::format ("Datafile::deleteInterval failed to find '{}'", serialized);
 
   _lines.erase (i);
   _dirty = true;
-  debug (format ("{1}: Deleted {2}", _file.name (), serialized));
+  debug (std::format ("{}: Deleted {}", _file.name (), serialized));
 */
 }
 
@@ -222,7 +222,7 @@ void Datafile::commit ()
         _dirty = false;
       }
       else
-        throw format ("Could not write to data file {1}", _file._data);
+        throw std::format ("Could not write to data file {}", _file._data);
     }
     else
       file.remove ();
@@ -258,7 +258,7 @@ void Datafile::load_lines ()
       _lines.push_back (line);
 
     _lines_loaded = true;
-    debug (format ("{1}: {2} lines", file.name (), read_lines.size ()));
+    debug (std::format ("{}: {} lines", file.name (), read_lines.size ()));
   }
 }
 

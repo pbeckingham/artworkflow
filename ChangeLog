@@ -16,6 +16,7 @@
 - Implemented info command for patinings and exhibitions
 - Added parsing for exhibition submissions
 - #5 Info Command
+- Migrated code to C++20
 
 ------ stable ------------------------------------
 

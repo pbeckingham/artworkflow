@@ -27,8 +27,8 @@
 #include <Color.h>
 #include <Lexer.h>
 #include <cstdlib>
-#include <format.h>
 #include <shared.h>
+#include <format>
 #include <sstream>
 #include <iomanip>
 
@@ -177,7 +177,7 @@ Color::Color (const std::string& spec)
     {
       index = strtol (word.substr (4).c_str (), nullptr, 10);
       if (index < 0 || index > 23)
-        throw format ("The color '{1}' is not recognized.", word);
+        throw std::format ("The color '{}' is not recognized.", word);
 
       if (bg)
       {
@@ -199,7 +199,7 @@ Color::Color (const std::string& spec)
       index = strtol (word.substr (3).c_str (), nullptr, 10);
       if (word.length () != 6 ||
           index < 0 || index > 555)
-        throw format ("The color '{1}' is not recognized.", word);
+        throw std::format ("The color '{}' is not recognized.", word);
 
       int r = strtol (word.substr (3, 1).c_str (), nullptr, 10);
       int g = strtol (word.substr (4, 1).c_str (), nullptr, 10);
@@ -207,7 +207,7 @@ Color::Color (const std::string& spec)
       if (r < 0 || r > 5 ||
           g < 0 || g > 5 ||
           b < 0 || b > 5)
-        throw format ("The color '{1}' is not recognized.", word);
+        throw std::format ("The color '{}' is not recognized.", word);
 
       index = 16 + r*36 + g*6 + b;
 
@@ -230,7 +230,7 @@ Color::Color (const std::string& spec)
     {
       index = strtol (word.substr (5).c_str (), nullptr, 10);
       if (index < 0 || index > 255)
-        throw format ("The color '{1}' is not recognized.", word);
+        throw std::format ("The color '{}' is not recognized.", word);
 
       upgrade ();
 
@@ -253,7 +253,7 @@ Color::Color (const std::string& spec)
     {
       unsigned long int color = strtol (word.c_str (), nullptr, 16);
       if (color > 0x00FFFFFF)
-        throw format ("The color '{1}' is not recognized.", word);
+        throw std::format ("The color '{}' is not recognized.", word);
 
       upgrade24b ();
 
@@ -271,7 +271,7 @@ Color::Color (const std::string& spec)
       }
     }
     else if (! word.empty ())
-      throw format ("The color '{1}' is not recognized.", word);
+      throw std::format ("The color '{}' is not recognized.", word);
   }
 
   // Now combine the fg and bg into a single color.
@@ -571,10 +571,7 @@ void Color::_colorize (std::string &result, const std::string& input) const
     if (count++) result += ';';
     if (_value & _COLOR_24BIT)
     {
-      result += "38;2;";
-      result += format((_value >> 16) & 0xFF) + ';';
-      result += format((_value >>  8) & 0xFF) + ';';
-      result += format((_value)       & 0xFF);
+      result += std::format ("38;2;{};{};{}", ((_value >> 16) & 0xFF), ((_value >> 8) & 0xFF), (_value & 0xFF));
     }
     else if (_value & _COLOR_256)
     {
@@ -592,10 +589,7 @@ void Color::_colorize (std::string &result, const std::string& input) const
     if (count++) result += ';';
     if (_value & _COLOR_24BIT)
     {
-      result += "48;2;";
-      result += format((_value >> 48) & 0xFF) + ';';
-      result += format((_value >> 40) & 0xFF) + ';';
-      result += format((_value >> 32) & 0xFF);
+      result += std::format ("48;2;{};{};{}", ((_value >> 48) & 0xFF), ((_value >> 40) & 0xFF), ((_value >> 32) & 0xFF));
     }
     else if (_value & _COLOR_256)
     {
@@ -664,22 +658,10 @@ std::string Color::code () const
       result += "\033[7m";
 
     if (_value & _COLOR_HASFG)
-    {
-      result += "\033[38;2;";
-      result += format((_value >> 16) & 0xFF) + ';';
-      result += format((_value >>  8) & 0xFF) + ';';
-      result += format((_value)       & 0xFF);
-      result += 'm';
-    }
+      result += std::format ("\033[38;2;{};{};{}m", ((_value >> 16) & 0xFF), ((_value >> 8) & 0xFF), (_value & 0xFF));
 
     if (_value & _COLOR_HASBG)
-    {
-      result += "\033[48;2;";
-      result += format((_value >> 48) & 0xFF) + ';';
-      result += format((_value >> 40) & 0xFF) + ';';
-      result += format((_value >> 32) & 0xFF);
-      result += 'm';
-    }
+      result += std::format ("\033[48;2;{};{};{}m", ((_value >> 48) & 0xFF), ((_value >> 40) & 0xFF), ((_value >> 32) & 0xFF));
   }
 
   // 256 color

@@ -25,7 +25,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <commands.h>
-#include <format.h>
+#include <format>
 #include <iostream>
 #include <shared.h>
 #include <artworkflow.h>
@@ -44,7 +44,7 @@ int CmdGet (
   {
     std::string value;
     if (! domGet (database, config, reference, value))
-      throw format ("DOM reference '{1}' is not valid.", reference);
+      throw std::format ("DOM reference '{}' is not valid.", reference);
 
     results.push_back (value);
   }

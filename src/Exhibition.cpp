@@ -28,7 +28,7 @@
 #include <sstream>
 #include <string>
 #include <shared.h>
-#include <format.h>
+#include <format>
 #include <Color.h>
 #include <Composite.h>
 #include <RX.h>
@@ -280,133 +280,133 @@ bool Exhibition::validate (std::vector <std::string>& errors) const
 
   if (_title == "")
   {
-    errors.push_back (format ("{1} Missing title", _id));
+    errors.push_back (std::format ("{} Missing title", _id));
     return false;
   }
 
   if (_submission != "" && _notification != "" && _submission > _notification)
   {
-    errors.push_back (format ("{1} Submission should be before notification", _id));
+    errors.push_back (std::format ("{} Submission should be before notification", _id));
     return false;
   }
 
   if (_submission != "" && _delivery != "" && _submission > _delivery)
   {
-    errors.push_back (format ("{1} Submission should be before delivery", _id));
+    errors.push_back (std::format ("{} Submission should be before delivery", _id));
     return false;
   }
 
   if (_submission != "" && _opening != "" && _submission > _opening)
   {
-    errors.push_back (format ("{1} Submission should be before opening", _id));
+    errors.push_back (std::format ("{} Submission should be before opening", _id));
     return false;
   }
 
   if (_submission != "" && _reception != "" && _submission > _reception)
   {
-    errors.push_back (format ("{1} Submission should be before reception", _id));
+    errors.push_back (std::format ("{} Submission should be before reception", _id));
     return false;
   }
 
   if (_submission != "" && _closing != "" && _submission > _closing)
   {
-    errors.push_back (format ("{1} Submission should be before closing", _id));
+    errors.push_back (std::format ("{} Submission should be before closing", _id));
     return false;
   }
 
   if (_submission != "" && _pickup != "" && _submission > _pickup)
   {
-    errors.push_back (format ("{1} Submission should be before pickup", _id));
+    errors.push_back (std::format ("{} Submission should be before pickup", _id));
     return false;
   }
 
   if (_notification != "" && _delivery != "" && _notification > _delivery)
   {
-    errors.push_back (format ("{1} Notification should be before delivery", _id));
+    errors.push_back (std::format ("{} Notification should be before delivery", _id));
     return false;
   }
 
   if (_notification != "" && _opening != "" && _notification > _opening)
   {
-    errors.push_back (format ("{1} Notification should be before opening", _id));
+    errors.push_back (std::format ("{} Notification should be before opening", _id));
     return false;
   }
 
   if (_notification != "" && _reception != "" && _notification > _reception)
   {
-    errors.push_back (format ("{1} Notification should be before reception", _id));
+    errors.push_back (std::format ("{} Notification should be before reception", _id));
     return false;
   }
 
   if (_notification != "" && _closing != "" && _notification > _closing)
   {
-    errors.push_back (format ("{1} Notification should be before closing", _id));
+    errors.push_back (std::format ("{} Notification should be before closing", _id));
     return false;
   }
 
   if (_notification != "" && _pickup != "" && _notification > _pickup)
   {
-    errors.push_back (format ("{1} Notification should be before pickup", _id));
+    errors.push_back (std::format ("{} Notification should be before pickup", _id));
     return false;
   }
 
   if (_delivery != "" && _opening != "" && _delivery > _opening)
   {
-    errors.push_back (format ("{1} Delivery should be before opening", _id));
+    errors.push_back (std::format ("{} Delivery should be before opening", _id));
     return false;
   }
 
   if (_delivery != "" && _reception != "" && _delivery > _reception)
   {
-    errors.push_back (format ("{1} Delivery should be before reception", _id));
+    errors.push_back (std::format ("{} Delivery should be before reception", _id));
     return false;
   }
 
   if (_delivery != "" && _closing != "" && _delivery > _closing)
   {
-    errors.push_back (format ("{1} Delivery should be before closing", _id));
+    errors.push_back (std::format ("{} Delivery should be before closing", _id));
     return false;
   }
 
   if (_delivery != "" && _pickup != "" && _delivery > _pickup)
   {
-    errors.push_back (format ("{1} Delivery should be before pickup", _id));
+    errors.push_back (std::format ("{} Delivery should be before pickup", _id));
     return false;
   }
 
   if (_opening != "" && _reception != "" && _opening > _reception)
   {
-    errors.push_back (format ("{1} Opening should be before reception", _id));
+    errors.push_back (std::format ("{} Opening should be before reception", _id));
     return false;
   }
 
   if (_opening != "" && _closing != "" && _opening > _closing)
   {
-    errors.push_back (format ("{1} Opening should be before closing", _id));
+    errors.push_back (std::format ("{} Opening should be before closing", _id));
     return false;
   }
 
   if (_opening != "" && _pickup != "" && _opening > _pickup)
   {
-    errors.push_back (format ("{1} Opening should be before pickup", _id));
+    errors.push_back (std::format ("{} Opening should be before pickup", _id));
     return false;
   }
 
   if (_reception != "" && _closing != "" && _reception > _closing)
   {
-    errors.push_back (format ("{1} Reception should be before closing", _id));
+    errors.push_back (std::format ("{} Reception should be before closing", _id));
     return false;
   }
 
   if (_reception != "" && _pickup != "" && _reception > _pickup)
   {
-    errors.push_back (format ("{1} Reception should be before pickup", _id));
+    errors.push_back (std::format ("{} Reception should be before pickup", _id));
     return false;
   }
 
   if (_closing != "" && _pickup != "" && _closing > _pickup)
   {
-    errors.push_back (format ("{1} Closing should be before pickup", _id));
+    errors.push_back (std::format ("{} Closing should be before pickup", _id));
     return false;
   }
 
@@ -459,7 +459,7 @@ void Exhibition::parse (const std::string& line)
   if (line.length () > 0)
     _id = Lexer::trimRight (line.substr (0, 7));
   else
-    throw format("Missing id to parse.");
+    throw "Missing id to parse.";
 
   if (line.length () > 17)
     _submission = Lexer::trimRight (line.substr (8, 10));
@@ -485,7 +485,7 @@ void Exhibition::parse (const std::string& line)
   if (line.length () > 85)
     _title      = Lexer::trimRight (line.substr (85), " \n");
   else
-    throw format("Missing title to parse.");
+    throw "Missing title to parse.";
 }
 
 ////////////////////////////////////////////////////////////////////////////////

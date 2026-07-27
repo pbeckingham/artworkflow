@@ -28,7 +28,7 @@
 #include <sstream>
 #include <string>
 #include <shared.h>
-#include <format.h>
+#include <format>
 #include <RX.h>
 #include <Pig.h>
 #include <Lexer.h>
@@ -314,74 +314,74 @@ bool Painting::validate (std::vector <std::string>& errors) const
 
   if (_title == "")
   {
-    errors.push_back (format ("{1} Missing title", _id));
+    errors.push_back (std::format ("{} Missing title", _id));
     return false;
   }
 
   if ((_varnished != "" && _varnish == "") ||
       (_varnished == "" && _varnish != ""))
   {
-    errors.push_back (format ("{1} Inconsistent varnish information", _id));
+    errors.push_back (std::format ("{} Inconsistent varnish information", _id));
     return false;
   }
 
   if (_action != "" && (_action [0] == '$' || _action[0] == 'g') && _varnish == "")
   {
-    errors.push_back (format ("{1} Sold unvarnished", _id));
+    errors.push_back (std::format ("{} Sold unvarnished", _id));
     return false;
   }
 
   if (_series == "")
   {
-    errors.push_back (format ("{1} is missing a series", _id));
+    errors.push_back (std::format ("{} is missing a series", _id));
     return false;
   }
 
   if ((_end != "" || _varnish != "") && _start == "")
   {
-    errors.push_back (format ("{1} is missing a start date", _id));
+    errors.push_back (std::format ("{} is missing a start date", _id));
     return false;
   }
 
   if (_varnish != "" && _end == "")
   {
-    errors.push_back (format ("{1} is missing an end date", _id));
+    errors.push_back (std::format ("{} is missing an end date", _id));
     return false;
   }
 
   if (_substrate == "")
   {
-    errors.push_back (format ("{1} is missing a subsstrate", _id));
+    errors.push_back (std::format ("{} is missing a subsstrate", _id));
     return false;
   }
 
   if (_size == "")
   {
-    errors.push_back (format ("{1} is missing a size", _id));
+    errors.push_back (std::format ("{} is missing a size", _id));
     return false;
   }
 
   if (_end != "" && _tagged == "")
   {
-    errors.push_back (format ("{1} is not tagged", _id));
+    errors.push_back (std::format ("{} is not tagged", _id));
     return false;
   }
 
   if (_varnished != "" && _www == "")
   {
-    errors.push_back (format ("{1} is not posted on website", _id));
+    errors.push_back (std::format ("{} is not posted on website", _id));
     return false;
   }
 
   if (_varnished != "" && _archived == "")
   {
-    errors.push_back (format ("{1} is not archived", _id));
+    errors.push_back (std::format ("{} is not archived", _id));
     return false;
   }
 
   if (_end != "" && _complexity == "")
   {
-    errors.push_back (format ("{1} is missing a complexity", _id));
+    errors.push_back (std::format ("{} is missing a complexity", _id));
     return false;
   }
 
@@ -446,7 +446,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
       Datetime ds (_start.substr (1));
       Datetime now;
       Duration age = now - ds;
-      line += format (" ({1} days)", age.days ());
+      line += std::format (" ({} days)", age.days ());
     }
     cline.add (line.substr (0, width), 1, card);
     lines.push_back (cline.str ());
@@ -462,14 +462,14 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
       Datetime de (_end.substr (1));
       Datetime now;
       Duration age = now - de;
-      line += format (" (Drying {1} days)", age.days ());
+      line += std::format (" (Drying {} days)", age.days ());
     }
     else
     {
       Datetime ds (_start.substr (1));
       Datetime de (_end.substr (1));
       Duration age = de - ds;
-      line += format (" ({1} days elapsed)", age.days ());
+      line += std::format (" ({} days elapsed)", age.days ());
     }
     cline.add (line.substr (0, width), 1, card);
     lines.push_back (cline.str ());
@@ -503,7 +503,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     Datetime de (_end.substr (1));
     Datetime dv (_varnish.substr (1));
     Duration age = dv - de;
-    line += format (" (Dried for {1} days)", age.days ());
+    line += std::format (" (Dried for {} days)", age.days ());
 
     cline.add (line.substr (0, width), 0, card);
     lines.push_back (cline.str ());
@@ -674,12 +674,12 @@ void Painting::parse (const std::string& line)
   if (line.length () > 1)
     _id         = Lexer::trimRight (line.substr (1, 4));
   else
-    throw format("Missing id to parse.");
+    throw "Missing id to parse.";
 
   if (line.length () >  7)
     _title      = Lexer::trimRight (line.substr (6, 28));
   else
-    throw format("Missing title to parse.");
+    throw "Missing title to parse.";
 
   if (line.length () > 35)
     _series     = Lexer::trimRight (line.substr (34, 3));
@@ -729,7 +729,7 @@ void Painting::parse (const std::string& line)
         pig.getDigits (_width)     &&
         pig.eos ()))
     {
-      warn (format ("Unparseable Painting size '{1}', input '{2}'", _size, line));
+      warn (std::format ("Unparseable Painting size '{}', input '{}'", _size, line));
     }
   }
 }

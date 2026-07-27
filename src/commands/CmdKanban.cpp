@@ -28,7 +28,7 @@
 #include <iostream>
 #include <iomanip>
 #include <Composite.h>
-#include <format.h>
+#include <format>
 #include <util.h>
 #include <artworkflow.h>
 
@@ -60,37 +60,37 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
     }
   }
 
-  debug (format ("{1} concepts", concepts.size ()));
+  debug (std::format ("{} concepts", concepts.size ()));
   for (auto& p : concepts)
-    debug (format ("  {1} {2}", p.id (), p.title ()));
+    debug (std::format ("  {} {}", p.id (), p.title ()));
 
-  debug (format ("{1} wip", wip.size ()));
+  debug (std::format ("{} wip", wip.size ()));
   for (auto& p : wip)
-    debug (format ("  {1} {2}", p.id (), p.title ()));
+    debug (std::format ("  {} {}", p.id (), p.title ()));
 
-  debug (format ("{1} drying", drying.size ()));
+  debug (std::format ("{} drying", drying.size ()));
   for (auto& p : drying)
-    debug (format ("  {1} {2}", p.id (), p.title ()));
+    debug (std::format ("  {} {}", p.id (), p.title ()));
 
-  debug (format ("{1} inventory", inventory.size ()));
+  debug (std::format ("{} inventory", inventory.size ()));
 //  for (auto& p : inventory)
-//    debug (format ("  {1} {2}", p.id (), p.title ()));
+//    debug (std::format ("  {} {}", p.id (), p.title ()));
 
-  debug (format ("{1} abandoned", abandoned.size ()));
+  debug (std::format ("{} abandoned", abandoned.size ()));
 //  for (auto& p : abandoned)
-//    debug (format ("  {1} {2}", p.id (), p.title ()));
+//    debug (std::format ("  {} {}", p.id (), p.title ()));
 
-  debug (format ("{1} destroyed", destroyed.size ()));
+  debug (std::format ("{} destroyed", destroyed.size ()));
 //  for (auto& p : destroyed)
-//    debug (format ("  {1} {2}", p.id (), p.title ()));
+//    debug (std::format ("  {} {}", p.id (), p.title ()));
 
-  debug (format ("{1} sold", sold.size ()));
+  debug (std::format ("{} sold", sold.size ()));
 //  for (auto& p : sold)
-//    debug (format ("  {1} {2}", p.id (), p.title ()));
+//    debug (std::format ("  {} {}", p.id (), p.title ()));
 
-  debug (format ("{1} gifted", gifted.size ()));
+  debug (std::format ("{} gifted", gifted.size ()));
 //  for (auto& p : gifted)
-//    debug (format ("  {1} {2}", p.id (), p.title ()));
+//    debug (std::format ("  {} {}", p.id (), p.title ()));
 
   // TODO: load configuration that determines Kanban columns.
   // reportKanban = {
@@ -110,7 +110,7 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
     }
   }
 
-  debug (format ("Terminal is {1}x{2}", get_terminal_width (), get_terminal_height ()));
+  debug (std::format ("Terminal is {}x{}", get_terminal_width (), get_terminal_height ()));
 
   Color frame ("0x808080 on 0x200030");
   int left_column_width = 14;
@@ -118,42 +118,42 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
 
   Composite left;
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (format ("Concepts   {1}", concepts.size ()), 1, frame);
+  left.add (std::format ("Concepts   {}", concepts.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (format ("WIP        {1}", wip.size ()), 1, frame);
+  left.add (std::format ("WIP        {}", wip.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (format ("Drying     {1}", drying.size ()), 1, frame);
+  left.add (std::format ("Drying     {}", drying.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (format ("Abandoned  {1}", abandoned.size ()), 1, frame);
+  left.add (std::format ("Abandoned  {}", abandoned.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (format ("Destroyed  {1}", destroyed.size ()), 1, frame);
+  left.add (std::format ("Destroyed  {}", destroyed.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (format ("Inventory  {1}", inventory.size ()), 1, frame);
+  left.add (std::format ("Inventory  {}", inventory.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (format ("Gifted     {1}", gifted.size ()), 1, frame);
+  left.add (std::format ("Gifted     {}", gifted.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   left.clear ();
   left.add (std::string (left_column_width, ' '), 0, frame);
-  left.add (format ("Sold       {1}", sold.size ()), 1, frame);
+  left.add (std::format ("Sold       {}", sold.size ()), 1, frame);
   left_column.push_back (left.str ());
 
   // TODO: Compose output line by line for each of the columns.

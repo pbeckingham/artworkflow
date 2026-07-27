@@ -26,7 +26,7 @@
 
 #include <cmake.h>
 #include <commands.h>
-#include <format.h>
+#include <format>
 #include <iostream>
 #include <paths.h>
 #include <unistd.h>
@@ -97,7 +97,7 @@ void initializeConfigAndDatabase (Config& config)
       (! configLocation.readable () ||
        ! configLocation.writable () ||
        ! configLocation.executable ()))
-    throw format ("Config is not readable at '{1}'", configLocation._data);
+    throw std::format ("Config is not readable at '{}'", configLocation._data);
 
   Directory dbLocation = Directory (getDataLocation ());
   bool dataLocationExists = dbLocation.exists ();
@@ -105,7 +105,7 @@ void initializeConfigAndDatabase (Config& config)
           (! dbLocation.readable () ||
            ! dbLocation.writable () ||
            ! dbLocation.executable ()))
-    throw format ("Database is not readable at '{1}'", dbLocation._data);
+    throw std::format ("Database is not readable at '{}'", dbLocation._data);
 
   std::string question = "";
   if (! configDirExists)
@@ -199,7 +199,7 @@ void initializeConfigAndDatabase (Config& config)
     if (arg.hasTag ("CONFIG"))
     {
       config.set (arg.attribute ("name"), arg.attribute ("value"));
-      debug (format ("Configuration override {1} = {2}", arg.attribute ("name"), arg.attribute ("value")));
+      debug (std::format ("Configuration override {} = {}", arg.attribute ("name"), arg.attribute ("value")));
     }
   }
 
@@ -242,7 +242,7 @@ int dispatchCommand (
 
     if (! words.empty ())
     {
-      throw format ("'{1}' is not an artworkflow command. See 'artworkflow help'.", words[0]);
+      throw std::format ("'{}' is not an artworkflow command. See 'artworkflow help'.", words[0]);
     }
     else
     {

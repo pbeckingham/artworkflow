@@ -48,7 +48,7 @@
 #include <shlwapi.h>
 #pragma comment(lib, "shlwapi.lib")
 #endif
-#include <format.h>
+#include <format>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -218,7 +218,7 @@ bool Path::is_directory () const
   {
     struct stat s {};
     if (stat (_data.c_str (), &s))
-      throw format ("stat error {1}: {2}", errno, strerror (errno));
+      throw std::format ("stat error {}: {}", errno, strerror (errno));
 
     return S_ISDIR (s.st_mode);
   }
@@ -244,7 +244,7 @@ bool Path::is_link () const
 #ifndef _WIN32
   struct stat s {};
   if (lstat (_data.c_str (), &s))
-    throw format ("lstat error {1}: {2}", errno, strerror (errno));
+    throw std::format ("lstat error {}: {}", errno, strerror (errno));
 
   return S_ISLNK (s.st_mode);
 #else
@@ -264,7 +264,7 @@ bool Path::readable () const
 #ifndef _WIN32
   auto status = access (_data.c_str (), R_OK);
   if (status == -1 && errno != EACCES)
-    throw format ("access error {1}: {2}", errno, strerror (errno));
+    throw std::format ("access error {}: {}", errno, strerror (errno));
 
   return status == 0;
 #else
@@ -283,7 +283,7 @@ bool Path::writable () const
 #ifndef _WIN32
   auto status = access (_data.c_str (), W_OK);
   if (status == -1 && errno != EACCES)
-    throw format ("access error {1}: {2}", errno, strerror (errno));
+    throw std::format ("access error {}: {}", errno, strerror (errno));
 
   return status == 0;
 #else
@@ -302,7 +302,7 @@ bool Path::executable () const
 #ifndef _WIN32
   auto status = access (_data.c_str (), X_OK);
   if (status == -1 && errno != EACCES)
-    throw format ("access error {1}: {2}", errno, strerror (errno));
+    throw std::format ("access error {}: {}", errno, strerror (errno));
 
   return status == 0;
 #else
@@ -547,7 +547,7 @@ bool File::open ()
       bool already_exists = exists ();
       if (already_exists)
         if (!readable () || !writable ())
-          throw std::string (format ("Insufficient permissions for '{1}'.", _data));
+          throw std::format ("Insufficient permissions for '{}'.", _data);
 
       _fh = fopen (_data.c_str (), (already_exists ? "r+" : "w+"));
       if (_fh)
@@ -557,7 +557,7 @@ bool File::open ()
         return true;
       }
       else
-        throw format ("fopen error {1}: {2}", errno, strerror (errno));
+        throw std::format ("fopen error {}: {}", errno, strerror (errno));
     }
     else
       return true;
@@ -579,7 +579,7 @@ void File::close ()
 #ifndef _WIN32
     #if defined (LINUX)
       if (fdatasync (fileno (_fh)))
-        throw format ("fdatasync error {1}: {2}", errno, strerror (errno));
+        throw std::format ("fdatasync error {}: {}", errno, strerror (errno));
     #elif defined (DARWIN)
       // https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/fsync.2.html
       // fsync() on macOS flush data to the device but does not force drive
@@ -589,19 +589,19 @@ void File::close ()
         // Some filesystems, like smbfs, do not support F_FULLFSYNC
         // operation. In those cases, fallback to fsync.
         if (fsync (fileno (_fh)))
-          throw format ("fsync error {1}: {2}", errno, strerror (errno));
+          throw std::format ("fsync error {}: {}", errno, strerror (errno));
       }
     #else
       if (fsync (fileno (_fh)))
-        throw format ("fsync error {1}: {2}", errno, strerror (errno));
+        throw std::format ("fsync error {}: {}", errno, strerror (errno));
     # endif
 #else
     // Windows doesn't have fsync, use FlushFileBuffers instead
     if (FlushFileBuffers((HANDLE)_get_osfhandle(fileno(_fh))) == 0)
-      throw format ("FlushFileBuffers error {1}: {2}", GetLastError(), "Windows file flush failed");
+      throw std::format ("FlushFileBuffers error {}: {}", GetLastError(), "Windows file flush failed");
 #endif
     if (fclose (_fh))
-      throw format ("fclose error {1}: {2}", errno, strerror (errno));
+      throw std::format ("fclose error {}: {}", errno, strerror (errno));
 
     _fh = nullptr;
     _h = -1;
@@ -731,7 +731,7 @@ void File::append (const std::string& line)
     fseek (_fh, 0, SEEK_END);
 
     if (fputs (line.c_str (), _fh) == EOF)
-      throw format ("fputs error {1}: {2}", errno, strerror (errno));
+      throw std::format ("fputs error {}: {}", errno, strerror (errno));
   }
 }
 
@@ -748,7 +748,7 @@ void File::append (const std::vector <std::string>& lines)
 
     for (auto& line : lines)
       if (fputs (line.c_str (), _fh) == EOF)
-        throw format ("fputs error {1}: {2}", errno, strerror (errno));
+        throw std::format ("fputs error {}: {}", errno, strerror (errno));
   }
 }
 
@@ -760,7 +760,7 @@ void File::write_raw (const std::string& line)
 
   if (_fh)
     if (fputs (line.c_str (), _fh) == EOF)
-      throw format ("fputs error {1}: {2}", errno, strerror (errno));
+      throw std::format ("fputs error {}: {}", errno, strerror (errno));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -772,10 +772,10 @@ void File::truncate ()
   if (_fh)
 #ifndef _WIN32
     if (ftruncate (_h, 0))
-      throw format ("ftruncate error {1}: {2}", errno, strerror (errno));
+      throw std::format ("ftruncate error {}: {}", errno, strerror (errno));
 #else
     if (_chsize(_h, 0))
-      throw format ("_chsize error {1}: {2}", errno, strerror (errno));
+      throw std::format ("_chsize error {}: {}", errno, strerror (errno));
 #endif
 }
 
@@ -799,7 +799,7 @@ mode_t File::mode ()
 {
   struct stat s;
   if (stat (_data.c_str (), &s))
-    throw format ("stat error {1}: {2}", errno, strerror (errno));
+    throw std::format ("stat error {}: {}", errno, strerror (errno));
 
   return s.st_mode;
 }
@@ -809,7 +809,7 @@ size_t File::size () const
 {
   struct stat s;
   if (stat (_data.c_str (), &s))
-    throw format ("stat error {1}: {2}", errno, strerror (errno));
+    throw std::format ("stat error {}: {}", errno, strerror (errno));
 
   return s.st_size;
 }
@@ -819,7 +819,7 @@ time_t File::mtime () const
 {
   struct stat s;
   if (stat (_data.c_str (), &s))
-    throw format ("stat error {1}: {2}", errno, strerror (errno));
+    throw std::format ("stat error {}: {}", errno, strerror (errno));
 
   return s.st_mtime;
 }
@@ -829,7 +829,7 @@ time_t File::ctime () const
 {
   struct stat s;
   if (stat (_data.c_str (), &s))
-    throw format ("stat error {1}: {2}", errno, strerror (errno));
+    throw std::format ("stat error {}: {}", errno, strerror (errno));
 
   return s.st_ctime;
 }
@@ -839,7 +839,7 @@ time_t File::btime () const
 {
   struct stat s;
   if (stat (_data.c_str (), &s))
-    throw format ("stat error {1}: {2}", errno, strerror (errno));
+    throw std::format ("stat error {}: {}", errno, strerror (errno));
 
 #ifdef HAVE_ST_BIRTHTIME
   return s.st_birthtime;
@@ -858,7 +858,7 @@ bool File::create (const std::string& name, int mode /* = 0640 */)
     out.close ();
 #ifndef _WIN32
     if (chmod (full_name.c_str (), mode))
-      throw format ("chmod error {1}: {2}", errno, strerror (errno));
+      throw std::format ("chmod error {}: {}", errno, strerror (errno));
 #endif
 
     return true;
@@ -1076,7 +1076,7 @@ bool Directory::remove_directory (const std::string& dir) const
 #if defined (SOLARIS) || defined (HAIKU)
       struct stat s;
       if (lstat ((dir + '/' + de->d_name).c_str (), &s))
-        throw format ("lstat error {1}: {2}", errno, strerror (errno));
+        throw std::format ("lstat error {}: {}", errno, strerror (errno));
 
       if (S_ISDIR (s.st_mode))
         remove_directory (dir + '/' + de->d_name);
@@ -1087,7 +1087,7 @@ bool Directory::remove_directory (const std::string& dir) const
       {
         struct stat s;
         if (lstat ((dir + '/' + de->d_name).c_str (), &s))
-          throw format ("lstat error {1}: {2}", errno, strerror (errno));
+          throw std::format ("lstat error {}: {}", errno, strerror (errno));
 
         if (S_ISDIR (s.st_mode))
           de->d_type = DT_DIR;
@@ -1223,7 +1223,7 @@ void Directory::list (
 #if defined (SOLARIS) || defined (HAIKU)
       struct stat s;
       if (stat ((base + '/' + de->d_name).c_str (), &s))
-        throw format ("stat error {1}: {2}", errno, strerror (errno));
+        throw std::format ("stat error {}: {}", errno, strerror (errno));
 
       if (recursive && S_ISDIR (s.st_mode))
         list (base + '/' + de->d_name, results, recursive);
@@ -1234,7 +1234,7 @@ void Directory::list (
       {
         struct stat s;
         if (lstat ((base + '/' + de->d_name).c_str (), &s))
-          throw format ("lstat error {1}: {2}", errno, strerror (errno));
+          throw std::format ("lstat error {}: {}", errno, strerror (errno));
 
         if (S_ISDIR (s.st_mode))
           de->d_type = DT_DIR;

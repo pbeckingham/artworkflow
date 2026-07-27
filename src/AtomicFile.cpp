@@ -34,7 +34,7 @@
 #include <vector>
 #include <AtomicFile.h>
 #include <FS.h>
-#include <format.h>
+#include <format>
 #include <artworkflow.h>
 
 struct AtomicFile::impl
@@ -166,7 +166,7 @@ size_t AtomicFile::impl::size () const
   struct stat s;
   const char *filename = (is_temp_active) ? temp_file._data.c_str () : real_file._data.c_str ();
   if (stat (filename, &s))
-    throw format ("stat error {1}: {2}", errno, strerror (errno));
+    throw std::format ("stat error {}: {}", errno, strerror (errno));
 
   return s.st_size;
 }
@@ -233,8 +233,8 @@ void AtomicFile::impl::append (const std::string& content)
       is_temp_active = true;
 
       if (real_file.exists () && ! File::copy (real_file, temp_file))
-        throw format ("Failed to copy '{1}' to '{2}'",
-                      real_file.name (), temp_file.name ());
+        throw std::format ("Failed to copy '{}' to '{}'",
+                           real_file.name (), temp_file.name ());
     }
     return temp_file.append (content);
   }
@@ -267,14 +267,14 @@ void AtomicFile::impl::finalize ()
   {
     if (temp_file.exists ())
     {
-      debug (format ("Moving '{1}' -> '{2}'", temp_file._data, real_file._data));
+      debug (std::format ("Moving '{}' -> '{}'", temp_file._data, real_file._data));
       if (std::rename (temp_file._data.c_str (), real_file._data.c_str ()))
-        throw format("Failed copying '{1}' to '{2}'. Database corruption possible.",
-            temp_file._data, real_file._data);
+        throw std::format("Failed copying '{}' to '{}'. Database corruption possible.",
+                          temp_file._data, real_file._data);
     }
     else
     {
-      debug (format ("Removing '{1}'", real_file._data));
+      debug (std::format ("Removing '{}'", real_file._data));
       std::remove (real_file._data.c_str ());
     }
     is_temp_active = false;
