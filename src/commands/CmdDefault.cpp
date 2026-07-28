@@ -47,7 +47,7 @@ int CmdDefault (CLI& cli, Config& config, Database& database)
               << '\n';
 
   if (verbose)
-    std::cout << "Running default command...\n";
+    std::cout << "Running default command...\n\n";
 
   return CmdKanban (cli, config, database);
 }

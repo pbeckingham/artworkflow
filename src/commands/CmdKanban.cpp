@@ -60,21 +60,31 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
     }
   }
 
-  // TODO: load configuration that determines Kanban columns.
+  // load configuration that determines Kanban columns.
   // reportKanban = {
   //   ["columns"] = {"Concept", "WIP", "Drying"}
   // }
-
-  // There may be settings overrides.
+  std::vector <std::string> columns;
   std::optional <sol::table> reportKanban = (*config.lua ())["reportKanban"];
   if (reportKanban)
   {
-    debug ("CmdKanban found Lua/reportKanban settings");
+    debug ("Found Lua:reportKanban settings");
     for (const auto& entry : reportKanban.value ())
     {
       sol::object key = entry.first;
-      sol::object value = entry.second;
-      debug (key.as<std::string> ());
+      debug ("  " + key.as<std::string> ());
+
+      sol::table value = entry.second;
+      if (value)
+      {
+        for (auto& pair : value)
+        {
+          sol::object ind = pair.first;
+          sol::object lis = pair.second;
+          columns.push_back (lis.as<std::string> ());
+          debug ("    " + lis.as<std::string> ());
+        }
+      }
     }
   }
 
