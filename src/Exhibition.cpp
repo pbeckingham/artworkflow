@@ -33,6 +33,7 @@
 #include <Composite.h>
 #include <RX.h>
 #include <Lexer.h>
+#include <utf8.h>
 #include <Exhibition.h>
 #include <artworkflow.h>
 
@@ -457,33 +458,33 @@ bool Exhibition::is_exhibition (const std::string& line)
 void Exhibition::parse (const std::string& line)
 {
   if (line.length () > 0)
-    _id = Lexer::trimRight (line.substr (0, 7));
+    _id           = Lexer::trimRight (utf8_substr (line, 0, 7));
   else
     throw "Missing id to parse.";
 
   if (line.length () > 17)
-    _submission = Lexer::trimRight (line.substr (8, 10));
+    _submission   = Lexer::trimRight (utf8_substr (line, 8, 10));
 
   if (line.length () > 28)
-    _notification = Lexer::trimRight (line.substr (19, 10));
+    _notification = Lexer::trimRight (utf8_substr (line, 19, 10));
 
   if (line.length () > 39)
-    _delivery = Lexer::trimRight (line.substr (30, 10));
+    _delivery     = Lexer::trimRight (utf8_substr (line, 30, 10));
 
   if (line.length () > 50)
-    _opening = Lexer::trimRight (line.substr (41, 10));
+    _opening      = Lexer::trimRight (utf8_substr (line, 41, 10));
 
   if (line.length () > 61)
-    _reception = Lexer::trimRight (line.substr (52, 10));
+    _reception    = Lexer::trimRight (utf8_substr (line, 52, 10));
 
   if (line.length () > 72)
-    _closing = Lexer::trimRight (line.substr (63, 10));
+    _closing      = Lexer::trimRight (utf8_substr (line, 63, 10));
 
   if (line.length () > 83)
-    _pickup = Lexer::trimRight (line.substr (74, 10));
+    _pickup       = Lexer::trimRight (utf8_substr (line, 74, 10));
 
   if (line.length () > 85)
-    _title      = Lexer::trimRight (line.substr (85), " \n");
+    _title        = Lexer::trimRight (utf8_substr (line, 85), " \n");
   else
     throw "Missing title to parse.";
 }
