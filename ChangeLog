@@ -16,7 +16,8 @@
 - Implemented info command for patinings and exhibitions
 - Added parsing for exhibition submissions
 - #5 Info Command
-- Migrated code to C++20
+- Migrated code to C++23
+- Fixed UTF8 title parsing error
 
 ------ stable ------------------------------------
 

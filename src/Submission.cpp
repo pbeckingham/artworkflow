@@ -31,6 +31,7 @@
 #include <format.h>
 #include <Lexer.h>
 #include <RX.h>
+#include <utf8.h>
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -91,15 +92,15 @@ bool Submission::is_submission (const std::string& line)
 void Submission::parse (const std::string& line)
 {
   if (line.length () > 4)
-    _id = Lexer::trimRight (line.substr (4, 5));
+    _id     = Lexer::trimRight (utf8_substr (line, 4, 5));
   else
     throw format("Missing id to parse.");
 
   if (line.length () > 9)
-    _title = Lexer::trimRight (line.substr (9, 27));
+    _title  = Lexer::trimRight (utf8_substr (line, 9, 27));
 
   if (line.length () > 37)
-    _status = Lexer::trimRight (line.substr (37));
+    _status = Lexer::trimRight (utf8_substr (line, 37));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
