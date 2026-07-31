@@ -173,24 +173,13 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
     column_drying.push_back (std::string (column_width, ' '));
   }
 
-  int total_lines = std::max (left_column.size (),
+  auto total_lines = std::max (left_column.size (),
                       std::max (column_concept.size (),
                         std::max (column_wip.size (), column_drying.size ())));
   debug (std::format ("total lines {}", total_lines));
 
-/*
-  for (auto& l : left_column)
-    std::cout << "left_column '" << l << "'\n";
-  for (auto& l : column_concept)
-    std::cout << "column_concept '" << l << "'\n";
-  for (auto& l : column_wip)
-    std::cout << "column_wip '" << l << "'\n";
-  for (auto& l : column_drying)
-    std::cout << "column_drying '" << l << "'\n";
-*/
-
   // TODO: Print line zero as column headers.
-  for (int i = 0; i < total_lines; ++i)
+  for (unsigned int i = 0; i < total_lines; ++i)
   {
     if (i < left_column.size ())
       std::cout << left_column[i];
