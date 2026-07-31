@@ -4,6 +4,7 @@
 0.0.9 () Color Themes
 
 ------ development -------------------------------
+------ stable ------------------------------------
 
 0.0.8 (2026-07-30) Reporting
 
@@ -18,8 +19,6 @@
 - #5 Info Command
 - Migrated code to C++23
 - Fixed UTF8 title parsing error
-
------- stable ------------------------------------
 
 0.0.7 (2026-07-13) Exhibition object I/O
 
