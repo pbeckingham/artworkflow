@@ -623,7 +623,13 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
   else if (is_concept ())
     background = "on gray2";
   else if (is_inventory ())
-    background = "on gray4";
+    background = "on gray5";
+  else if (is_drying ())
+    background = "on gray6";
+  else if (is_gifted ())
+    background = "on rgb010";
+  else if (is_sold ())
+    background = "on rgb020";
   else if (is_abandoned ())
     background = "on rgb001";
   else if (is_destroyed ())
