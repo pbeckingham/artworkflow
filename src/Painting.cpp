@@ -449,7 +449,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
       Duration age = now - ds;
       line += std::format (" ({} days)", age.days ());
     }
-    cline.add (line.substr (0, width), 1, card);
+    cline.add (line.substr (0, width - 1), 1, card);
     lines.push_back (cline.str ());
   }
 
@@ -472,7 +472,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
       Duration age = de - ds;
       line += std::format (" ({} days elapsed)", age.days ());
     }
-    cline.add (line.substr (0, width), 1, card);
+    cline.add (line.substr (0, width - 1), 1, card);
     lines.push_back (cline.str ());
   }
 
@@ -539,7 +539,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     std::string line ("Series     " + series_name ());
-    cline.add (line.substr (0, width), 1, card);
+    cline.add (line.substr (0, width - 1), 1, card);
     lines.push_back (cline.str ());
   }
 
@@ -563,7 +563,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
   {
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
-    cline.add (std::string ("Substrate  " + substrate_name ()).substr (0, width), 1, card);
+    cline.add (std::string ("Substrate  " + substrate_name ()).substr (0, width - 1), 1, card);
     lines.push_back (cline.str ());
   }
 
