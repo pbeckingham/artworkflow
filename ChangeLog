@@ -13,7 +13,7 @@
 - Added new filtering to Kanban report
 - Added new filtering to info command
 - Implemented price command
-- Implemented info command for patinings and exhibitions
+- Implemented info command for paintings and exhibitions
 - Added parsing for exhibition submissions
 - #5 Info Command
 - Migrated code to C++23
