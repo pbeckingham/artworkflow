@@ -630,11 +630,11 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
     background = "on rgb100";
 
   std::vector <std::string> lines;
+  Color color_id ("gray12 " + background);
 
   Composite cid;
-  Color color_id ("gray12 " + background);
   cid.add (std::string (width, ' '), 0, color_id);
-  cid.add (_id, 0, color_id);
+  cid.add ("#" + _id, 0, color_id);
   lines.push_back (cid.str ());
 
   Composite ctitle;
