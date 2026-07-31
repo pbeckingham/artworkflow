@@ -88,10 +88,13 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
     }
   }
 
-  debug (std::format ("Terminal is {}x{}", get_terminal_width (), get_terminal_height ()));
+  int terminal_width = get_terminal_width ();
+  int terminal_height = get_terminal_height ();
+  debug (std::format ("Terminal is {}x{}", terminal_width, terminal_height));
 
   Color frame ("0x808080 on 0x200030");
-  int left_column_width = 14;
+  int left_column_width = 15;
+  std::map <std::string, std::vector <std::string>> table;
   std::vector <std::string> left_column;
 
   Composite left;
@@ -135,8 +138,82 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   left_column.push_back (left.str ());
 
   // TODO: Compose output line by line for each of the columns.
-  for (auto& line : left_column)
-    std::cout << line << '\n';
+  int column_width = 26;
+  Composite header;
+  header.add (std::string (terminal_width, ' '), 0, frame);
+  header.add ("Concept", left_column_width + 1, frame);
+  header.add ("WIP", left_column_width + 1 + column_width + 1, frame);
+  header.add ("Drying", left_column_width + 1 + column_width + 1 + column_width + 1, frame);
+  std::cout << header.str () << '\n';
+  header.clear ();
+  header.add (std::string (left_column_width, ' '), 0, frame);
+  std::cout << header.str () << '\n';
+
+  std::vector <std::string> column_concept;
+  for (auto& painting : concepts)
+  {
+    for (auto& line : painting.mini_card (column_width))
+      column_concept.push_back (line);
+    column_concept.push_back (std::string (column_width, ' '));
+  }
+
+  std::vector <std::string> column_wip;
+  for (auto& painting : wip)
+  {
+    for (auto& line : painting.mini_card (column_width))
+      column_wip.push_back (line);
+    column_wip.push_back (std::string (column_width, ' '));
+  }
+
+  std::vector <std::string> column_drying;
+  for (auto& painting : drying)
+  {
+    for (auto& line : painting.mini_card (column_width))
+      column_drying.push_back (line);
+    column_drying.push_back (std::string (column_width, ' '));
+  }
+
+  int total_lines = std::max (left_column.size (),
+                      std::max (column_concept.size (),
+                        std::max (column_wip.size (), column_drying.size ())));
+  debug (std::format ("total lines {}", total_lines));
+
+/*
+  for (auto& l : left_column)
+    std::cout << "left_column '" << l << "'\n";
+  for (auto& l : column_concept)
+    std::cout << "column_concept '" << l << "'\n";
+  for (auto& l : column_wip)
+    std::cout << "column_wip '" << l << "'\n";
+  for (auto& l : column_drying)
+    std::cout << "column_drying '" << l << "'\n";
+*/
+
+  // TODO: Print line zero as column headers.
+  for (int i = 0; i < total_lines; ++i)
+  {
+    if (i < left_column.size ())
+      std::cout << left_column[i];
+    else
+      std::cout << Color::colorize (std::string (left_column_width, ' '), frame);
+
+    if (i < column_concept.size ())
+      std::cout << ' ' << column_concept[i];
+    else
+      std::cout << std::string (column_width + 1, ' ');
+
+    if (i < column_wip.size ())
+      std::cout << ' ' << column_wip[i];
+    else
+      std::cout << std::string (column_width + 1, ' ');
+
+    if (i < column_drying.size ())
+      std::cout << ' ' << column_drying[i];
+    else
+      std::cout << std::string (column_width + 1, ' ');
+
+    std::cout << '\n';
+  }
 
   return 0;
 }
