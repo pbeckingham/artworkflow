@@ -1,10 +1,15 @@
 ------ planned -----------------------------------
 
 0.1.0 (2026-) Minimal Functionality
-0.0.9 () Color Themes
+0.0.10 () Color Themes
 
 ------ development -------------------------------
+
+0.0.9 () ?
+
 ------ stable ------------------------------------
+------ current release ---------------------------
+
 
 0.0.8 (2026-07-30) Reporting
 
@@ -32,8 +37,6 @@
 - Implemented extensionOnExit
 - Implemented extensionCmdVersion
 - Implemented extensionCmdHelp
-
------- current release ---------------------------
 
 0.0.6 (2026-06-28) Lua configuration support
 
