@@ -152,24 +152,36 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   std::vector <std::string> column_concept;
   for (auto& painting : concepts)
   {
-    for (auto& line : painting.mini_card (column_width))
-      column_concept.push_back (line);
+    if (verbose)
+      for (auto& line : painting.card (column_width))
+        column_concept.push_back (line);
+      else
+      for (auto& line : painting.mini_card (column_width))
+        column_concept.push_back (line);
     column_concept.push_back (std::string (column_width, ' '));
   }
 
   std::vector <std::string> column_wip;
   for (auto& painting : wip)
   {
-    for (auto& line : painting.mini_card (column_width))
-      column_wip.push_back (line);
+    if (verbose)
+      for (auto& line : painting.card (column_width))
+        column_wip.push_back (line);
+      else
+      for (auto& line : painting.mini_card (column_width))
+        column_wip.push_back (line);
     column_wip.push_back (std::string (column_width, ' '));
   }
 
   std::vector <std::string> column_drying;
   for (auto& painting : drying)
   {
-    for (auto& line : painting.mini_card (column_width))
-      column_drying.push_back (line);
+    if (verbose)
+      for (auto& line : painting.card (column_width))
+        column_drying.push_back (line);
+      else
+      for (auto& line : painting.mini_card (column_width))
+        column_drying.push_back (line);
     column_drying.push_back (std::string (column_width, ' '));
   }
 
