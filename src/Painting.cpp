@@ -617,26 +617,26 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
 std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
 {
   // Backgrounds: Concept, WIP, Inventory, Sold/Gifted, Destroyed, Abandoned
-  std::string background = "on gray3";
-  if (is_sold () || is_gifted ())
-    background = "on 0x004000";
-  else if (is_concept ())
-    background = "on gray2";
-  else if (is_inventory ())
-    background = "on gray5";
-  else if (is_drying ())
-    background = "on gray6";
-  else if (is_gifted ())
-    background = "on rgb010";
-  else if (is_sold ())
-    background = "on rgb020";
+  std::string background = "on 0x303030";
+  if (is_concept ())
+    background = "on 0x181818";
   else if (is_abandoned ())
-    background = "on rgb001";
+    background = "on 0x002040";
+  else if (is_gifted ())
+    background = "on 0x003000";
+  else if (is_sold ())
+    background = "on 0x006000";
   else if (is_destroyed ())
-    background = "on rgb100";
+    background = "on 0x300000";
+  else if (is_wip ())
+    background = "on 0x005070";
+  else if (is_inventory ())
+    background = "on 0x303030";
+  else if (is_drying ())
+    background = "on 0x404040";
 
   std::vector <std::string> lines;
-  Color color_id ("gray12 " + background);
+  Color color_id ("0x808080 " + background);
 
   Composite cid;
   cid.add (std::string (width, ' '), 0, color_id);
@@ -644,7 +644,7 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
   lines.push_back (cid.str ());
 
   Composite ctitle;
-  Color color_title ("gray18 " + background);
+  Color color_title ("0xaaaaaa " + background);
   ctitle.add (std::string (width, ' '), 0, color_title);
   ctitle.add (_title.substr (0, width), 0, color_title);
   lines.push_back (ctitle.str ());
