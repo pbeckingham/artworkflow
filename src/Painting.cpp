@@ -625,12 +625,12 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
   // Backgrounds: Concept, WIP, Inventory, Sold/Gifted, Destroyed, Abandoned
 //  std::string background = "on 0x303030";
   std::string background = "on 0xffff00";
-  if (is_concept ())        background = "on 0x181818";
+       if (is_concept ())   background = "on 0x181818";
+  else if (is_destroyed ()) background = "on 0x300000";
   else if (is_abandoned ()) background = "on 0x002040";
   else if (is_nfs ())       background = "on 0x304030";
   else if (is_gifted ())    background = "on 0x003000";
   else if (is_sold ())      background = "on 0x006000";
-  else if (is_destroyed ()) background = "on 0x300000";
   else if (is_wip ())       background = "on 0x005070";
   else if (is_inventory ()) background = "on 0x404040";
   else if (is_drying ())    background = "on 0x405060";
