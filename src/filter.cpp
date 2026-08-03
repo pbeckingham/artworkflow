@@ -40,6 +40,24 @@ bool filterByCLI (
   bool trivial = true;
   for (auto& arg : cli._args)
   {
+    // Filter hints are a quick way to filter based on status.
+    if (arg.hasTag ("FILTER") && arg.hasTag ("HINT"))
+    {
+      trivial = false;
+
+      auto hint = arg.attribute ("canonical");
+      if (hint == ":concept"   && ! painting.is_concept ())   return false;
+      if (hint == ":wip"       && ! painting.is_wip ())       return false;
+      if (hint == ":drying"    && ! painting.is_drying ())    return false;
+      if (hint == ":varnished" && ! painting.is_varnished ()) return false;
+      if (hint == ":inventory" && ! painting.is_inventory ()) return false;
+      if (hint == ":gifted"    && ! painting.is_gifted ())    return false;
+      if (hint == ":sold"      && ! painting.is_sold ())      return false;
+      if (hint == ":abandoned" && ! painting.is_abandoned ()) return false;
+      if (hint == ":destroyed" && ! painting.is_destroyed ()) return false;
+      if (hint == ":nfs"       && ! painting.is_nfs ())       return false;
+    }
+
     if (arg.hasTag ("FILTER") && ! arg.hasTag ("EID") && ! arg.hasTag ("HINT"))
     {
       // Use canonical form if available, otherwise raw input.
