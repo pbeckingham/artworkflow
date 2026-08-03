@@ -631,9 +631,9 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
   else if (is_wip ())
     background = "on 0x005070";
   else if (is_inventory ())
-    background = "on 0x303030";
-  else if (is_drying ())
     background = "on 0x404040";
+  else if (is_drying ())
+    background = "on 0x405060";
 
   std::vector <std::string> lines;
   Color color_id ("0x808080 " + background);
