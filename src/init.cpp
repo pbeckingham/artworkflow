@@ -60,6 +60,18 @@ void initializeEntities (CLI& cli)
   cli.entity ("hint", ":color");
   cli.entity ("hint", ":nocolor");
   cli.entity ("hint", ":yes");
+
+  // Filtering hints.
+  cli.entity ("hint", ":concept");
+  cli.entity ("hint", ":wip");
+  cli.entity ("hint", ":drying");
+  cli.entity ("hint", ":varnished");
+  cli.entity ("hint", ":inventory");
+  cli.entity ("hint", ":gifted");
+  cli.entity ("hint", ":sold");
+  cli.entity ("hint", ":abandoned");
+  cli.entity ("hint", ":destroyed");
+  cli.entity ("hint", ":nfs");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
