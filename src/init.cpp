@@ -38,6 +38,7 @@
 void initializeEntities (CLI& cli)
 {
   // Command entities.
+  cli.entity ("command", "all");
   cli.entity ("command", "diagnostics");
   cli.entity ("command", "get");
   cli.entity ("command", "help");
@@ -224,7 +225,8 @@ int dispatchCommand (
   if (! command.empty ())
   {
     // These signatures are expected to be all different, therefore no command to fn mapping.
-         if (command == "diagnostics") status = CmdDiagnostics   (     config          );
+         if (command == "all")         status = CmdAll           (cli, config, database);
+    else if (command == "diagnostics") status = CmdDiagnostics   (     config          );
     else if (command == "get")         status = CmdGet           (cli, config, database);
     else if (command == "help"    ||
              command == "--help"  ||

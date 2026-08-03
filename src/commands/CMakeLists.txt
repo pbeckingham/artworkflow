@@ -5,7 +5,8 @@ include_directories (${CMAKE_SOURCE_DIR}
                      ${CMAKE_SOURCE_DIR}/src/libshared
                      "/opt/homebrew/include/lua")
 
-set (commands_SRCS CmdDefault.cpp
+set (commands_SRCS CmdAll.cpp
+                   CmdDefault.cpp
                    CmdDiagnostics.cpp
                    CmdGet.cpp
                    CmdHelp.cpp
