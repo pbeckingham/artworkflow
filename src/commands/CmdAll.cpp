@@ -63,7 +63,6 @@ int CmdAll (CLI& cli, Config& config, Database& database)
     auto column = i % columns;
     auto row = i / columns;
 
-    debug (std::format ("column {}, row {}, id {}", column, row, all[i].id ()));
     if (verbose)
       for (auto& line : all[i].card (column_width))
         grid[column].push_back (line);
@@ -81,7 +80,8 @@ int CmdAll (CLI& cli, Config& config, Database& database)
       if (col)
         std::cout << ' ';
 
-      std::cout << grid[col][row];
+      if (grid[col].size ())
+        std::cout << grid[col][row];
     }
 
     std::cout << '\n';
