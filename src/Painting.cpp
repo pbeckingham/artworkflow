@@ -289,6 +289,12 @@ bool Painting::is_varnished () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+bool Painting::is_nfs () const
+{
+  return _start != "" && _notes.find ("NFS") != std::string::npos;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Painting::matches (const std::string& id) const
 {
   return Lexer::trimLeft (_id, "#") == Lexer::trimLeft (id, "#");

@@ -71,6 +71,7 @@ public:
   bool is_abandoned () const;
   bool is_destroyed () const;
   bool is_varnished () const;
+  bool is_nfs () const;
 
   bool matches (const std::string&) const;
 
