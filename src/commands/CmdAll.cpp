@@ -52,7 +52,7 @@ int CmdAll (CLI& cli, Config& config, Database& database)
   if (verbose)
     column_width = 24;
 
-  std::size_t columns = terminal_width / (column_width + 1);
+  std::size_t columns = terminal_width / (column_width + 2);
   debug (std::format ("Can display {} columns", columns));
 
   std::vector <std::vector <std::string>> grid;
@@ -90,7 +90,7 @@ int CmdAll (CLI& cli, Config& config, Database& database)
     for (std::size_t col = 0; col < columns; ++col)
     {
       if (col)
-        std::cout << ' ';
+        std::cout << "  ";
 
       if (row < grid[col].size ())
         std::cout << grid[col][row];
