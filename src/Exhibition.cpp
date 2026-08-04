@@ -137,7 +137,7 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     cline.add ("Submission", 1, card);
-    cline.add (_submission, 12, card);
+    cline.add (_submission, 14, card);
     lines.push_back (cline.str ());
   }
 
@@ -146,7 +146,7 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     cline.add ("Notification", 1, card);
-    cline.add (_notification, 12, card);
+    cline.add (_notification, 14, card);
     lines.push_back (cline.str ());
   }
 
@@ -155,7 +155,7 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     cline.add ("Delivery", 1, card);
-    cline.add (_delivery, 12, card);
+    cline.add (_delivery, 14, card);
     lines.push_back (cline.str ());
   }
 
@@ -164,7 +164,7 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     cline.add ("Opening", 1, card);
-    cline.add (_opening, 12, card);
+    cline.add (_opening, 14, card);
     lines.push_back (cline.str ());
   }
 
@@ -173,7 +173,7 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     cline.add ("Reception", 1, card);
-    cline.add (_reception, 12, card);
+    cline.add (_reception, 14, card);
     lines.push_back (cline.str ());
   }
 
@@ -182,7 +182,7 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     cline.add ("Closing", 1, card);
-    cline.add (_closing, 12, card);
+    cline.add (_closing, 14, card);
     lines.push_back (cline.str ());
   }
 
@@ -191,7 +191,7 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     cline.add ("Pickup", 1, card);
-    cline.add (_pickup, 12, card);
+    cline.add (_pickup, 14, card);
     lines.push_back (cline.str ());
   }
 
@@ -268,7 +268,7 @@ std::vector <std::string> Exhibition::mini_card (int width /* = 24 */) const
 ////////////////////////////////////////////////////////////////////////////////
 // Note that incomplete data should validate.
 //
-// TODO: Ensure all dates are in logical sequence
+// Ensure all dates are in logical sequence
 bool Exhibition::validate (std::vector <std::string>& errors) const
 {
   if (_id == "")
