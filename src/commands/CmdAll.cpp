@@ -27,6 +27,7 @@
 #include <commands.h>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 #include <Composite.h>
 #include <format>
 #include <util.h>
@@ -51,37 +52,50 @@ int CmdAll (CLI& cli, Config& config, Database& database)
   if (verbose)
     column_width = 24;
 
-  int columns = terminal_width / (column_width + 1);
+  std::size_t columns = terminal_width / (column_width + 1);
   debug (std::format ("Can display {} columns", columns));
 
   std::vector <std::vector <std::string>> grid;
-  for (int i = 0; i < columns; i++)
+  for (std::size_t i = 0; i < columns; i++)
     grid.push_back (std::vector <std::string> {});
 
   for (unsigned int i = 0; i < all.size (); ++i)
   {
-    auto column = i % columns;
-    auto row = i / columns;
+    // Find shortest column.
+    std::size_t shortest_col = 0;
+    std::size_t shortest_col_length = 1000; // Approximately infinity.
+    for (std::size_t col = 0; col < grid.size (); ++col)
+      if (grid[col].size () < shortest_col_length)
+      {
+        shortest_col_length = grid[col].size ();
+        shortest_col = col;
+      }
 
     if (verbose)
       for (auto& line : all[i].card (column_width))
-        grid[column].push_back (line);
+        grid[shortest_col].push_back (line);
     else
       for (auto& line : all[i].mini_card (column_width))
-        grid[column].push_back (line);
+        grid[shortest_col].push_back (line);
 
-    grid[column].push_back (std::string (column_width, ' '));
+    grid[shortest_col].push_back (std::string (column_width, ' '));
   }
 
-  for (int row = 0; row < grid[0].size (); ++row)
+  std::size_t max_rows = 0;
+  for (std::size_t col = 0; col < grid.size (); ++col)
+    max_rows = std::max (max_rows, grid[col].size ());
+
+  for (std::size_t row = 0; row < max_rows; ++row)
   {
-    for (int col = 0; col < columns; ++col)
+    for (std::size_t col = 0; col < columns; ++col)
     {
       if (col)
         std::cout << ' ';
 
-      if (grid[col].size ())
+      if (row < grid[col].size ())
         std::cout << grid[col][row];
+      else
+        std::cout << std::string (column_width, ' ');
     }
 
     std::cout << '\n';
