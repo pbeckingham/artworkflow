@@ -430,18 +430,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     // TODO: Override bg with a rota color.
   }
 
-  std::vector <std::string> lines;
-
-  Composite line1;
-  line1.add (std::string (width, ' '), 0, card);
-  line1.add ('#' + _id, 0, card);
-  lines.push_back (line1.str ());
-
-  Color title ("white on gray3");
-  Composite line2;
-  line2.add (std::string (width, ' '), 0, title);
-  line2.add (_title.substr (0, width), 0, title);
-  lines.push_back (line2.str ());
+  std::vector <std::string> lines = mini_card (width);
 
   if (_start != "")
   {
