@@ -76,6 +76,7 @@ public:
   bool matches (const std::string&) const;
 
   const std::string compose () const;
+  const std::string get_background_color (void) const;
   std::vector <std::string> card (int width = 40) const;
   std::vector <std::string> mini_card (int width = 24) const;
 
