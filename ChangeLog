@@ -7,6 +7,7 @@
 
 0.0.9 () ?
  - Implemented all command
+	- #21 Exhibition submissions are listed twice
  - #23	Segfault with empty result of filtering
 
 ------ stable ------------------------------------

@@ -206,8 +206,6 @@ std::vector <std::string> Exhibition::card (int width /* = 40 */) const
       cline.add (" " + submission.id () + " " + submission.title () + " " + submission.status (), 2, card);
       lines.push_back (cline.str ());
     }
-
-    lines.push_back (cline.str ());
   }
 
   return lines;
