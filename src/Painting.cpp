@@ -440,7 +440,8 @@ const std::string Painting::get_background_color (void) const
 ////////////////////////////////////////////////////////////////////////////////
 std::vector <std::string> Painting::card (int width /* = 40 */) const
 {
-  Color card ("gray12 on gray3");
+  std::string background = get_background_color ();
+  Color card ("gray12 on " + background);
 
   if (groups ().size ())
   {
@@ -492,7 +493,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
   {
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
-    cline.add ("WIP", 12, Color ("bold yellow on gray3"));
+    cline.add ("WIP", 12, card);
     lines.push_back (cline.str ());
   }
 
@@ -500,7 +501,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
   {
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
-    cline.add ("Abandoned", 12, Color ("cyan on gray3"));
+    cline.add ("Abandoned", 12, card);
     lines.push_back (cline.str ());
   }
 
@@ -536,12 +537,9 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     cline.add (std::string (width, ' '), 0, card);
     cline.add (_action.substr (1), 12, card);
 
-    if (_action[0] == '$')
-      cline.add ("Sold", 1, Color ("bold green on gray3"));
-    else if (_action[0] == 'g')
-      cline.add ("Gifted", 1, Color ("green on gray3"));
-    else if (_action[0] == 'd')
-      cline.add ("Destroyed", 1, Color ("red on gray3"));
+         if (_action[0] == '$') cline.add ("Sold", 1, card);
+    else if (_action[0] == 'g') cline.add ("Gifted", 1, card);
+    else if (_action[0] == 'd') cline.add ("Destroyed", 1, card);
 
     lines.push_back (cline.str ());
   }
@@ -616,7 +614,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
     cline.add ("Groups", 1, card);
-    cline.add (join (" ", groups ()), 12, card);
+    cline.add (join (" ", groups ()).substr (0, width - 12), 12, card);
     lines.push_back (cline.str ());
   }
 
@@ -630,19 +628,11 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
 {
   // Backgrounds: Concept, WIP, Inventory, Sold/Gifted, Destroyed, Abandoned
 //  std::string background = "on 0x303030";
-  std::string background = "on 0xffff00";
-       if (is_concept ())   background = "on 0x181818";
-  else if (is_destroyed ()) background = "on 0x300000";
-  else if (is_abandoned ()) background = "on 0x002040";
-  else if (is_nfs ())       background = "on 0x304030";
-  else if (is_gifted ())    background = "on 0x003000";
-  else if (is_sold ())      background = "on 0x006000";
-  else if (is_wip ())       background = "on 0x005070";
-  else if (is_inventory ()) background = "on 0x404040";
-  else if (is_drying ())    background = "on 0x405060";
+  std::string background = get_background_color ();
+  Color color_id ("0x808080 " + background);
+  Color color_title ("0xaaaaaa " + background);
 
   std::vector <std::string> lines;
-  Color color_id ("0x808080 " + background);
 
   Composite cid;
   cid.add (std::string (width, ' '), 0, color_id);
@@ -650,7 +640,6 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
   lines.push_back (cid.str ());
 
   Composite ctitle;
-  Color color_title ("0xaaaaaa " + background);
   ctitle.add (std::string (width, ' '), 0, color_title);
   ctitle.add (_title.substr (0, width), 0, color_title);
   lines.push_back (ctitle.str ());
