@@ -35,6 +35,7 @@ int CmdHelpUsage (Config& config)
 {
   std::cout << '\n'
             << "Usage: artworkflow [--version]\n"
+            << "       artworkflow all [<filter>]\n"
             << "       artworkflow diagnostics\n"
             << "       artworkflow get <DOM> [<DOM> ...]\n"
             << "       artworkflow help [<command>]\n"
@@ -56,6 +57,16 @@ int CmdHelpUsage (Config& config)
             << "       [0-9]{4}(.[0-9]{1,2})?  Is an exhibition ID\n"
             << "       /<regex>/               Is a regular expression to search the title\n"
             << "       <word>                  Is a word in the title\n"
+            << "       :concept                Is painting a concept\n"
+            << "       :wip                    Is painting being created\n"
+            << "       :drying                 Is painting drying\n"
+            << "       :inventory              Is painting in inventory\n"
+            << "       :abandoned              Is painting abandoned\n"
+            << "       :destroyed              Is painting destroyed\n"
+            << "       :mfs                    Is painting not for sale\n"
+            << "       :gifted                 Is painting gifted\n"
+            << "       :sold                   Is painting sold\n"
+            << "       :varnished              Is painting varnished\n"
             << '\n'
             << "DOM References:\n"
             << "       dom.painting.next\n"
