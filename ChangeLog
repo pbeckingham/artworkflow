@@ -6,7 +6,7 @@
 ------ development -------------------------------
 
 0.0.9 () ?
- - Implemented all command
+ - Implemented all report
 	- #21 Exhibition submissions are listed twice
  - #23	Segfault with empty result of filtering
 
