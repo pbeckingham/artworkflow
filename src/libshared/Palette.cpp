@@ -31,6 +31,69 @@
 Palette::Palette ()
 {
   _colors = {
+    // Flat UI Colors
+    Color ("0x000000 on 0xF8C82D"),
+    Color ("0x000000 on 0xFBCF61"),
+    Color ("0x000000 on 0xFF6F6F"),
+    Color ("0x000000 on 0xE3A712"),
+    Color ("0x000000 on 0xE5BA5A"),
+    Color ("0x000000 on 0xD1404A"),
+    Color ("0x000000 on 0x0DCCC0"),
+    Color ("0x000000 on 0xA8D164"),
+    Color ("0x000000 on 0x3498DB"),
+    Color ("0x000000 on 0x0EAD9A"),
+    Color ("0x000000 on 0x27AE60"),
+    Color ("0xFFFFFF on 0x2980B9"),
+    Color ("0x000000 on 0xD49E99"),
+    Color ("0xFFFFFF on 0xB23F73"),
+    Color ("0xFFFFFF on 0x48647C"),
+    Color ("0xFFFFFF on 0x74525F"),
+    Color ("0xFFFFFF on 0x832D51"),
+    Color ("0xFFFFFF on 0x2C3E50"),
+    Color ("0x000000 on 0xE84B3A"),
+    Color ("0x000000 on 0xFE7C60"),
+    Color ("0x000000 on 0xECF0F1"),
+    Color ("0xFFFFFF on 0xC0392B"),
+    Color ("0xFFFFFF on 0x404148"),
+    Color ("0x000000 on 0xBDC3C7"),
+
+  /*
+    // Autumn Luxury
+    Color ("0xffffff on 0x007571"),
+    Color ("0x000000 on 0x10C2BB"),
+    Color ("0xffffff on 0xC24D0F"),
+    Color ("0x000000 on 0xFF772E"),
+    Color ("0xffffff on 0x752C05"),
+
+    // Rosy Glow
+    Color ("0xffffff on 0xdd614a"),
+    Color ("0xffffff on 0xf48668"),
+    Color ("0x000000 on 0xf4a698"),
+    Color ("0x000000 on 0xc5c392"),
+    Color ("0xffffff on 0x73a580"),
+
+    // Citrus Burst
+    Color ("0xffffff on 0x8ea604"),
+    Color ("0x000000 on 0xf5bb00"),
+    Color ("0x000000 on 0xec9f05"),
+    Color ("0xffffff on 0xd76a03"),
+    Color ("0xffffff on 0xbf3100"),
+
+    // Summer Splash
+    Color ("0xffffff on 0x086788"),
+    Color ("0xffffff on 0x07a0c3"),
+    Color ("0x000000 on 0xf0c808"),
+    Color ("0x000000 on 0xfff1d0"),
+    Color ("0x000000 on 0xdd1c1a"),
+
+    // Tranquil Earth
+    Color ("0xffffff on 0x73877b"),
+    Color ("0xffffff on 0x839788"),
+    Color ("0x000000 on 0xbdbbb6"),
+    Color ("0x000000 on 0xe5d1d0"),
+    Color ("0x000000 on 0xf534d7"),
+
+    // 16 color
     Color ("white on red"),
     Color ("white on blue"),
     Color ("black on green"),
@@ -44,6 +107,7 @@ Palette::Palette ()
     Color ("black on bright magenta"),
     Color ("black on bright cyan"),
     Color ("black on bright yellow"),
+*/
   };
 
   _current = 0;
