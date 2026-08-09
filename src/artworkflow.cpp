@@ -97,7 +97,6 @@ int main (int argc, const char** argv)
     AtomicFile::finalize_all ();
     debug ("AtomicFile::finalize_all");
 
-    // TODO: Why does this call result in no std::cout?
     extensionOnExit (config);
   }
 

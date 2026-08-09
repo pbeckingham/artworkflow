@@ -8,6 +8,7 @@
 0.0.9 () ?
  - Implemented all report
 	- #21 Exhibition submissions are listed twice
+	- #22 Miscolored mini_card for gifted work
  - #23	Segfault with empty result of filtering
 
 ------ stable ------------------------------------

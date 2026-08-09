@@ -162,7 +162,7 @@ bool domGet (
               return true;
             }
 
-            // TODO: hours?
+            // TODO: Hours?
             // TODO: Awards?
             // TODO: Groups?
           }
