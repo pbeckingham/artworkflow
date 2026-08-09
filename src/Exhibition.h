@@ -50,6 +50,7 @@ public:
   std::string closing () const;
   std::string pickup () const;
   std::string title () const;
+  std::vector <Submission> submissions () const;
 
   bool matches (const std::string&) const;
 

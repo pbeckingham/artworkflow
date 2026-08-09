@@ -104,6 +104,12 @@ std::string Exhibition::title () const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+std::vector <Submission> Exhibition::submissions () const
+{
+  return _submissions;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 bool Exhibition::matches (const std::string& id) const
 {
   return id == _id;
