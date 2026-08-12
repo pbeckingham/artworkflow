@@ -636,6 +636,7 @@ bool Painting::is_painting (const std::string& sample)
 // #381  [Herring 2]                 WIL s2026-05-23 e2026-05-27                         7x17  S              C1 2h
 // #382  [Herring 3]                 WIL s2026-05-23 e2026-05-27                         4x10  S              C1 2h
 // #383  Coleoptera IV               WIL                                                                      C4
+// #374  Mmmmm                       STL s2026-03-23 e2026-04-20 v2026-05-27             18x18 ACM Y C  Y     C3 71h G:Still_Life
 //
 // #S001 Juan de Pareja (Velasquez)  POR s2025-04-04 e2025-04-05 v2025-05-24             7x5   ACM Y C        C2 G:Study
 // #S002 Mike Derby                  POR s2025-05-24 e2025-06-25 v2025-07-19 g2025-07-23 10x10 WP  Y W        C2 12h G:Study
@@ -679,7 +680,7 @@ void Painting::parse (const std::string& line)
     _varnished  = Lexer::trimRight (utf8_substr (line, 98, 1));
 
   if (line.length () > 101)
-    _archived   = Lexer::trimRight (utf8_substr (line, 100, 1));
+    _archived   = Lexer::trimRight (utf8_substr (line, 101, 1));
 
   if (line.length () > 106)
     _www        = Lexer::trimRight (utf8_substr (line, 105, 1));
