@@ -33,6 +33,7 @@
 
 //  CmdXxx           (CLI&, Config&, Database&);
 int CmdAll           (CLI&, Config&, Database&);
+int CmdCheck         (CLI&, Config&, Database&);
 int CmdDiagnostics   (      Config&           );
 int CmdGet           (CLI&, Config&, Database&);
 int CmdHelp          (CLI&, Config&           );
