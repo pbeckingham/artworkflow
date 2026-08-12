@@ -36,6 +36,7 @@ int CmdHelpUsage (Config& config)
   std::cout << '\n'
             << "Usage: artworkflow [--version]\n"
             << "       artworkflow all [<filter>]\n"
+            << "       artworkflow check [<filter>]\n"
             << "       artworkflow diagnostics\n"
             << "       artworkflow get <DOM> [<DOM> ...]\n"
             << "       artworkflow help [<command>]\n"
