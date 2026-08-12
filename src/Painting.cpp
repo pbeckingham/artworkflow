@@ -311,88 +311,56 @@ const std::string Painting::compose () const
 //
 // TODO: Ensure all dates are in logical sequence
 // TODO: Ensure completion hours are tracked
-bool Painting::validate (std::vector <std::string>& errors) const
+bool Painting::validate (
+  std::vector <std::string>& errors,
+  std::vector <std::string>& warnings) const
 {
   if (_id == "")
-  {
     errors.push_back ("Missing ID");
-    return false;
-  }
 
   if (_title == "")
-  {
-    errors.push_back (std::format ("{} Missing title", _id));
-    return false;
-  }
+    errors.push_back ("Missing title");
 
-  if ((_varnished != "" && _varnish == "") ||
-      (_varnished == "" && _varnish != ""))
-  {
-    errors.push_back (std::format ("{} Inconsistent varnish information", _id));
-    return false;
-  }
+  if (! is_destroyed () &&
+      ((_varnished != "" && _varnish == "") ||
+       (_varnished == "" && _varnish != "")))
+    errors.push_back ("Inconsistent varnish information");
 
   if (_action != "" && (_action [0] == '$' || _action[0] == 'g') && _varnish == "")
-  {
-    errors.push_back (std::format ("{} Sold unvarnished", _id));
-    return false;
-  }
+    warnings.push_back ("Sold unvarnished");
 
   if (_series == "")
-  {
-    errors.push_back (std::format ("{} is missing a series", _id));
-    return false;
-  }
+    errors.push_back ("is missing a series");
 
   if ((_end != "" || _varnish != "") && _start == "")
-  {
-    errors.push_back (std::format ("{} is missing a start date", _id));
-    return false;
-  }
+    errors.push_back ("is missing a start date");
 
   if (_varnish != "" && _end == "")
-  {
-    errors.push_back (std::format ("{} is missing an end date", _id));
-    return false;
-  }
+    errors.push_back ("is missing an end date");
 
-  if (_substrate == "")
-  {
-    errors.push_back (std::format ("{} is missing a subsstrate", _id));
-    return false;
-  }
+  if (_start != "" && ! is_destroyed () && _substrate == "")
+    errors.push_back ("is missing a substrate");
 
-  if (_size == "")
-  {
-    errors.push_back (std::format ("{} is missing a size", _id));
-    return false;
-  }
+  if (_start != "" && ! is_destroyed () && _size == "")
+    errors.push_back ("is missing a size");
 
-  if (_end != "" && _tagged == "")
-  {
-    errors.push_back (std::format ("{} is not tagged", _id));
-    return false;
-  }
+  if (_end != "" && _action == "" && _tagged == "")
+    warnings.push_back ("is not tagged");
 
-  if (_varnished != "" && _www == "")
-  {
-    errors.push_back (std::format ("{} is not posted on website", _id));
-    return false;
-  }
+// Note: Too vocal.
+//  if (_varnished != "" && _www == "")
+//    errors.push_back ("is not posted on website");
 
-  if (_varnished != "" && _archived == "")
-  {
-    errors.push_back (std::format ("{} is not archived", _id));
-    return false;
-  }
+  if (_end != "" && _action == "" && _varnished != "" && _archived == "")
+    warnings.push_back ("is not archived");
 
-  if (_end != "" && _complexity == "")
-  {
-    errors.push_back (std::format ("{} is missing a complexity", _id));
-    return false;
-  }
+  if (is_sold () && _tagged == "")
+    warnings.push_back ("was sold untagged");
 
-  return true;
+  if (is_sold () && ! is_varnished ())
+    errors.push_back ("was sold unvarnished");
+
+  return errors.size () + warnings.size () > 0 ? true : false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
