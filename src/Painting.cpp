@@ -326,39 +326,39 @@ bool Painting::validate (
        (_varnished == "" && _varnish != "")))
     errors.push_back ("Inconsistent varnish information");
 
-  if (_action != "" && (_action [0] == '$' || _action[0] == 'g') && _varnish == "")
+  if (_action != "" && _action [0] == '$' && _varnish == "")
     warnings.push_back ("Sold unvarnished");
 
+  if (_action != "" && _action[0] == 'g' && _varnish == "")
+    warnings.push_back ("Gifted unvarnished");
+
   if (_series == "")
-    errors.push_back ("is missing a series");
+    errors.push_back ("Missing a series");
 
   if ((_end != "" || _varnish != "") && _start == "")
-    errors.push_back ("is missing a start date");
+    errors.push_back ("Missing a start date");
 
   if (_varnish != "" && _end == "")
-    errors.push_back ("is missing an end date");
+    errors.push_back ("Missing an end date");
 
   if (_start != "" && ! is_destroyed () && _substrate == "")
-    errors.push_back ("is missing a substrate");
+    errors.push_back ("Missing a substrate");
 
   if (_start != "" && ! is_destroyed () && _size == "")
-    errors.push_back ("is missing a size");
+    errors.push_back ("Missing a size");
 
   if (_end != "" && _action == "" && _tagged == "")
-    warnings.push_back ("is not tagged");
+    warnings.push_back ("Not tagged");
 
 // Note: Too vocal.
 //  if (_varnished != "" && _www == "")
 //    errors.push_back ("is not posted on website");
 
   if (_end != "" && _action == "" && _varnished != "" && _archived == "")
-    warnings.push_back ("is not archived");
+    warnings.push_back ("Not archived");
 
   if (is_sold () && _tagged == "")
-    warnings.push_back ("was sold untagged");
-
-  if (is_sold () && ! is_varnished ())
-    errors.push_back ("was sold unvarnished");
+    warnings.push_back ("Sold untagged");
 
   return errors.size () + warnings.size () > 0 ? true : false;
 }
