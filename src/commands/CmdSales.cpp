@@ -26,8 +26,11 @@
 
 #include <commands.h>
 #include <iostream>
+#include <map>
+#include <ranges>
 #include <iomanip>
 #include <algorithm>
+#include <numeric>
 #include <format>
 #include <Table.h>
 #include <Composite.h>
@@ -35,17 +38,112 @@
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
+std::string round_percentage (int numerator, int denominator)
+{
+  if (denominator)
+    return std::format ("{: >3.1f}%", 100.0 * numerator / denominator);
+
+  return "";
+}
+
+////////////////////////////////////////////////////////////////////////////////
 int CmdSales (CLI& cli, Config& config, Database& database)
 {
   auto verbose = config.getBoolean ("verbose");
 
+  std::map <std::string, int> started;
+  std::map <std::string, int> finished;
+  std::map <std::string, int> varnished;
+  std::map <std::string, int> destroyed;
+  std::map <std::string, int> inventory;
+  std::map <std::string, int> gifted;
+  std::map <std::string, int> sold;
   for (auto& painting : database.allPaintings ())
   {
     if (filterByCLI (cli, painting, true))
     {
+      auto start = painting.start ();
+      if (start != "")
+      {
+        auto year = painting.start ().substr (1, 4);
+        if (started.find (year) == started.end ())
+        {
+          started[year] = 0;
+          finished[year] = 0;
+          varnished[year] = 0;
+          destroyed[year] = 0;
+          inventory[year] = 0;
+          gifted[year] = 0;
+          sold[year] = 0;
+        }
+
+        ++started[year];
+        if (painting.end () != "")    ++finished[year];
+        if (painting.is_varnished ()) ++varnished[year];
+        if (painting.is_destroyed ()) ++destroyed[year];
+        if (painting.is_inventory ()) ++inventory[year];
+        if (painting.is_gifted ())    ++gifted[year];
+        if (painting.is_sold ())      ++sold[year];
+      }
     }
   }
 
+  debug ("Composing table");
+  Table table;
+  table.underlineHeaders ();
+  table.add ("Start Year");
+  table.add ("Started", false);
+  table.add ("Finished", false);
+  table.add ("Comp Rate", false);
+  table.add ("Varnish", false);
+  table.add ("Destroyed", false);
+  table.add ("Inventory", false);
+  table.add ("Gifted", false);
+  table.add ("Sold", false);
+  table.add ("Sell Rate", false);
+
+  Color color_destroyed ("0xff0000");
+  Color color_inventory ("0xf0f0f0");
+  Color color_gifted ("0x00b000");
+  Color color_sold ("0x00ff00");
+
+  for (auto& key : std::views::keys (started))
+  {
+    auto row = table.addRow ();
+    table.set (row, 0, key);
+    table.set (row, 1, started[key]);
+    table.set (row, 2, finished[key]);
+    table.set (row, 3, round_percentage (finished[key], started[key]));
+    table.set (row, 4, varnished[key]);
+    table.set (row, 5, destroyed[key], color_destroyed);
+    table.set (row, 6, inventory[key], color_inventory);
+    table.set (row, 7, gifted[key], color_gifted);
+    table.set (row, 8, sold[key], color_sold);
+    table.set (row, 9, round_percentage (sold[key], finished[key]));
+  }
+
+  auto row = table.addRow ();
+  table.set (row, 0, " ");
+
+  row = table.addRow ();
+  table.set (row, 0, "Total");
+  table.set (row, 1, std::accumulate (started.begin (), started.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  table.set (row, 2, std::accumulate (finished.begin (), finished.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  table.set (row, 4, std::accumulate (varnished.begin (), varnished.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  table.set (row, 5, std::accumulate (destroyed.begin (), destroyed.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  table.set (row, 6, std::accumulate (inventory.begin (), inventory.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  table.set (row, 7, std::accumulate (gifted.begin (), gifted.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  table.set (row, 8, std::accumulate (sold.begin (), sold.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+
+  debug ("Rendering table");
+  std::cout << table.render ();
   return 0;
 }
 
