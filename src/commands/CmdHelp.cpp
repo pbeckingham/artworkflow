@@ -43,6 +43,7 @@ int CmdHelpUsage (Config& config)
             << "       artworkflow kanban [<filter>]\n"
             << "       artworkflow new\n"
             << "       artworkflow price <filter>\n"
+            << "       artworkflow sales <filter>\n"
             << "       artworkflow info <filter>\n"
             << '\n'
             << "Hints:\n"
