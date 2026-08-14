@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
-// Copyright 2016 - 2018, 2022 - 2025, Gothenburg Bit Factory.
+// Copyright 2026, Paul Beckingham.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,25 +24,29 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#ifndef INCLUDED_COMMANDS
-#define INCLUDED_COMMANDS
+#include <commands.h>
+#include <iostream>
+#include <iomanip>
+#include <algorithm>
+#include <format>
+#include <Table.h>
+#include <Composite.h>
+#include <util.h>
+#include <artworkflow.h>
 
-#include <CLI.h>
-#include <Database.h>
-#include <Config.h>
+////////////////////////////////////////////////////////////////////////////////
+int CmdSales (CLI& cli, Config& config, Database& database)
+{
+  auto verbose = config.getBoolean ("verbose");
 
-//  CmdXxx           (CLI&, Config&, Database&);
-int CmdAll           (CLI&, Config&, Database&);
-int CmdCheck         (CLI&, Config&, Database&);
-int CmdDiagnostics   (      Config&           );
-int CmdGet           (CLI&, Config&, Database&);
-int CmdHelp          (CLI&, Config&           );
-int CmdInfo          (CLI&,          Database&);
-int CmdKanban        (CLI&, Config&, Database&);
-int CmdNew           (CLI&, Config&, Database&);
-int CmdPrice         (CLI&, Config&, Database&);
-int CmdSales         (CLI&, Config&, Database&);
-int CmdVersion       (      Config&           );
-int CmdDefault       (CLI&, Config&, Database&);
+  for (auto& painting : database.allPaintings ())
+  {
+    if (filterByCLI (cli, painting, true))
+    {
+    }
+  }
 
-#endif
+  return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
