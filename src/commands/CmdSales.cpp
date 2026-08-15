@@ -127,10 +127,21 @@ int CmdSales (CLI& cli, Config& config, Database& database)
 
   row = table.addRow ();
   table.set (row, 0, "Total");
-  table.set (row, 1, std::accumulate (started.begin (), started.end (), 0,
-             [](int current_total, const auto& pair) {return current_total + pair.second;}));
-  table.set (row, 2, std::accumulate (finished.begin (), finished.end (), 0,
-             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  auto total_started = std::accumulate (started.begin (),
+                                        started.end (),
+                                        0,
+                                        [](int current_total, const auto& pair) {return current_total + pair.second;});
+  table.set (row, 1, total_started);
+
+  auto total_finished = std::accumulate (finished.begin (),
+                                         finished.end (),
+                                         0,
+                                         [](int current_total, const auto& pair) {return current_total + pair.second;});
+  table.set (row, 2, total_finished);
+
+  if (total_started)
+    table.set (row, 3, round_percentage (total_finished, total_started));
+
   table.set (row, 4, std::accumulate (varnished.begin (), varnished.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
   table.set (row, 5, std::accumulate (destroyed.begin (), destroyed.end (), 0,
@@ -139,8 +150,12 @@ int CmdSales (CLI& cli, Config& config, Database& database)
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
   table.set (row, 7, std::accumulate (gifted.begin (), gifted.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
-  table.set (row, 8, std::accumulate (sold.begin (), sold.end (), 0,
-             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  auto total_sold = std::accumulate (sold.begin (),
+                                     sold.end (),
+                                     0,
+                                     [](int current_total, const auto& pair) {return current_total + pair.second;});
+  table.set (row, 8, total_sold);
+  table.set (row, 9, round_percentage (total_sold, total_finished));
 
   debug ("Rendering table");
   std::cout << table.render ();
