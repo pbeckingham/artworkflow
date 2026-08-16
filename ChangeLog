@@ -8,6 +8,7 @@
 0.0.9 () ?
  - Implemented all report
  - Implemented sales report
+ - Implemented disposition chart
  - #17 Implement equivalent to gestalt error reporting
  - #21 Exhibition submissions are listed twice
  - #22 Miscolored mini_card for gifted work
