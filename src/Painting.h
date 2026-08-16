@@ -58,6 +58,7 @@ public:
   std::string notes () const;
   std::vector <std::string> groups () const;
   std::string effort () const;
+  std::string disposition () const;
 
   int height () const;
   int width () const;
