@@ -392,15 +392,15 @@ std::string Painting::dump (const std::string& title) const
 const std::string Painting::get_background_color (void) const
 {
   std::string background = "on 0xffff00";
-       if (is_concept ())   background = "on 0x181818";
-  else if (is_destroyed ()) background = "on 0x300000";
-  else if (is_abandoned ()) background = "on 0x002040";
+       if (is_concept ())   background = "on 0x401050";
+  else if (is_destroyed ()) background = "on 0xa00000";
+  else if (is_abandoned ()) background = "on 0x000030";
   else if (is_nfs ())       background = "on 0x304030";
   else if (is_gifted ())    background = "on 0x003000";
   else if (is_sold ())      background = "on 0x006000";
-  else if (is_wip ())       background = "on 0x005070";
+  else if (is_wip ())       background = "on 0x202080";
   else if (is_inventory ()) background = "on 0x404040";
-  else if (is_drying ())    background = "on 0x405060";
+  else if (is_drying ())    background = "on 0x2020c0";
 
   return background;
 }
