@@ -38,6 +38,7 @@ int CmdHelpUsage (Config& config)
             << "       artworkflow all [<filter>]\n"
             << "       artworkflow check [<filter>]\n"
             << "       artworkflow diagnostics\n"
+            << "       artworkflow disposition [<filter>]\n"
             << "       artworkflow get <DOM> [<DOM> ...]\n"
             << "       artworkflow help [<command>]\n"
             << "       artworkflow kanban [<filter>]\n"
