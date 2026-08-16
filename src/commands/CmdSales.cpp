@@ -56,6 +56,7 @@ int CmdSales (CLI& cli, Config& config, Database& database)
   std::map <std::string, int> abandoned;
   std::map <std::string, int> varnished;
   std::map <std::string, int> destroyed;
+  std::map <std::string, int> nfs;
   std::map <std::string, int> inventory;
   std::map <std::string, int> gifted;
   std::map <std::string, int> sold;
@@ -74,6 +75,7 @@ int CmdSales (CLI& cli, Config& config, Database& database)
           abandoned[year] = 0;
           varnished[year] = 0;
           destroyed[year] = 0;
+          nfs[year] = 0;
           inventory[year] = 0;
           gifted[year] = 0;
           sold[year] = 0;
@@ -84,6 +86,7 @@ int CmdSales (CLI& cli, Config& config, Database& database)
         if (painting.is_varnished ()) ++varnished[year];
         if (painting.is_abandoned ()) ++abandoned[year];
         if (painting.is_destroyed ()) ++destroyed[year];
+        if (painting.is_nfs ())       ++nfs[year];
         if (painting.is_inventory ()) ++inventory[year];
         if (painting.is_gifted ())    ++gifted[year];
         if (painting.is_sold ())      ++sold[year];
@@ -100,6 +103,7 @@ int CmdSales (CLI& cli, Config& config, Database& database)
   table.add ("Varnish", false);
   table.add ("Abandoned", false);
   table.add ("Destroyed", false);
+  table.add ("NFS", false);
   table.add ("Inventory", false);
   table.add ("Gifted", false);
   table.add ("Sold", false);
@@ -107,6 +111,7 @@ int CmdSales (CLI& cli, Config& config, Database& database)
 
   Color color_abandoned ("0x0060a0");
   Color color_destroyed ("0xff0000");
+  Color color_nfs ("0x80a080");
   Color color_inventory ("0xf0f0f0");
   Color color_gifted ("0x00b000");
   Color color_sold ("0x00ff00");
@@ -121,10 +126,11 @@ int CmdSales (CLI& cli, Config& config, Database& database)
     table.set (row, 4, varnished[key]);
     table.set (row, 5, abandoned[key], color_abandoned);
     table.set (row, 6, destroyed[key], color_destroyed);
-    table.set (row, 7, inventory[key], color_inventory);
-    table.set (row, 8, gifted[key], color_gifted);
-    table.set (row, 9, sold[key], color_sold);
-    table.set (row, 10, round_percentage (sold[key], finished[key]));
+    table.set (row, 7, nfs[key], color_nfs);
+    table.set (row, 8, inventory[key], color_inventory);
+    table.set (row, 9, gifted[key], color_gifted);
+    table.set (row, 10, sold[key], color_sold);
+    table.set (row, 11, round_percentage (sold[key], finished[key]));
   }
 
   auto row = table.addRow ();
@@ -153,16 +159,18 @@ int CmdSales (CLI& cli, Config& config, Database& database)
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
   table.set (row, 6, std::accumulate (destroyed.begin (), destroyed.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
-  table.set (row, 7, std::accumulate (inventory.begin (), inventory.end (), 0,
+  table.set (row, 7, std::accumulate (nfs.begin (), nfs.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
-  table.set (row, 8, std::accumulate (gifted.begin (), gifted.end (), 0,
+  table.set (row, 8, std::accumulate (inventory.begin (), inventory.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  table.set (row, 9, std::accumulate (gifted.begin (), gifted.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
   auto total_sold = std::accumulate (sold.begin (),
                                      sold.end (),
                                      0,
                                      [](int current_total, const auto& pair) {return current_total + pair.second;});
-  table.set (row, 9, total_sold);
-  table.set (row, 10, round_percentage (total_sold, total_finished));
+  table.set (row, 10, total_sold);
+  table.set (row, 11, round_percentage (total_sold, total_finished));
 
   std::cout << table.render ();
   return 0;
