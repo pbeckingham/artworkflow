@@ -53,6 +53,7 @@ int CmdSales (CLI& cli, Config& config, Database& database)
 
   std::map <std::string, int> started;
   std::map <std::string, int> finished;
+  std::map <std::string, int> abandoned;
   std::map <std::string, int> varnished;
   std::map <std::string, int> destroyed;
   std::map <std::string, int> inventory;
@@ -70,6 +71,7 @@ int CmdSales (CLI& cli, Config& config, Database& database)
         {
           started[year] = 0;
           finished[year] = 0;
+          abandoned[year] = 0;
           varnished[year] = 0;
           destroyed[year] = 0;
           inventory[year] = 0;
@@ -80,6 +82,7 @@ int CmdSales (CLI& cli, Config& config, Database& database)
         ++started[year];
         if (painting.end () != "")    ++finished[year];
         if (painting.is_varnished ()) ++varnished[year];
+        if (painting.is_abandoned ()) ++abandoned[year];
         if (painting.is_destroyed ()) ++destroyed[year];
         if (painting.is_inventory ()) ++inventory[year];
         if (painting.is_gifted ())    ++gifted[year];
@@ -88,7 +91,6 @@ int CmdSales (CLI& cli, Config& config, Database& database)
     }
   }
 
-  debug ("Composing table");
   Table table;
   table.underlineHeaders ();
   table.add ("Start Year");
@@ -96,12 +98,14 @@ int CmdSales (CLI& cli, Config& config, Database& database)
   table.add ("Finished", false);
   table.add ("Comp Rate", false);
   table.add ("Varnish", false);
+  table.add ("Abandoned", false);
   table.add ("Destroyed", false);
   table.add ("Inventory", false);
   table.add ("Gifted", false);
   table.add ("Sold", false);
   table.add ("Sell Rate", false);
 
+  Color color_abandoned ("0x0060a0");
   Color color_destroyed ("0xff0000");
   Color color_inventory ("0xf0f0f0");
   Color color_gifted ("0x00b000");
@@ -115,11 +119,12 @@ int CmdSales (CLI& cli, Config& config, Database& database)
     table.set (row, 2, finished[key]);
     table.set (row, 3, round_percentage (finished[key], started[key]));
     table.set (row, 4, varnished[key]);
-    table.set (row, 5, destroyed[key], color_destroyed);
-    table.set (row, 6, inventory[key], color_inventory);
-    table.set (row, 7, gifted[key], color_gifted);
-    table.set (row, 8, sold[key], color_sold);
-    table.set (row, 9, round_percentage (sold[key], finished[key]));
+    table.set (row, 5, abandoned[key], color_abandoned);
+    table.set (row, 6, destroyed[key], color_destroyed);
+    table.set (row, 7, inventory[key], color_inventory);
+    table.set (row, 8, gifted[key], color_gifted);
+    table.set (row, 9, sold[key], color_sold);
+    table.set (row, 10, round_percentage (sold[key], finished[key]));
   }
 
   auto row = table.addRow ();
@@ -144,20 +149,21 @@ int CmdSales (CLI& cli, Config& config, Database& database)
 
   table.set (row, 4, std::accumulate (varnished.begin (), varnished.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
-  table.set (row, 5, std::accumulate (destroyed.begin (), destroyed.end (), 0,
+  table.set (row, 5, std::accumulate (abandoned.begin (), abandoned.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
-  table.set (row, 6, std::accumulate (inventory.begin (), inventory.end (), 0,
+  table.set (row, 6, std::accumulate (destroyed.begin (), destroyed.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
-  table.set (row, 7, std::accumulate (gifted.begin (), gifted.end (), 0,
+  table.set (row, 7, std::accumulate (inventory.begin (), inventory.end (), 0,
+             [](int current_total, const auto& pair) {return current_total + pair.second;}));
+  table.set (row, 8, std::accumulate (gifted.begin (), gifted.end (), 0,
              [](int current_total, const auto& pair) {return current_total + pair.second;}));
   auto total_sold = std::accumulate (sold.begin (),
                                      sold.end (),
                                      0,
                                      [](int current_total, const auto& pair) {return current_total + pair.second;});
-  table.set (row, 8, total_sold);
-  table.set (row, 9, round_percentage (total_sold, total_finished));
+  table.set (row, 9, total_sold);
+  table.set (row, 10, round_percentage (total_sold, total_finished));
 
-  debug ("Rendering table");
   std::cout << table.render ();
   return 0;
 }
