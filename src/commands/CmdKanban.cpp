@@ -92,7 +92,7 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   int terminal_height = get_terminal_height ();
   debug (std::format ("Terminal is {}x{}", terminal_width, terminal_height));
 
-  Color frame ("0x808080 on 0x200030");
+  Color frame ("0x808080 on 0x000020");
   int left_column_width = 15;
   std::map <std::string, std::vector <std::string>> table;
   std::vector <std::string> left_column;
