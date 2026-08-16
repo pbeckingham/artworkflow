@@ -605,6 +605,17 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
   Composite cid;
   cid.add (std::string (width, ' '), 0, color_id);
   cid.add ("#" + _id, 0, color_id);
+
+       if (is_concept ())   cid.add ("Concept",   width - 7, color_id);
+  else if (is_wip ())       cid.add ("WIP",       width - 3, color_id);
+  else if (is_drying ())    cid.add ("Drying",    width - 6, color_id);
+  else if (is_abandoned ()) cid.add ("Abandoned", width - 9, color_id);
+  else if (is_destroyed ()) cid.add ("Destroyed", width - 9, color_id);
+  else if (is_nfs ())       cid.add ("NFS",       width - 3, color_id);
+  else if (is_inventory ()) cid.add ("Inventory", width - 9, color_id);
+  else if (is_gifted ())    cid.add ("Gifted",    width - 6, color_id);
+  else if (is_sold ())      cid.add ("Sold",      width - 4, color_id);
+
   lines.push_back (cid.str ());
 
   Composite ctitle;
