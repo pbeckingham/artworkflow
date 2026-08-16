@@ -9,6 +9,7 @@ set (commands_SRCS CmdAll.cpp
                    CmdCheck.cpp
                    CmdDefault.cpp
                    CmdDiagnostics.cpp
+                   CmdDisposition.cpp
                    CmdGet.cpp
                    CmdHelp.cpp
                    CmdInfo.cpp

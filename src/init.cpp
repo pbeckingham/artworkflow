@@ -41,6 +41,7 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "all");
   cli.entity ("command", "check");
   cli.entity ("command", "diagnostics");
+  cli.entity ("command", "disposition");
   cli.entity ("command", "get");
   cli.entity ("command", "help");
   cli.entity ("command", "--help");
@@ -242,6 +243,7 @@ int dispatchCommand (
          if (command == "all")         status = CmdAll           (cli, config, database);
     else if (command == "check")       status = CmdCheck         (cli, config, database);
     else if (command == "diagnostics") status = CmdDiagnostics   (     config          );
+    else if (command == "disposition") status = CmdDisposition   (cli, config, database);
     else if (command == "get")         status = CmdGet           (cli, config, database);
     else if (command == "help"    ||
              command == "--help"  ||

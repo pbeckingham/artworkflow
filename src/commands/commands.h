@@ -35,6 +35,7 @@
 int CmdAll           (CLI&, Config&, Database&);
 int CmdCheck         (CLI&, Config&, Database&);
 int CmdDiagnostics   (      Config&           );
+int CmdDisposition   (CLI&, Config&, Database&);
 int CmdGet           (CLI&, Config&, Database&);
 int CmdHelp          (CLI&, Config&           );
 int CmdInfo          (CLI&,          Database&);
