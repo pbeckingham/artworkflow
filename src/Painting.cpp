@@ -213,14 +213,14 @@ std::string Painting::effort () const
 std::string Painting::disposition () const
 {
   if (is_concept ())   return "Concept";
-  if (is_wip ())       return "WIP";
   if (is_drying ())    return "Drying";
-  if (is_abandoned ()) return "Abandoned";
   if (is_destroyed ()) return "Destroyed";
   if (is_nfs ())       return "NFS";
   if (is_inventory ()) return "Inventory";
   if (is_gifted ())    return "Gifted";
   if (is_sold ())      return "Sold";
+  if (is_abandoned ()) return "Abandoned";
+  if (is_wip ())       return "WIP";
 
   return "Unknown";
 }
