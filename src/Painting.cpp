@@ -473,22 +473,6 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     lines.push_back (cline.str ());
   }
 
-  if (is_wip ())
-  {
-    Composite cline;
-    cline.add (std::string (width, ' '), 0, card);
-    cline.add ("WIP", 12, card);
-    lines.push_back (cline.str ());
-  }
-
-  if (is_abandoned ())
-  {
-    Composite cline;
-    cline.add (std::string (width, ' '), 0, card);
-    cline.add ("Abandoned", 12, card);
-    lines.push_back (cline.str ());
-  }
-
   if (_varnish != "")
   {
     Composite cline;
@@ -504,27 +488,6 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     line += std::format (" (Dried for {} days)", age.days ());
 
     cline.add (line.substr (0, width), 0, card);
-    lines.push_back (cline.str ());
-  }
-
-  if (is_inventory ())
-  {
-    Composite cline;
-    cline.add (std::string (width, ' '), 0, card);
-    cline.add ("Location   Inventory", 1, card);
-    lines.push_back (cline.str ());
-  }
-
-  if (_action != "")
-  {
-    Composite cline;
-    cline.add (std::string (width, ' '), 0, card);
-    cline.add (_action.substr (1), 12, card);
-
-         if (_action[0] == '$') cline.add ("Sold", 1, card);
-    else if (_action[0] == 'g') cline.add ("Gifted", 1, card);
-    else if (_action[0] == 'd') cline.add ("Destroyed", 1, card);
-
     lines.push_back (cline.str ());
   }
 
