@@ -66,7 +66,7 @@ int CmdHelpUsage (Config& config)
             << "       :drying                 Is painting drying\n"
             << "       :gifted                 Is painting gifted\n"
             << "       :inventory              Is painting in inventory\n"
-            << "       :mfs                    Is painting not for sale\n"
+            << "       :nfs                    Is painting not for sale\n"
             << "       :sold                   Is painting sold\n"
             << "       :varnished              Is painting varnished\n"
             << "       :wip                    Is painting being created\n"
