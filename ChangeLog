@@ -1,11 +1,12 @@
 ------ planned -----------------------------------
 
 0.1.0 (2026-) Minimal Functionality
-0.0.10 () Color Themes
+0.0.11 () Color Themes
+0.0.10 () Rreporting
 
 ------ development -------------------------------
 
-0.0.9 () ?
+0.0.9 () Reporting
  - Implemented all report
  - Implemented sales report
  - Implemented disposition chart
