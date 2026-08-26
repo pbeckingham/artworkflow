@@ -45,6 +45,7 @@ int CmdHelpUsage (Config& config)
             << "       artworkflow new\n"
             << "       artworkflow price <filter>\n"
             << "       artworkflow sales <filter>\n"
+            << "       artworkflow series <filter>\n"
             << "       artworkflow info <filter>\n"
             << '\n'
             << "Hints:\n"

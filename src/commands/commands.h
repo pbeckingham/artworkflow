@@ -43,6 +43,7 @@ int CmdKanban        (CLI&, Config&, Database&);
 int CmdNew           (CLI&, Config&, Database&);
 int CmdPrice         (CLI&, Config&, Database&);
 int CmdSales         (CLI&, Config&, Database&);
+int CmdSeries        (CLI&, Config&, Database&);
 int CmdVersion       (      Config&           );
 int CmdDefault       (CLI&, Config&, Database&);
 

@@ -5,7 +5,9 @@
 
 ------ development -------------------------------
 
-0.0.10 () Rreporting
+0.0.10 () Reporting
+- Implemented series report
+- #16 Implement equivalent to gestalt statistics by series
 
 ------ stable ------------------------------------
 ------ current release ---------------------------
