@@ -30,7 +30,6 @@
 #include <format.h>
 #include <shared.h>
 #include <iostream>
-#include <Config.h>
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,26 +46,26 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
-void extensionAPI (Config& config)
+void extensionAPI ()
 {
-  (*config.lua ())["apiGetVersion"] = []()
+  (*get_lua_vm ())["apiGetVersion"] = []()
     {
       return VERSION;
     };
 
-  (*config.lua ())["apiGet"] = []()
+  (*get_lua_vm ())["apiGet"] = []()
     {
       // TODO: Perform a domGetcall.
     };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void extensionOnEntry (Config& config)
+void extensionOnEntry ()
 {
   debug ("extensionOnEntry");
 
   // Determine if 'extensionOnEntry' is a lua function, before calling it.
-  sol::protected_function function_object = (*config.lua ())["extensionOnEntry"];
+  sol::protected_function function_object = (*get_lua_vm ())["extensionOnEntry"];
   if (function_object)
   {
     auto result = function_object ();
@@ -83,12 +82,12 @@ void extensionOnEntry (Config& config)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void extensionOnExit (Config& config)
+void extensionOnExit ()
 {
   debug ("extensionOnExit");
 
   // Determine if 'extensionOnExit' is a lua function, before calling it.
-  sol::protected_function function_object = (*config.lua ())["extensionOnExit"];
+  sol::protected_function function_object = (*get_lua_vm ())["extensionOnExit"];
   if (function_object)
   {
     auto result = function_object ();
@@ -105,12 +104,12 @@ void extensionOnExit (Config& config)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void extensionCmdVersion (Config& config)
+void extensionCmdVersion ()
 {
   debug ("extensionCmdVersion");
 
   // Determine if 'extensionCmdVersion' is a lua function, before calling it.
-  sol::protected_function function_object = (*config.lua ())["extensionCmdVersion"];
+  sol::protected_function function_object = (*get_lua_vm ())["extensionCmdVersion"];
   if (function_object)
   {
     auto result = function_object ();
@@ -127,12 +126,12 @@ void extensionCmdVersion (Config& config)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void extensionCmdHelp (Config& config)
+void extensionCmdHelp ()
 {
   debug ("extensionCmdHelp");
 
   // Determine if 'extensionCmdHelp' is a lua function, before calling it.
-  sol::protected_function function_object = (*config.lua ())["extensionCmdHelp"];
+  sol::protected_function function_object = (*get_lua_vm ())["extensionCmdHelp"];
   if (function_object)
   {
     auto result = function_object ();
@@ -146,6 +145,58 @@ void extensionCmdHelp (Config& config)
       debug (format ("extensionCmdHelp: {1}", e.what ()));
     }
   }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string extensionCard ()
+{
+  debug ("extensionCard");
+  std::string output {};
+
+  // Determine if 'extensionCmdHelp' is a lua function, before calling it.
+  sol::protected_function function_object = (*get_lua_vm ())["extensionCard"];
+  if (function_object)
+  {
+    auto result = function_object ();
+    if (result.valid ())
+    {
+      output = result;
+      debug ("extensionCard success");
+    }
+    else
+    {
+      sol::error e = result;
+      debug (format ("extensionCard: {1}", e.what ()));
+    }
+  }
+
+  return output;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string extensionMiniCard ()
+{
+  debug ("extensionMiniCard");
+  std::string output {};
+
+  // Determine if 'extensionCmdHelp' is a lua function, before calling it.
+  sol::protected_function function_object = (*get_lua_vm ())["extensionMiniCard"];
+  if (function_object)
+  {
+    auto result = function_object ();
+    if (result.valid ())
+    {
+      output = result;
+      debug ("extensionMiniCard success");
+    }
+    else
+    {
+      sol::error e = result;
+      debug (format ("extensionMiniCard: {1}", e.what ()));
+    }
+  }
+
+  return output;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -27,15 +27,19 @@
 #include <iomanip>
 #include <iostream>
 
-#define SOL_ALL_SAFETIES_ON 1
-#include <sol/sol.hpp>
-
 #include <Config.h>
 #include <AtomicFile.h>
 #include <Color.h>
 #include <Timer.h>
 #include <shared.h>
 #include <artworkflow.h>
+
+////////////////////////////////////////////////////////////////////////////////
+sol::state lua;
+sol::state* get_lua_vm ()
+{
+  return &lua;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 int main (int argc, const char** argv)
@@ -56,7 +60,7 @@ int main (int argc, const char** argv)
     sol::state lua;
     lua.open_libraries (sol::lib::base, sol::lib::io, sol::lib::math, sol::lib::table);
     Config config (lua);
-    extensionAPI (config);
+    extensionAPI ();
 
     // Add entities so that command line tokens such as 'help' are recognized as
     // commands.
@@ -84,7 +88,7 @@ int main (int argc, const char** argv)
     debug ("initializeDataAndConfig"); // After initializeDataAndConfig because of default values
 
     // First chance to do anything meaningful.
-    extensionOnEntry (config);
+    extensionOnEntry ();
 
     // Dispatch to commands.
     debug ("dispatchCommand");
@@ -97,7 +101,7 @@ int main (int argc, const char** argv)
     AtomicFile::finalize_all ();
     debug ("AtomicFile::finalize_all");
 
-    extensionOnExit (config);
+    extensionOnExit ();
   }
 
   catch (const std::string& error)

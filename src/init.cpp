@@ -248,7 +248,7 @@ int dispatchCommand (
     else if (command == "get")         status = CmdGet           (cli, config, database);
     else if (command == "help"    ||
              command == "--help"  ||
-             command == "-h")          status = CmdHelp          (cli, config          );
+             command == "-h")          status = CmdHelp          (cli                  );
     else if (command == "information") status = CmdInfo          (cli,         database);
     else if (command == "kanban")      status = CmdKanban        (cli, config, database);
     else if (command == "new")         status = CmdNew           (cli, config, database);
@@ -256,7 +256,7 @@ int dispatchCommand (
     else if (command == "sales")       status = CmdSales         (cli, config, database);
     else if (command == "series")      status = CmdSeries        (cli, config, database);
     else if (command == "version" ||
-             command == "-v")          status = CmdVersion       (     config          );
+             command == "-v")          status = CmdVersion       (                     );
   }
   else
   {

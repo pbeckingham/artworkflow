@@ -31,7 +31,7 @@
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int CmdHelpUsage (Config& config)
+int CmdHelpUsage ()
 {
   std::cout << '\n'
             << "Usage: artworkflow [--version]\n"
@@ -80,12 +80,12 @@ int CmdHelpUsage (Config& config)
             << "       dom.config.<name>\n"
             << '\n';
 
-  extensionCmdHelp (config);
+  extensionCmdHelp ();
   return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-int CmdHelp (CLI& cli, Config& config)
+int CmdHelp (CLI& cli)
 {
   auto words = cli.getWords ();
 
@@ -96,7 +96,7 @@ int CmdHelp (CLI& cli, Config& config)
     return (WIFEXITED (ret)) ? WEXITSTATUS (ret) : -1;
   }
 
-  return CmdHelpUsage (config);
+  return CmdHelpUsage ();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

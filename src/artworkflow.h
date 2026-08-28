@@ -27,11 +27,17 @@
 #ifndef INCLUDED_ARTWORKFLOW
 #define INCLUDED_ARTWORKFLOW
 
+#define SOL_ALL_SAFETIES_ON 1
+#include <sol/sol.hpp>
+
 #include <Color.h>
 #include <CLI.h>
 #include <Database.h>
 #include <Config.h>
 #include <Palette.h>
+
+// artworkflow.cpp
+sol::state* get_lua_vm ();
 
 // debug.cpp
 void enableDebugMode (bool);
@@ -44,11 +50,13 @@ void warn (const std::string&);
 bool domGet (Database&, const Config&, const std::string&, std::string&);
 
 // extensions.cpp
-void extensionAPI (Config&);
-void extensionOnEntry (Config&);
-void extensionOnExit (Config&);
-void extensionCmdVersion (Config&);
-void extensionCmdHelp (Config&);
+void extensionAPI ();
+void extensionOnEntry ();
+void extensionOnExit ();
+void extensionCmdVersion ();
+void extensionCmdHelp ();
+std::string extensionCard ();
+std::string extensionMiniCard ();
 
 // filter.cpp
 bool filterByCLI (const CLI&, const Painting&, bool inclusive = false);

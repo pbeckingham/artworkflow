@@ -32,11 +32,11 @@
 #include <cmake.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-int CmdVersion (Config& config)
+int CmdVersion ()
 {
   std::cout << VERSION
             << '\n';
-  extensionCmdVersion (config);
+  extensionCmdVersion ();
   return 0;
 }
 

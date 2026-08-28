@@ -7,19 +7,20 @@
 
 0.0.10 () Reporting
 - Implemented series report
+- #25 Allow extension to add to ::card and ::mini_card
 - #16 Implement equivalent to gestalt statistics by series
 
 ------ stable ------------------------------------
 ------ current release ---------------------------
 
 0.0.9 (2026-08-23) Reporting
- - Implemented all report
- - Implemented sales report
- - Implemented disposition chart
- - #17 Implement equivalent to gestalt error reporting
- - #21 Exhibition submissions are listed twice
- - #22 Miscolored mini_card for gifted work
- - #23 Segfault with empty result of filtering
+- Implemented all report
+- Implemented sales report
+- Implemented disposition chart
+- #17 Implement equivalent to gestalt error reporting
+- #21 Exhibition submissions are listed twice
+- #22 Miscolored mini_card for gifted work
+- #23 Segfault with empty result of filtering
 
 
 0.0.8 (2026-07-30) Reporting

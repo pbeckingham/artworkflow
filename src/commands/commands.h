@@ -37,14 +37,14 @@ int CmdCheck         (CLI&, Config&, Database&);
 int CmdDiagnostics   (      Config&           );
 int CmdDisposition   (CLI&, Config&, Database&);
 int CmdGet           (CLI&, Config&, Database&);
-int CmdHelp          (CLI&, Config&           );
+int CmdHelp          (CLI&                    );
 int CmdInfo          (CLI&,          Database&);
 int CmdKanban        (CLI&, Config&, Database&);
 int CmdNew           (CLI&, Config&, Database&);
 int CmdPrice         (CLI&, Config&, Database&);
 int CmdSales         (CLI&, Config&, Database&);
 int CmdSeries        (CLI&, Config&, Database&);
-int CmdVersion       (      Config&           );
+int CmdVersion       (                        );
 int CmdDefault       (CLI&, Config&, Database&);
 
 #endif

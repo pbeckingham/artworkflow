@@ -544,7 +544,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
   {
     Composite cline;
     cline.add (std::string (width, ' '), 0, card);
-    cline.add ("Archived  " + _archived, 1, card);
+    cline.add ("Archived   " + _archived, 1, card);
     lines.push_back (cline.str ());
   }
 
@@ -563,6 +563,19 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     cline.add ("Groups", 1, card);
     cline.add (join (" ", groups ()).substr (0, width - 12), 12, card);
     lines.push_back (cline.str ());
+  }
+
+  auto extra = extensionCard ();
+  if (extra != "")
+  {
+    Composite cline;
+    auto extra_lines = split (extra, '\n');
+    for (auto& line : extra_lines)
+    {
+      cline.add (std::string (width, ' '), 0, card);
+      cline.add (line, 1, card);
+      lines.push_back (cline.str ());
+    }
   }
 
   return lines;
@@ -594,6 +607,19 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
   ctitle.add (std::string (width, ' '), 0, color_title);
   ctitle.add (_title.substr (0, width), 0, color_title);
   lines.push_back (ctitle.str ());
+
+  auto extra = extensionMiniCard ();
+  if (extra != "")
+  {
+    Composite cline;
+    auto extra_lines = split (extra, '\n');
+    for (auto& line : extra_lines)
+    {
+      cline.add (std::string (width, ' '), 0, color_id);
+      cline.add (line, 1, color_id);
+      lines.push_back (cline.str ());
+    }
+  }
 
   return lines;
 }
