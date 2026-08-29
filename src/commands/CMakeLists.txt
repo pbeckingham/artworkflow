@@ -14,6 +14,7 @@ set (commands_SRCS CmdAll.cpp
                    CmdHelp.cpp
                    CmdInfo.cpp
                    CmdKanban.cpp
+                   CmdMetrics.cpp
                    CmdNew.cpp
                    CmdPrice.cpp
 		   CmdSales.cpp

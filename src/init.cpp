@@ -48,6 +48,7 @@ void initializeEntities (CLI& cli)
   cli.entity ("command", "-h");
   cli.entity ("command", "information");
   cli.entity ("command", "kanban");
+  cli.entity ("command", "metrics");
   cli.entity ("command", "new");
   cli.entity ("command", "price");
   cli.entity ("command", "sales");
@@ -251,6 +252,7 @@ int dispatchCommand (
              command == "-h")          status = CmdHelp          (cli                  );
     else if (command == "information") status = CmdInfo          (cli,         database);
     else if (command == "kanban")      status = CmdKanban        (cli, config, database);
+    else if (command == "metrics")     status = CmdMetrics       (cli, config, database);
     else if (command == "new")         status = CmdNew           (cli, config, database);
     else if (command == "price")       status = CmdPrice         (cli, config, database);
     else if (command == "sales")       status = CmdSales         (cli, config, database);

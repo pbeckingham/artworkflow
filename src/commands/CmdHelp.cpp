@@ -42,6 +42,7 @@ int CmdHelpUsage ()
             << "       artworkflow get <DOM> [<DOM> ...]\n"
             << "       artworkflow help [<command>]\n"
             << "       artworkflow kanban [<filter>]\n"
+            << "       artworkflow metrics <filter>\n"
             << "       artworkflow new\n"
             << "       artworkflow price <filter>\n"
             << "       artworkflow sales <filter>\n"

@@ -40,6 +40,7 @@ int CmdGet           (CLI&, Config&, Database&);
 int CmdHelp          (CLI&                    );
 int CmdInfo          (CLI&,          Database&);
 int CmdKanban        (CLI&, Config&, Database&);
+int CmdMetrics       (CLI&, Config&, Database&);
 int CmdNew           (CLI&, Config&, Database&);
 int CmdPrice         (CLI&, Config&, Database&);
 int CmdSales         (CLI&, Config&, Database&);
