@@ -65,7 +65,7 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   //   ["columns"] = {"Concept", "WIP", "Drying"}
   // }
   std::vector <std::string> columns;
-  std::optional <sol::table> reportKanban = (*config.lua ())["reportKanban"];
+  std::optional <sol::table> reportKanban = (*get_lua_vm ())["reportKanban"];
   if (reportKanban)
   {
     debug ("Found Lua:reportKanban settings");

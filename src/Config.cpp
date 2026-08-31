@@ -33,21 +33,15 @@
 #include <artworkflow.h>
 
 ////////////////////////////////////////////////////////////////////////////////
-Config::Config (sol::state& lua)
-: _lua (&lua)
-{
-  assert (_lua);
-}
-
-////////////////////////////////////////////////////////////////////////////////
 void Config::load (const std::string& file)
 {
-  assert (_lua);
+  auto lua = get_lua_vm ();
+  assert (lua);
   _original_file = file;
 
   try
   {
-    _lua->safe_script_file (_original_file);
+    lua->safe_script_file (_original_file);
     debug ("Configuration file loaded");
   }
   catch (sol::error& e)
@@ -60,7 +54,8 @@ void Config::load (const std::string& file)
 ////////////////////////////////////////////////////////////////////////////////
 bool Config::has (const std::string& key) const
 {
-  assert (_lua);
+  auto lua = get_lua_vm ();
+  assert (lua);
   return false;
 }
 
@@ -68,63 +63,65 @@ bool Config::has (const std::string& key) const
 // Return the configuration value given the specified key.
 std::string Config::get (const std::string& key, const std::string& defaultValue) const
 {
-  assert (_lua);
-  return (*_lua)[key].get_or<std::string> (defaultValue);
+  auto lua = get_lua_vm ();
+  assert (lua);
+  return (*lua)[key].get_or<std::string> (defaultValue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 int Config::getInteger (const std::string& key, int defaultValue) const
 {
-  assert (_lua);
-  return (*_lua)[key].get_or (defaultValue);
+  auto lua = get_lua_vm ();
+  assert (lua);
+  return (*lua)[key].get_or (defaultValue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 double Config::getReal (const std::string& key, double defaultValue) const
 {
-  assert (_lua);
-  return (*_lua)[key].get_or (defaultValue);
+  auto lua = get_lua_vm ();
+  assert (lua);
+  return (*lua)[key].get_or (defaultValue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 bool Config::getBoolean (const std::string& key, bool defaultValue) const
 {
-  assert (_lua);
-  return (*_lua)[key].get_or (defaultValue);
+  auto lua = get_lua_vm ();
+  assert (lua);
+  return (*lua)[key].get_or (defaultValue);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const std::string& value)
 {
-  assert (_lua);
-  (*_lua)[key] = value;
+  auto lua = get_lua_vm ();
+  assert (lua);
+  (*lua)[key] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const int value)
 {
-  assert (_lua);
-  (*_lua)[key] = value;
+  auto lua = get_lua_vm ();
+  assert (lua);
+  (*lua)[key] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const double value)
 {
-  assert (_lua);
-  (*_lua)[key] = value;
+  auto lua = get_lua_vm ();
+  assert (lua);
+  (*lua)[key] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void Config::set (const std::string& key, const bool value)
 {
-  assert (_lua);
-  (*_lua)[key] = value;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-sol::state* Config::lua ()
-{
-  return _lua;
+  auto lua = get_lua_vm ();
+  assert (lua);
+  (*lua)[key] = value;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
