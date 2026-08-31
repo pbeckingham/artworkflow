@@ -573,7 +573,7 @@ std::vector <std::string> Painting::card (int width /* = 40 */) const
     for (auto& line : extra_lines)
     {
       cline.add (std::string (width, ' '), 0, card);
-      cline.add (line, 1, card);
+      cline.add (line.substr (0, width - 1), 1, card);
       lines.push_back (cline.str ());
     }
   }
@@ -616,7 +616,7 @@ std::vector <std::string> Painting::mini_card (int width /* = 24 */) const
     for (auto& line : extra_lines)
     {
       cline.add (std::string (width, ' '), 0, color_id);
-      cline.add (line, 1, color_id);
+      cline.add (line.substr (0, width - 1), 1, color_id);
       lines.push_back (cline.str ());
     }
   }
