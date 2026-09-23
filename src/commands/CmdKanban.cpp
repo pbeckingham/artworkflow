@@ -94,7 +94,6 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
 
   Color frame ("0x808080 on 0x000020");
   int left_column_width = 15;
-  std::map <std::string, std::vector <std::string>> table;
   std::vector <std::string> left_column;
 
   Composite left;
