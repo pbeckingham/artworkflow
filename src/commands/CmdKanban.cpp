@@ -45,6 +45,7 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
   std::vector <Painting> destroyed;
   std::vector <Painting> sold;
   std::vector <Painting> gifted;
+  std::map <std::string, std::vector <Painting>> groupings;
   for (auto& painting : database.allPaintings ())
   {
     if (filterByCLI (cli, painting, true))
@@ -57,12 +58,32 @@ int CmdKanban (CLI& cli, Config& config, Database& database)
       else if (painting.is_destroyed ()) destroyed.push_back (painting);
       else if (painting.is_sold ())      sold.push_back (painting);
       else if (painting.is_gifted ())    gifted.push_back (painting);
+
+      if (painting.is_inventory ())
+      {
+        for (auto& group : painting.groups ())
+        {
+          if (groupings.contains (group))
+            groupings[group].push_back (painting);
+          else
+            groupings.insert ({group, {painting}});
+        }
+      }
     }
   }
 
+  // TODO: Remove.
+  for (auto& group : groupings)
+  {
+    debug (std::format ("Group: {}", group.first));
+    for (auto& painting : group.second)
+      debug (std::format ("  {}", painting.id ()));
+  }
+
+  // TODO: No, make it dynamic instead.
   // load configuration that determines Kanban columns.
   // reportKanban = {
-  //   ["columns"] = {"Concept", "WIP", "Drying"}
+  //   ["columns"] = {"Concept", "WIP", "Drying", "G:Some_Show"}
   // }
   std::vector <std::string> columns;
   std::optional <sol::table> reportKanban = (*get_lua_vm ())["reportKanban"];
